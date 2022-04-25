@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:graceful_shop/login/login.dart';
 import 'package:graceful_shop/utils/colors.dart';
 import 'package:graceful_shop/utils/dimensions.dart';
+
+import '../login/login.dart';
 
 class Welcome extends StatefulWidget {
   const Welcome({Key? key}) : super(key: key);
@@ -33,12 +34,12 @@ class _WelcomeState extends State<Welcome> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(
-              height: Dimensions.height250,
-              width: Dimensions.widght250,
+              height: Dimensions.h250,
+              width: Dimensions.w250,
               child: SvgPicture.asset('assets/svg/logo.svg'),
             ),
             Padding(
-              padding: EdgeInsets.only(top: Dimensions.height20),
+              padding: EdgeInsets.only(top: Dimensions.h20),
               child: Text(
                 'GRACEFUL SHOP',
                 style: TextStyle(

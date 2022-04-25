@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:graceful_shop/screen/welcome/welcome.dart';
 import 'package:graceful_shop/utils/colors.dart';
-import 'package:graceful_shop/welcome/welcome.dart';
 
 void main() {
   runApp(const MyApp());
