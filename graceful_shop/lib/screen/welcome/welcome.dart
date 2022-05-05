@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:graceful_shop/utils/colors.dart';
-import 'package:graceful_shop/utils/dimensions.dart';
-
-import '../login/login.dart';
+import 'package:graceful_shop/screen/login/login.dart';
+import 'package:graceful_shop/screen/tab_bar/tab_bar.dart';
+import 'package:graceful_shop/resources/utils/colors.dart';
+import 'package:graceful_shop/resources/utils/dimensions.dart';
 
 class Welcome extends StatefulWidget {
   const Welcome({Key? key}) : super(key: key);
@@ -22,7 +22,9 @@ class _WelcomeState extends State<Welcome> {
   void push() {
     Navigator.pushAndRemoveUntil(
         context,
-        MaterialPageRoute(builder: (context) => const Login()),
+        MaterialPageRoute(
+          builder: (context) => TabBarBottom(index: 0),
+        ),
         (route) => false);
   }
 

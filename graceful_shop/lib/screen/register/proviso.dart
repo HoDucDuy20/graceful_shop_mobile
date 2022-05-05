@@ -1,7 +1,8 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:graceful_shop/utils/colors.dart';
-import 'package:graceful_shop/utils/dimensions.dart';
+import 'package:get/get.dart';
+import 'package:graceful_shop/resources/utils/colors.dart';
+import 'package:graceful_shop/resources/utils/dimensions.dart';
 
 class Proviso extends StatelessWidget {
   const Proviso({Key? key}) : super(key: key);
@@ -12,7 +13,7 @@ class Proviso extends StatelessWidget {
       padding: EdgeInsets.only(bottom: Dimensions.h12),
       child: Text.rich(
         TextSpan(
-          text: 'Bằng cách nhấn nút Đăng Ký, bạn đã đồng ý với\n',
+          text: 'You_Agree'.tr + '\n',
           style: TextStyle(
             fontSize: Dimensions.font15,
             fontWeight: FontWeight.w600,
@@ -20,7 +21,7 @@ class Proviso extends StatelessWidget {
           ),
           children: <TextSpan>[
             TextSpan(
-              text: 'Điều khoản sử dụng',
+              text: 'Terms'.tr,
               style: TextStyle(
                 fontSize: Dimensions.font16,
                 color: AppColors.mainColor,

@@ -1,8 +1,9 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:graceful_shop/screen/login/login.dart';
-import 'package:graceful_shop/utils/colors.dart';
-import 'package:graceful_shop/utils/dimensions.dart';
+import 'package:graceful_shop/resources/utils/colors.dart';
+import 'package:graceful_shop/resources/utils/dimensions.dart';
 
 class LinkLogin extends StatelessWidget {
   const LinkLogin({Key? key}) : super(key: key);
@@ -13,14 +14,14 @@ class LinkLogin extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: Dimensions.h12),
       child: Text.rich(
         TextSpan(
-          text: 'Nếu bạn đã có tài khoản vui lòng nhấn\n',
+          text: 'If_Account'.tr + '\n',
           style: TextStyle(
             fontSize: Dimensions.font16,
             color: AppColors.blackColor,
           ),
           children: <TextSpan>[
             TextSpan(
-              text: 'vào đây ',
+              text: 'Here'.tr + ' ',
               style: TextStyle(
                 fontSize: Dimensions.font16,
                 color: AppColors.mainColor,
@@ -36,7 +37,7 @@ class LinkLogin extends StatelessWidget {
                 },
             ),
             TextSpan(
-              text: 'để đăng nhập',
+              text: 'To_Login'.tr,
               style: TextStyle(
                 fontSize: Dimensions.font16,
                 color: AppColors.blackColor,

@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:graceful_shop/screen/login/login_with_google.dart';
 import 'package:graceful_shop/screen/register/link_login.dart';
 import 'package:graceful_shop/screen/register/proviso.dart';
-import 'package:graceful_shop/utils/colors.dart';
-import 'package:graceful_shop/utils/dimensions.dart';
-import 'package:graceful_shop/widgets/header_login_register.dart';
+import 'package:graceful_shop/resources/utils/colors.dart';
+import 'package:graceful_shop/resources/utils/dimensions.dart';
+import 'package:graceful_shop/resources/widgets/header_login_register.dart';
 
 class Register extends StatefulWidget {
   const Register({Key? key}) : super(key: key);
@@ -45,8 +46,8 @@ class _RegisterState extends State<Register> {
           child: Column(
             children: [
               HeaderLoginRegister(
-                title: 'Đăng ký',
-                subTitle: 'Vui lòng điền đầy đủ thông tin để đăng ký',
+                title: 'Register'.tr,
+                subTitle: 'Register_Title'.tr,
               ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: Dimensions.w40),
@@ -56,7 +57,7 @@ class _RegisterState extends State<Register> {
                       controller: txtPhone,
                       decoration: InputDecoration(
                         label: Text(
-                          'Nhập só điện thoại',
+                          'Input_Phone'.tr,
                           style: TextStyle(
                             fontSize: Dimensions.font16,
                             color: AppColors.grayColor,
@@ -74,7 +75,7 @@ class _RegisterState extends State<Register> {
                       controller: txtPass,
                       decoration: InputDecoration(
                         label: Text(
-                          'Mật khẩu',
+                          'Input_Pass'.tr,
                           style: TextStyle(
                             fontSize: Dimensions.font16,
                             color: AppColors.grayColor,
@@ -94,7 +95,7 @@ class _RegisterState extends State<Register> {
                       controller: txtPassCompare,
                       decoration: InputDecoration(
                         label: Text(
-                          'Nhập lại mật khẩu',
+                          'Input_Pass_2'.tr,
                           style: TextStyle(
                             fontSize: Dimensions.font16,
                             color: AppColors.grayColor,
@@ -108,7 +109,7 @@ class _RegisterState extends State<Register> {
                       controller: txtFullName,
                       decoration: InputDecoration(
                         label: Text(
-                          'Họ và tên',
+                          'Input_Name'.tr,
                           style: TextStyle(
                             fontSize: Dimensions.font16,
                             color: AppColors.grayColor,
@@ -128,48 +129,48 @@ class _RegisterState extends State<Register> {
                             //validation phone
                             final phone = txtPhone.value.text;
                             if (phone.isEmpty) {
-                              errorPhone = 'Nhập số điện thoại';
-                            } else if (phone.length != 10 ||
-                                phone.substring(0, 1) != '0' ||
-                                phone.substring(1, 2) != '3' ||
-                                phone.substring(1, 2) != '5' ||
-                                phone.substring(1, 2) != '7' ||
-                                phone.substring(1, 2) != '8' ||
-                                phone.substring(1, 2) != '9') {
-                              errorPhone = 'Vui lòng nhập đúng số điện thoại';
-                            } else {
+                              errorPhone = 'Required_Phone'.tr;
+                            } else if (phone.length == 10 &&
+                                phone.substring(0, 1) == '0' &&
+                                (phone.substring(1, 2) == '3' ||
+                                    phone.substring(1, 2) == '5' ||
+                                    phone.substring(1, 2) == '7' ||
+                                    phone.substring(1, 2) == '8' ||
+                                    phone.substring(1, 2) == '9')) {
                               errorPhone = '';
+                            } else {
+                              errorPhone = 'Required_Phone_Correct'.tr;
                             }
                             //validation pass
                             final pass = txtPass.value.text;
                             if (pass.isEmpty) {
-                              errorPass = 'Nhập mật khẩu';
+                              errorPass = 'Required_Pass'.tr;
                             } else if (pass.length < 6) {
-                              errorPass = 'Mật khẩu tối thiểu 6 ký tự';
+                              errorPass = 'Required_Pass_Min'.tr;
                             } else if (pass.length > 20) {
-                              errorPass = 'Mật khẩu tối đa 20 ký tự';
+                              errorPass = 'Required_Pass_Max'.tr;
                             } else {
                               errorPass = '';
                             }
                             //validation pass compare
                             final passCompare = txtPassCompare.value.text;
                             if (passCompare.isEmpty) {
-                              errorPassCompare = 'Nhập mật khẩu';
+                              errorPassCompare = 'Required_Pass'.tr;
                             } else if (passCompare.length < 6) {
-                              errorPassCompare = 'Mật khẩu tối thiểu 6 ký tự';
+                              errorPassCompare = 'Required_Pass_Min'.tr;
                             } else if (passCompare.length > 20) {
-                              errorPassCompare = 'Mật khẩu tối đa 20 ký tự';
+                              errorPassCompare = 'Required_Pass_Max'.tr;
                             } else if (passCompare != pass) {
-                              errorPassCompare = 'Mật khẩu không khớp';
+                              errorPassCompare = 'Required_Pass_Compare'.tr;
                             } else {
                               errorPassCompare = '';
                             }
                             //validation name
                             final fullName = txtFullName.value.text;
                             if (fullName.isEmpty) {
-                              errorFullName = 'Họ và tên không được để trống';
+                              errorFullName = 'Required_Name'.tr;
                             } else if (fullName.length > 40) {
-                              errorFullName = 'Họ tên tối đa 40 ký tự';
+                              errorFullName = 'Required_Name_Max'.tr;
                             } else {
                               errorFullName = '';
                             }
@@ -191,7 +192,7 @@ class _RegisterState extends State<Register> {
                         height: Dimensions.h40,
                         minWidth: Dimensions.w210,
                         child: Text(
-                          'ĐĂNG KÝ',
+                          'Register'.tr.toUpperCase(),
                           style: TextStyle(
                             fontSize: Dimensions.font20,
                             fontWeight: FontWeight.w500,

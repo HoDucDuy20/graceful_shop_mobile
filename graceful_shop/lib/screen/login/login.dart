@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:graceful_shop/screen/login/link_register.dart';
 import 'package:graceful_shop/screen/login/login_with_google.dart';
-import 'package:graceful_shop/utils/colors.dart';
-import 'package:graceful_shop/utils/dimensions.dart';
-import 'package:graceful_shop/widgets/header_login_register.dart';
+import 'package:graceful_shop/resources/utils/colors.dart';
+import 'package:graceful_shop/resources/utils/dimensions.dart';
+import 'package:graceful_shop/resources/widgets/header_login_register.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -40,8 +41,8 @@ class _LoginState extends State<Login> {
           child: Column(
             children: [
               HeaderLoginRegister(
-                title: 'Đăng nhập',
-                subTitle: 'Vui lòng điền đầy đủ thông tin để đăng nhập',
+                title: 'Login'.tr,
+                subTitle: 'Login_Title'.tr,
               ),
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: Dimensions.w40),
@@ -51,7 +52,7 @@ class _LoginState extends State<Login> {
                       controller: txtPhone,
                       decoration: InputDecoration(
                         label: Text(
-                          'Nhập só điện thoại',
+                          'Input_Phone'.tr,
                           style: TextStyle(
                             fontSize: Dimensions.font16,
                             color: AppColors.grayColor,
@@ -69,7 +70,7 @@ class _LoginState extends State<Login> {
                       controller: txtPass,
                       decoration: InputDecoration(
                         label: Text(
-                          'Mật khẩu',
+                          'Input_Pass'.tr,
                           style: TextStyle(
                             fontSize: Dimensions.font16,
                             color: AppColors.grayColor,
@@ -94,26 +95,26 @@ class _LoginState extends State<Login> {
                           //validation phone
                           final phone = txtPhone.value.text;
                           if (phone.isEmpty) {
-                            errorPhone = 'Nhập số điện thoại';
-                          } else if (phone.length != 10 ||
-                              phone.substring(0, 1) != '0' ||
-                              phone.substring(1, 2) != '3' ||
-                              phone.substring(1, 2) != '5' ||
-                              phone.substring(1, 2) != '7' ||
-                              phone.substring(1, 2) != '8' ||
-                              phone.substring(1, 2) != '9') {
-                            errorPhone = 'Vui lòng nhập đúng số điện thoại';
-                          } else {
+                            errorPhone = 'Required_Phone'.tr;
+                          } else if (phone.length == 10 &&
+                              phone.substring(0, 1) == '0' &&
+                              (phone.substring(1, 2) == '3' ||
+                                  phone.substring(1, 2) == '5' ||
+                                  phone.substring(1, 2) == '7' ||
+                                  phone.substring(1, 2) == '8' ||
+                                  phone.substring(1, 2) == '9')) {
                             errorPhone = '';
+                          } else {
+                            errorPhone = 'Required_Phone_Correct'.tr;
                           }
                           //validation pass
                           final pass = txtPass.value.text;
                           if (pass.isEmpty) {
-                            errorPass = 'Nhập mật khẩu';
+                            errorPass = 'Required_Pass'.tr;
                           } else if (pass.length < 6) {
-                            errorPass = 'Mật khẩu tối thiểu 6 ký tự';
+                            errorPass = 'Required_Pass_Min'.tr;
                           } else if (pass.length > 20) {
-                            errorPass = 'Mật khẩu tối đa 20 ký tự';
+                            errorPass = 'Required_Pass_Max'.tr;
                           } else {
                             errorPass = '';
                           }
@@ -131,7 +132,7 @@ class _LoginState extends State<Login> {
                         height: Dimensions.h40,
                         minWidth: Dimensions.w210,
                         child: Text(
-                          'ĐĂNG NHẬP',
+                          'Login'.tr.toUpperCase(),
                           style: TextStyle(
                             fontSize: Dimensions.font20,
                             fontWeight: FontWeight.w500,
@@ -143,7 +144,7 @@ class _LoginState extends State<Login> {
                     TextButton(
                       onPressed: () {},
                       child: Text(
-                        'Quên mật khẩu?',
+                        'Forgot_Pass'.tr,
                         style: TextStyle(
                           fontSize: Dimensions.font15,
                           color: AppColors.blackColor,

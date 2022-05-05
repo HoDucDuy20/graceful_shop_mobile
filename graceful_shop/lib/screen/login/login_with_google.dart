@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:graceful_shop/utils/colors.dart';
-import 'package:graceful_shop/utils/dimensions.dart';
+import 'package:get/get.dart';
+import 'package:graceful_shop/resources/utils/colors.dart';
+import 'package:graceful_shop/resources/utils/dimensions.dart';
 
 class LoginWithGoogle extends StatefulWidget {
   const LoginWithGoogle({Key? key}) : super(key: key);
@@ -16,7 +17,7 @@ class _LoginWithGoogleState extends State<LoginWithGoogle> {
     return Column(
       children: [
         Text(
-          'Hoặc đăng nhập bằng',
+          'Or_Login'.tr,
           style: TextStyle(
             fontSize: Dimensions.font17,
             fontWeight: FontWeight.w600,

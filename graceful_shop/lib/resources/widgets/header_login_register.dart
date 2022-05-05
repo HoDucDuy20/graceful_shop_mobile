@@ -1,7 +1,9 @@
+// ignore_for_file: must_be_immutable
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:graceful_shop/utils/colors.dart';
-import 'package:graceful_shop/utils/dimensions.dart';
+import 'package:graceful_shop/resources/utils/colors.dart';
+import 'package:graceful_shop/resources/utils/dimensions.dart';
 
 class HeaderLoginRegister extends StatelessWidget {
   String title;
@@ -17,7 +19,7 @@ class HeaderLoginRegister extends StatelessWidget {
     return Container(
       padding: EdgeInsets.only(top: Dimensions.h40, left: Dimensions.w35),
       margin: EdgeInsets.only(bottom: Dimensions.h40),
-      height: Dimensions.h200,
+      height: Dimensions.h205,
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(70)),
         color: AppColors.mainColor,
