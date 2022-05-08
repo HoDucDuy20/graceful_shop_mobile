@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:get/get.dart';
 import 'package:graceful_shop/resources/utils/colors.dart';
 import 'package:graceful_shop/resources/utils/dimensions.dart';
 import 'package:html/dom.dart' as dom;
@@ -41,7 +42,9 @@ class _AdvertiseDetailState extends State<AdvertiseDetail> {
               child: ListTile(
                 contentPadding: EdgeInsets.zero,
                 leading: InkWell(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
                   child: Container(
                     decoration: BoxDecoration(
                       borderRadius: const BorderRadius.all(
@@ -59,7 +62,7 @@ class _AdvertiseDetailState extends State<AdvertiseDetail> {
                 trailing: InkWell(
                   onTap: () {},
                   child: Container(
-                    padding: EdgeInsets.all(5.0),
+                    padding: EdgeInsets.all(Dimensions.w5),
                     decoration: BoxDecoration(
                       borderRadius: const BorderRadius.all(
                         Radius.circular(100.0),

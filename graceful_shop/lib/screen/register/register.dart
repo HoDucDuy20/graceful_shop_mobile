@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:graceful_shop/resources/widgets/button_sign_in_up.dart';
 import 'package:graceful_shop/screen/login/login_with_google.dart';
 import 'package:graceful_shop/screen/register/link_login.dart';
 import 'package:graceful_shop/screen/register/proviso.dart';
@@ -121,7 +122,8 @@ class _RegisterState extends State<Register> {
                     Padding(
                       padding: EdgeInsets.only(
                           top: Dimensions.h40, bottom: Dimensions.h7),
-                      child: MaterialButton(
+                      child: ButtonSignInUp(
+                        title: 'Register'.tr,
                         onPressed: () {
                           FocusScope.of(context).requestFocus(FocusNode());
                           {
@@ -183,22 +185,6 @@ class _RegisterState extends State<Register> {
                             } else {}
                           }
                         },
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(20.0),
-                          ),
-                        ),
-                        color: AppColors.mainColor,
-                        height: Dimensions.h40,
-                        minWidth: Dimensions.w210,
-                        child: Text(
-                          'Register'.tr.toUpperCase(),
-                          style: TextStyle(
-                            fontSize: Dimensions.font20,
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.whiteColor,
-                          ),
-                        ),
                       ),
                     ),
                     const LinkLogin(),

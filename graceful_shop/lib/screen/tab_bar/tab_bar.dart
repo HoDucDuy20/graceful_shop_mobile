@@ -1,7 +1,10 @@
 // ignore_for_file: must_be_immutable, no_logic_in_create_state
 
 import 'package:flutter/material.dart';
+import 'package:graceful_shop/screen/category/category.dart';
+import 'package:graceful_shop/screen/favorite/favorite.dart';
 import 'package:graceful_shop/screen/home/home.dart';
+import 'package:graceful_shop/screen/personal_page/personal_page.dart';
 import 'package:graceful_shop/screen/tab_bar/tab_icon.dart';
 import 'package:graceful_shop/resources/utils/colors.dart';
 import 'package:graceful_shop/resources/utils/dimensions.dart';
@@ -103,9 +106,9 @@ class _TabBarBottomState extends State<TabBarBottom>
           controller: tabController,
           children: const [
             Home(),
-            Center(child: Text('data 2')),
-            Center(child: Text('data 3')),
-            Center(child: Text('data 4')),
+            Category(),
+            Favorite(),
+            PersonalPage(),
           ],
         ),
       ),

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:graceful_shop/resources/widgets/button_sign_in_up.dart';
 import 'package:graceful_shop/screen/login/link_register.dart';
 import 'package:graceful_shop/screen/login/login_with_google.dart';
 import 'package:graceful_shop/resources/utils/colors.dart';
@@ -88,7 +89,8 @@ class _LoginState extends State<Login> {
                     Padding(
                       padding: EdgeInsets.only(
                           top: Dimensions.h40, bottom: Dimensions.h7),
-                      child: MaterialButton(
+                      child: ButtonSignInUp(
+                        title: 'Login'.tr,
                         onPressed: () {
                           FocusScope.of(context).requestFocus(FocusNode());
                           setState(() {});
@@ -123,22 +125,6 @@ class _LoginState extends State<Login> {
                             return;
                           } else {}
                         },
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(20.0),
-                          ),
-                        ),
-                        color: AppColors.mainColor,
-                        height: Dimensions.h40,
-                        minWidth: Dimensions.w210,
-                        child: Text(
-                          'Login'.tr.toUpperCase(),
-                          style: TextStyle(
-                            fontSize: Dimensions.font20,
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.whiteColor,
-                          ),
-                        ),
                       ),
                     ),
                     TextButton(

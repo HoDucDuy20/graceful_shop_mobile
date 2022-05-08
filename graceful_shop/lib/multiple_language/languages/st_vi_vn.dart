@@ -27,5 +27,38 @@ const Map<String, String> vi = {
   'Required_Name': 'Họ và tên không được để trống',
   'Required_Name_Max': 'Họ tên tối đa 40 ký tự',
   //Home
-  'Search': 'Tìm kiếm'
+  'Search': 'Tìm kiếm',
+  //Search
+  'Cancel': 'Huỷ',
+  'SearchHistory': 'Lịch sử tìm kiếm',
+  'DeleteAll': 'Xoá tất cả',
+  'NoHistory': 'Không có lịch sử tìm kiếm nào gần đây',
+  //Category
+  'Category': 'Danh mục',
+  //Category Detail
+  'All': 'Tất cả',
+  //Favorite
+  'Favorite': 'Yêu thích',
+  'NotLoggedIn': 'Chưa đăng nhập',
+  'SignInRequired': 'Vui lòng đăng nhập để nhận thông báo mới nhất từ shop',
+  'NoProduct': 'Chưa có sản phẩm',
+  'TitleAddProduct':
+      'Thêm sản phẩm vào để có thể dể dàng tìm lại các sản phẩm yêu thích của mình với Graceful Shop nhé!',
+  //Personal Page
+  'PersonalPage': 'Trang cá nhân',
+  'Hello': 'Xin chào!',
+  'ActivityDiary': 'Nhật ký hoạt động',
+  'OrderHistory': 'Lịch sử mua hàng',
+  'OrderStatus': 'Trạng thái đơn hàng',
+  'Service': 'Dịch vụ',
+  'Feedback': 'Phản hồi',
+  'Share': 'Chia sẻ',
+  'Address': 'Sổ địa chỉ',
+  'Voucher': 'Voucher',
+  'Policy': 'Chính sách và điều khoản',
+  'Setting': 'Cài đặt chung',
+  //Setting
+  'Infor': 'Thông tin cá nhân',
+  'Version': 'Phiên bản',
+  'Language': 'Ngôn ngữ'
 };

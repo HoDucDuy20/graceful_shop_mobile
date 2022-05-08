@@ -27,5 +27,10 @@ const Map<String, String> en = {
   'Required_Name': 'First and last name cannot be left blank',
   'Required_Name_Max': 'Name up to 40 characters',
   //Home
-  'Search': 'Search'
+  'Search': 'Search',
+  //Search
+  'Cancel': 'Cancel',
+  'SearchHistory': 'Search history',
+  'DeleteAll': 'Delete all',
+  'NoHistory': 'No recent search history'
 };

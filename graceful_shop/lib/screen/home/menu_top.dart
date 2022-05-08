@@ -3,6 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:graceful_shop/resources/utils/colors.dart';
 import 'package:graceful_shop/resources/utils/dimensions.dart';
+import 'package:graceful_shop/resources/widgets/icon_onTap.dart';
+import 'package:graceful_shop/screen/search/search.dart';
 
 class MenuTop extends StatelessWidget {
   const MenuTop({Key? key}) : super(key: key);
@@ -22,10 +24,12 @@ class MenuTop extends StatelessWidget {
           readOnly: true,
           onTap: () {
             FocusScope.of(context).requestFocus(FocusNode());
-            // Navigator.push(
-            //     context,
-            //     MaterialPageRoute(
-            //         builder: (context) => const AdvertiseDetail()));
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => const Search(),
+              ),
+            );
           },
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.all(0),
@@ -35,10 +39,6 @@ class MenuTop extends StatelessWidget {
             label: Text(
               'Search'.tr,
               style: TextStyle(fontSize: Dimensions.font16),
-            ),
-            focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide.none,
-              borderRadius: BorderRadius.circular(25.0),
             ),
             enabledBorder: UnderlineInputBorder(
               borderSide: BorderSide.none,
@@ -50,35 +50,17 @@ class MenuTop extends StatelessWidget {
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          InkWell(
-            onTap: () {},
-            child: Container(
-              padding: EdgeInsets.all(Dimensions.h7),
-              margin: EdgeInsets.only(right: Dimensions.w5),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(100),
-                color: AppColors.white2Color,
-              ),
-              child: Icon(
-                Icons.shopping_cart_outlined,
-                color: AppColors.mainColor,
-              ),
-            ),
+          IconOnTap1(
+            onPressed: () {},
+            icon: Icons.shopping_cart_outlined,
+            size: Dimensions.font25,
+            border: true,
           ),
-          InkWell(
-            onTap: () {},
-            child: Container(
-              padding: EdgeInsets.all(Dimensions.h7),
-              margin: EdgeInsets.only(left: Dimensions.w5),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(100),
-                color: AppColors.white2Color,
-              ),
-              child: Icon(
-                Icons.message_outlined,
-                color: AppColors.mainColor,
-              ),
-            ),
+          IconOnTap1(
+            onPressed: () {},
+            icon: Icons.message_outlined,
+            size: Dimensions.font25,
+            border: true,
           ),
         ],
       ),
