@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:graceful_shop/screen/login/login.dart';
+import 'package:get/get.dart';
 import 'package:graceful_shop/screen/tab_bar/tab_bar.dart';
 import 'package:graceful_shop/resources/utils/colors.dart';
 import 'package:graceful_shop/resources/utils/dimensions.dart';
@@ -20,12 +20,7 @@ class _WelcomeState extends State<Welcome> {
   }
 
   void push() {
-    Navigator.pushAndRemoveUntil(
-        context,
-        MaterialPageRoute(
-          builder: (context) => TabBarBottom(index: 0),
-        ),
-        (route) => false);
+    Get.offAll(() => TabBarBottom(index: 0));
   }
 
   @override

@@ -15,11 +15,11 @@ class Category extends StatefulWidget {
 
 class _CategoryState extends State<Category> {
   List<CategoryModel> lstCategory = [
-    CategoryModel(icon: 'assets/svg/shirt.svg', name: 'Áo'),
-    CategoryModel(icon: 'assets/svg/trousers.svg', name: 'Quần'),
-    CategoryModel(icon: 'assets/svg/dress.svg', name: 'Đầm'),
-    CategoryModel(icon: 'assets/svg/big_skirt.svg', name: 'Váy'),
-    CategoryModel(icon: 'assets/svg/shoes.svg', name: 'Giày'),
+    CategoryModel(icon: 'assets/svg/categorys/shirt.svg', name: 'Áo'),
+    CategoryModel(icon: 'assets/svg/categorys/trousers.svg', name: 'Quần'),
+    CategoryModel(icon: 'assets/svg/categorys/dress.svg', name: 'Đầm'),
+    CategoryModel(icon: 'assets/svg/categorys/big_skirt.svg', name: 'Váy'),
+    CategoryModel(icon: 'assets/svg/categorys/shoes.svg', name: 'Giày'),
   ];
 
   @override
@@ -55,10 +55,7 @@ class _CategoryState extends State<Category> {
                 itemBuilder: ((context, index) {
                   return InkWell(
                     onTap: () {
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => CategoryDetail()));
+                      Get.to(() => const CategoryDetail());
                     },
                     child: Container(
                       margin: EdgeInsets.only(left: Dimensions.w25),

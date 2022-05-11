@@ -28,7 +28,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
           children: [
             InkWell(
               onTap: () {
-                Navigator.pop(context);
+                Get.back();
               },
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: Dimensions.w5),
@@ -73,7 +73,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
                       child: Text(
                         'All'.tr,
                         style: TextStyle(
-                            fontSize: Dimensions.font20,
+                            fontSize: Dimensions.font17,
                             fontWeight: FontWeight.w600,
                             color: AppColors.mainColor),
                       ),
@@ -102,9 +102,9 @@ class _CategoryDetailState extends State<CategoryDetail> {
                           child: Text(
                             lstCategory[index],
                             style: TextStyle(
-                                fontSize: Dimensions.font20,
+                                fontSize: Dimensions.font16,
                                 fontWeight: FontWeight.w500,
-                                color: AppColors.blackColor),
+                                color: AppColors.grayColor),
                           ),
                         ),
                       );

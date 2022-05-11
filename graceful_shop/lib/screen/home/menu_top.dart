@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:graceful_shop/resources/utils/colors.dart';
 import 'package:graceful_shop/resources/utils/dimensions.dart';
-import 'package:graceful_shop/resources/widgets/icon_onTap.dart';
+import 'package:graceful_shop/resources/widgets/actions.dart';
 import 'package:graceful_shop/screen/search/search.dart';
 
 class MenuTop extends StatelessWidget {
@@ -22,14 +22,10 @@ class MenuTop extends StatelessWidget {
         child: TextField(
           autofocus: false,
           readOnly: true,
+          textInputAction: TextInputAction.search,
           onTap: () {
             FocusScope.of(context).requestFocus(FocusNode());
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (context) => const Search(),
-              ),
-            );
+            Get.to(() => const Search());
           },
           decoration: InputDecoration(
             contentPadding: const EdgeInsets.all(0),
@@ -50,18 +46,8 @@ class MenuTop extends StatelessWidget {
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          IconOnTap1(
-            onPressed: () {},
-            icon: Icons.shopping_cart_outlined,
-            size: Dimensions.font25,
-            border: true,
-          ),
-          IconOnTap1(
-            onPressed: () {},
-            icon: Icons.message_outlined,
-            size: Dimensions.font25,
-            border: true,
-          ),
+          Action_Cart(border: true),
+          Action_Message(border: true),
         ],
       ),
     );

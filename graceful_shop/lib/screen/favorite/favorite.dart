@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:graceful_shop/object/product_object.dart';
 import 'package:graceful_shop/resources/utils/colors.dart';
 import 'package:graceful_shop/resources/utils/dimensions.dart';
 import 'package:graceful_shop/resources/widgets/actions.dart';
@@ -14,7 +15,12 @@ class Favorite extends StatefulWidget {
 
 class _FavoriteState extends State<Favorite> {
   String Token = '';
-  List<String> lstProduct = [];
+  List<ProductObject> lstProduct = [
+    ProductObject('Áo cổ rộng gợi cảm', 'assets/images/img_2.jpg', 250000, 20),
+    ProductObject('Áo cổ rộng gợi cảm', 'assets/images/img_2.jpg', 250000, 20),
+    ProductObject('Áo cổ rộng gợi cảm', 'assets/images/img_2.jpg', 250000, 20),
+    ProductObject('Áo cổ rộng gợi cảm', 'assets/images/img_2.jpg', 250000, 20),
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(

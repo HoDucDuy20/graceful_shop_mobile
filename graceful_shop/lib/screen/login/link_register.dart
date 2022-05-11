@@ -26,12 +26,7 @@ class LinkRegister extends StatelessWidget {
             ),
             recognizer: TapGestureRecognizer()
               ..onTap = () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => const Register(),
-                  ),
-                );
+                Get.off(() => const Register());
               },
           ),
           TextSpan(

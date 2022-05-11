@@ -32,5 +32,36 @@ const Map<String, String> en = {
   'Cancel': 'Cancel',
   'SearchHistory': 'Search history',
   'DeleteAll': 'Delete all',
-  'NoHistory': 'No recent search history'
+  'NoHistory': 'No recent search history',
+  //Category
+  'Category': 'Category',
+  //Category Detail
+  'All': 'ALL',
+  //Favorite
+  'Favorite': 'Favorite',
+  'NotLoggedIn': 'Not logged in yet',
+  'SignInRequired': 'Please login to receive the latest notifications from the shop',
+  'NoProduct': 'No products',
+  'TitleAddProduct': 'Add products to easily find your favorite products again with Graceful Shop!',
+  //Personal Page
+  'PersonalPage': 'Personal page',
+  'Hello': 'Hello!',
+  'ActivityDiary': 'Activity Log',
+  'OrderHistory': 'Purchase history',
+  'OrderStatus': 'Order Status',
+  'Service': 'Service',
+  'Feedback': 'Feedback',
+  'Share': 'Share',
+  'Address': 'Address book',
+  'Voucher': 'Voucher',
+  'Policy': 'Policy and terms',
+  'Setting': 'General settings',
+  'LogOut': 'Log out',
+  //Setting
+  'Infor': 'Personal information',
+  'Version': 'Version',
+  'Language': 'Language',
+  'LanguageSettings': 'Language settings',
+  //Showdialog
+  'PleaseLogIn':'Please login to Gracefull Shop\nto experience the best shopping experience!'
 };

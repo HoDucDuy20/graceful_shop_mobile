@@ -73,28 +73,28 @@ class _TabBarBottomState extends State<TabBarBottom>
             tabs: [
               Tab(
                 child: TabIcon(
-                  assetIcon: 'assets/svg/icon_home.svg',
+                  assetIcon: 'assets/svg/icons/icon_home.svg',
                   tabController: tabController!,
                   index: 0,
                 ),
               ),
               Tab(
                 child: TabIcon(
-                  assetIcon: 'assets/svg/icon_menu.svg',
+                  assetIcon: 'assets/svg/icons/icon_menu.svg',
                   tabController: tabController!,
                   index: 1,
                 ),
               ),
               Tab(
                 child: TabIcon(
-                  assetIcon: 'assets/svg/icon_favorite.svg',
+                  assetIcon: 'assets/svg/icons/icon_favorite.svg',
                   tabController: tabController!,
                   index: 2,
                 ),
               ),
               Tab(
                 child: TabIcon(
-                  assetIcon: 'assets/svg/icon_person.svg',
+                  assetIcon: 'assets/svg/icons/icon_person.svg',
                   tabController: tabController!,
                   index: 3,
                 ),

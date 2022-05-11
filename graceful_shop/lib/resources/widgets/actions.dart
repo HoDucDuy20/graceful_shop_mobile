@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:graceful_shop/resources/utils/dimensions.dart';
 import 'package:graceful_shop/resources/widgets/icon_onTap.dart';
+import 'package:graceful_shop/resources/widgets/show_dialog.dart';
 import 'package:graceful_shop/screen/search/search.dart';
 import 'package:graceful_shop/screen/tab_bar/tab_bar.dart';
 
@@ -11,12 +13,7 @@ class Action_Search extends StatelessWidget {
   Widget build(BuildContext context) {
     return IconOnTap1(
       onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) => const Search(),
-          ),
-        );
+        Get.to(() => const Search());
       },
       icon: Icons.search,
       size: Dimensions.font27,
@@ -26,29 +23,35 @@ class Action_Search extends StatelessWidget {
 }
 
 class Action_Cart extends StatelessWidget {
-  const Action_Cart({Key? key}) : super(key: key);
+  bool border;
+  Action_Cart({Key? key, required this.border}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return IconOnTap1(
-      onPressed: () {},
+      onPressed: () async {
+        showLogIn();
+      },
       icon: Icons.shopping_cart_outlined,
       size: Dimensions.font25,
-      border: false,
+      border: border,
     );
   }
 }
 
 class Action_Message extends StatelessWidget {
-  const Action_Message({Key? key}) : super(key: key);
+  bool border;
+  Action_Message({Key? key, required this.border}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return IconOnTap1(
-      onPressed: () {},
+      onPressed: () {
+        showLogIn();
+      },
       icon: Icons.message_outlined,
       size: Dimensions.font25,
-      border: false,
+      border: border,
     );
   }
 }
@@ -74,12 +77,7 @@ class Action_Home extends StatelessWidget {
   Widget build(BuildContext context) {
     return IconOnTap1(
       onPressed: () {
-        Navigator.pushAndRemoveUntil(
-            context,
-            MaterialPageRoute(
-              builder: (context) => TabBarBottom(index: 0),
-            ),
-            (route) => false);
+        Get.offAll(() => TabBarBottom(index: 0));
       },
       icon: Icons.home_outlined,
       size: Dimensions.font25,
@@ -90,8 +88,8 @@ class Action_Home extends StatelessWidget {
 
 List<Widget> lstAction1 = [
   const Action_Search(),
-  const Action_Cart(),
-  const Action_Message(),
+  Action_Cart(border: false),
+  Action_Message(border: false),
   SizedBox(
     width: Dimensions.w15,
   )

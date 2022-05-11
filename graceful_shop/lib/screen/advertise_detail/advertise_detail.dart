@@ -43,7 +43,7 @@ class _AdvertiseDetailState extends State<AdvertiseDetail> {
                 contentPadding: EdgeInsets.zero,
                 leading: InkWell(
                   onTap: () {
-                    Navigator.pop(context);
+                    Get.back();
                   },
                   child: Container(
                     decoration: BoxDecoration(

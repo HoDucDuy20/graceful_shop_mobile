@@ -28,12 +28,7 @@ class LinkLogin extends StatelessWidget {
               ),
               recognizer: TapGestureRecognizer()
                 ..onTap = () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => const Login(),
-                    ),
-                  );
+                  Get.off(() => const Login());
                 },
             ),
             TextSpan(

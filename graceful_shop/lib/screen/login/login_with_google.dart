@@ -36,7 +36,7 @@ class _LoginWithGoogleState extends State<LoginWithGoogle> {
               shape: BoxShape.circle,
             ),
             child: SvgPicture.asset(
-              'assets/svg/icon_google.svg',
+              'assets/svg/icons/icon_google.svg',
             ),
           ),
         ),

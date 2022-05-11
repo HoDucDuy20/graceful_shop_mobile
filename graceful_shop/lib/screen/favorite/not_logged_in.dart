@@ -50,8 +50,7 @@ class NotLoggedIn extends StatelessWidget {
             child: ButtonSignInUp(
               title: 'Login'.tr,
               onPressed: () {
-                Navigator.push(
-                    context, MaterialPageRoute(builder: (context) => Login()));
+                Get.to(() => const Login());
               },
             ),
           ),

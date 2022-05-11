@@ -42,7 +42,7 @@ class ListTileOnTap extends StatelessWidget {
               color: AppColors.blackColor,
             ),
           ),
-          trailing: Icon(Icons.chevron_right),
+          trailing: const Icon(Icons.chevron_right),
         ),
       ),
     );

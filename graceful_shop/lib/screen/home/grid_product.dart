@@ -1,6 +1,7 @@
 // ignore_for_file: no_logic_in_create_state, must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:graceful_shop/resources/utils/colors.dart';
 import 'package:graceful_shop/resources/utils/dimensions.dart';
 
 class GridProduct extends StatefulWidget {
@@ -129,21 +130,29 @@ class _GridProductState extends State<GridProduct> {
             child: Container(
               margin: const EdgeInsets.all(15.0),
               padding: const EdgeInsets.symmetric(vertical: 5),
-              decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(
+              decoration: BoxDecoration(
+                  borderRadius: const BorderRadius.all(
                     Radius.circular(20.0),
                   ),
-                  color: Colors.blue),
+                  color: AppColors.blueAccentSearchColor),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     'Xem thêm',
                     style: TextStyle(
-                        fontSize: Dimensions.font20,
-                        fontWeight: FontWeight.w600),
+                      fontSize: Dimensions.font17,
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.mainColor,
+                    ),
                   ),
-                  Icon(Icons.move_down),
+                  SizedBox(
+                    width: Dimensions.w5,
+                  ),
+                  Icon(
+                    Icons.expand_more,
+                    color: AppColors.mainColor,
+                  ),
                 ],
               ),
             ),

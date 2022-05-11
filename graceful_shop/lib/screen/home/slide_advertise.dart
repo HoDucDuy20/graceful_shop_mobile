@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
+import 'package:get/get.dart';
 import 'package:graceful_shop/screen/advertise_detail/advertise_detail.dart';
 import 'package:graceful_shop/resources/utils/colors.dart';
 import 'package:graceful_shop/resources/utils/dimensions.dart';
@@ -23,19 +24,13 @@ class _ImgSlideState extends State<ImgSlide> {
       children: [
         InkWell(
           onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const AdvertiseDetail()));
+            Get.to(() => const AdvertiseDetail());
           },
           child: Image.asset('assets/images/img_1.jpg', fit: BoxFit.cover),
         ),
         InkWell(
           onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) => const AdvertiseDetail()));
+            Get.to(() => const AdvertiseDetail());
           },
           child: Image.asset('assets/images/img_2.jpg', fit: BoxFit.cover),
         ),

@@ -42,8 +42,7 @@ const Map<String, String> vi = {
   'NotLoggedIn': 'Chưa đăng nhập',
   'SignInRequired': 'Vui lòng đăng nhập để nhận thông báo mới nhất từ shop',
   'NoProduct': 'Chưa có sản phẩm',
-  'TitleAddProduct':
-      'Thêm sản phẩm vào để có thể dể dàng tìm lại các sản phẩm yêu thích của mình với Graceful Shop nhé!',
+  'TitleAddProduct': 'Thêm sản phẩm vào để có thể dể dàng tìm lại các sản phẩm yêu thích của mình với Graceful Shop nhé!',
   //Personal Page
   'PersonalPage': 'Trang cá nhân',
   'Hello': 'Xin chào!',
@@ -57,8 +56,12 @@ const Map<String, String> vi = {
   'Voucher': 'Voucher',
   'Policy': 'Chính sách và điều khoản',
   'Setting': 'Cài đặt chung',
+  'LogOut': 'Đăng xuất',
   //Setting
   'Infor': 'Thông tin cá nhân',
   'Version': 'Phiên bản',
-  'Language': 'Ngôn ngữ'
+  'Language': 'Ngôn ngữ',
+  'LanguageSettings': 'Cài đặt ngôn ngữ',
+  //Showdialog
+  'PleaseLogIn':'Hãy đăng nhập Gracefull Shop\nđể trải nghiệm cảm giác mua sắm tốt nhất bạn nhé!'
 };

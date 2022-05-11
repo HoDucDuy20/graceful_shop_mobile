@@ -5,6 +5,7 @@ import 'package:graceful_shop/multiple_language/localization_service.dart';
 import 'package:graceful_shop/resources/utils/colors.dart';
 import 'package:graceful_shop/resources/utils/dimensions.dart';
 import 'package:graceful_shop/resources/widgets/actions.dart';
+import 'package:graceful_shop/resources/widgets/show_dialog.dart';
 import 'package:graceful_shop/screen/setting/list_tile.dart';
 
 class Setting extends StatefulWidget {
@@ -26,14 +27,14 @@ class _SettingState extends State<Setting> {
               langCode = key;
             });
             LocalizationService.changeLocale(key);
-            Navigator.pop(context);
+            Get.back();
           },
           child: ListTileItem(
             title: value,
             trailing: SizedBox(
               height: Dimensions.h25,
               width: Dimensions.w25,
-              child: SvgPicture.asset('assets/svg/$key.svg'),
+              child: SvgPicture.asset('assets/svg/langs/$key.svg'),
             ),
           ),
         ),
@@ -62,7 +63,7 @@ class _SettingState extends State<Setting> {
           children: [
             InkWell(
               onTap: () {
-                Navigator.pop(context);
+                Get.back();
               },
               child: Container(
                 padding: EdgeInsets.symmetric(horizontal: Dimensions.w5),
@@ -109,46 +110,15 @@ class _SettingState extends State<Setting> {
                 ),
               ),
               InkWell(
-                onTap: () async {
-                  showDialog(
-                    context: context,
-                    builder: (context) => AlertDialog(
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20)),
-                      backgroundColor: Colors.white,
-                      title: Center(
-                        child: Text(
-                          "Cài đặt ngôn ngữ",
-                          style: TextStyle(
-                            fontSize: Dimensions.font17,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                      ),
-                      content: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: lstItem,
-                      ),
-                      // actions: [
-                      //   Align(
-                      //     alignment: Alignment.center,
-                      //     child: OutlinedButton(
-                      //       child: Text("Cancel".tr),
-                      //       onPressed: () {
-                      //         Navigator.pop(context);
-                      //       },
-                      //     ),
-                      //   )
-                      // ],
-                    ),
-                  );
+                onTap: () {
+                  showLanguage(lstItem);
                 },
                 child: ListTileItem(
                   title: 'Language'.tr,
                   trailing: SizedBox(
                     height: Dimensions.h25,
                     width: Dimensions.w25,
-                    child: SvgPicture.asset('assets/svg/$langCode.svg'),
+                    child: SvgPicture.asset('assets/svg/langs/$langCode.svg'),
                   ),
                 ),
               ),

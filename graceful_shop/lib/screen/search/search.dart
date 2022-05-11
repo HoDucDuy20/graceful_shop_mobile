@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:graceful_shop/resources/utils/colors.dart';
 import 'package:graceful_shop/resources/utils/dimensions.dart';
+import 'package:graceful_shop/screen/search_detail/search_detail.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Search extends StatefulWidget {
@@ -87,6 +88,7 @@ class _SearchState extends State<Search> {
                 onSubmitted: (value) {
                   if (txtSearch.text != '') {
                     _addItem(txtSearch.text);
+                    Get.to(() => SearchDetail(value: value));
                   }
                 },
                 decoration: InputDecoration(
@@ -120,7 +122,7 @@ class _SearchState extends State<Search> {
           actions: [
             TextButton(
               onPressed: () {
-                Navigator.pop(context);
+                Get.back();
               },
               child: Text(
                 'Cancel'.tr,
@@ -184,7 +186,9 @@ class _SearchState extends State<Search> {
                         for (int i = 0; i < searchHistory!.length; i++)
                           InkWell(
                             onTap: () {
-                              print(searchHistory![i]);
+                              txtSearch.text = searchHistory![i];
+                              Get.to(
+                                  () => SearchDetail(value: searchHistory![i]));
                             },
                             child: Padding(
                               padding: EdgeInsets.only(
