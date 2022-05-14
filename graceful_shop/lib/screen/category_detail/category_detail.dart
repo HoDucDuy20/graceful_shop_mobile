@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:graceful_shop/object/product_object.dart';
 import 'package:graceful_shop/resources/utils/colors.dart';
 import 'package:graceful_shop/resources/utils/dimensions.dart';
 import 'package:graceful_shop/resources/widgets/actions.dart';
+import 'package:graceful_shop/resources/widgets/grid_view.dart';
+import 'package:graceful_shop/screen/category_detail/title_category_detail.dart';
 
 class CategoryDetail extends StatefulWidget {
   const CategoryDetail({Key? key}) : super(key: key);
@@ -12,7 +15,16 @@ class CategoryDetail extends StatefulWidget {
 }
 
 class _CategoryDetailState extends State<CategoryDetail> {
+  int categoryIndex = -1;
   List<String> lstCategory = ['Áo', 'Sơ mi', 'T-Shirt', 'Hai dây', 'Áo thun'];
+  List<ProductObject> lstProduct = [
+    ProductObject('Áo cổ rộng gợi cảm', 'assets/images/img_2.jpg', 250000, 20),
+    ProductObject('Áo cổ rộng gợi cảm', 'assets/images/img_2.jpg', 250000, 20),
+    ProductObject('Áo cổ rộng gợi cảm', 'assets/images/img_2.jpg', 250000, 20),
+    ProductObject('Áo cổ rộng gợi cảm', 'assets/images/img_2.jpg', 250000, 20),
+    ProductObject('Áo cổ rộng gợi cảm', 'assets/images/img_2.jpg', 250000, 20),
+    ProductObject('Áo cổ rộng gợi cảm', 'assets/images/img_2.jpg', 250000, 20),
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,7 +47,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
                 child: Icon(
                   Icons.chevron_left,
                   size: Dimensions.font40,
-                  color: AppColors.blackColor,
+                  color: AppColors.black2Color,
                 ),
               ),
             ),
@@ -57,73 +69,30 @@ class _CategoryDetailState extends State<CategoryDetail> {
             titleSpacing: 0,
             backgroundColor: AppColors.whiteColor,
             pinned: true,
-            title: Container(
-              height: Dimensions.h40,
-              width: Dimensions.screenWidth,
-              alignment: Alignment.centerLeft,
-              child: ListView(
-                scrollDirection: Axis.horizontal,
-                shrinkWrap: true,
-                children: [
-                  InkWell(
-                    onTap: () {},
-                    child: Container(
-                      alignment: Alignment.center,
-                      padding: EdgeInsets.symmetric(horizontal: Dimensions.w15),
-                      child: Text(
-                        'All'.tr,
-                        style: TextStyle(
-                            fontSize: Dimensions.font17,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.mainColor),
-                      ),
-                    ),
-                  ),
-                  ListView.builder(
-                    scrollDirection: Axis.horizontal,
-                    shrinkWrap: true,
-                    primary: false,
-                    itemCount: lstCategory.length,
-                    itemBuilder: ((context, index) {
-                      return InkWell(
-                        onTap: () {},
-                        child: Container(
-                          alignment: Alignment.center,
-                          padding:
-                              EdgeInsets.symmetric(horizontal: Dimensions.w15),
-                          decoration: BoxDecoration(
-                            border: Border(
-                              left: BorderSide(
-                                color: AppColors.grayColor,
-                                width: 0.5,
-                              ),
-                            ),
-                          ),
-                          child: Text(
-                            lstCategory[index],
-                            style: TextStyle(
-                                fontSize: Dimensions.font16,
-                                fontWeight: FontWeight.w500,
-                                color: AppColors.grayColor),
-                          ),
-                        ),
-                      );
-                    }),
-                  ),
-                ],
-              ),
+            title: TitleCategoryDetail(
+              categoryIndex: categoryIndex,
+              lstCategory: lstCategory,
             ),
           ),
           SliverList(
             delegate: SliverChildListDelegate(
               [
-                Padding(
-                  padding: EdgeInsets.only(
-                    top: Dimensions.h10,
+                Container(
+                  padding: EdgeInsets.only(top: Dimensions.h10),
+                  decoration: BoxDecoration(
+                    color: AppColors.white3Color,
+                    border: Border(
+                      top: BorderSide(
+                        color: AppColors.gray2Color,
+                        width: 1,
+                      ),
+                    ),
                   ),
                 ),
                 Container(
-                    height: 900, decoration: BoxDecoration(color: Colors.amber))
+                  padding: EdgeInsets.only(bottom: Dimensions.h10),
+                  child: GridViewCustom(lstProduct: lstProduct),
+                ),
               ],
             ),
           ),

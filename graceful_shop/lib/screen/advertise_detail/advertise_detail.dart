@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
+import 'package:graceful_shop/object/product_object.dart';
 import 'package:graceful_shop/resources/utils/colors.dart';
 import 'package:graceful_shop/resources/utils/dimensions.dart';
+import 'package:graceful_shop/resources/widgets/grid_view.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:url_launcher/url_launcher.dart';
 
@@ -14,6 +16,15 @@ class AdvertiseDetail extends StatefulWidget {
 }
 
 class _AdvertiseDetailState extends State<AdvertiseDetail> {
+  List<ProductObject> lstProduct = [
+    ProductObject('Áo cổ rộng gợi cảm', 'assets/images/img_2.jpg', 250000, 20),
+    ProductObject('Áo cổ rộng gợi cảm', 'assets/images/img_2.jpg', 250000, 20),
+    ProductObject('Áo cổ rộng gợi cảm', 'assets/images/img_2.jpg', 250000, 20),
+    ProductObject('Áo cổ rộng gợi cảm', 'assets/images/img_2.jpg', 250000, 20),
+    ProductObject('Áo cổ rộng gợi cảm', 'assets/images/img_2.jpg', 250000, 20),
+    ProductObject('Áo cổ rộng gợi cảm', 'assets/images/img_2.jpg', 250000, 20),
+  ];
+
   void _launchUrl(String url) async {
     Uri _url = Uri.parse(url);
     // ignore: avoid_print
@@ -55,7 +66,7 @@ class _AdvertiseDetailState extends State<AdvertiseDetail> {
                     child: Icon(
                       Icons.chevron_left,
                       size: Dimensions.font30,
-                      color: AppColors.blackColor,
+                      color: AppColors.black2Color,
                     ),
                   ),
                 ),
@@ -72,7 +83,7 @@ class _AdvertiseDetailState extends State<AdvertiseDetail> {
                     child: Icon(
                       Icons.share_rounded,
                       size: Dimensions.font20,
-                      color: AppColors.blackColor,
+                      color: AppColors.black2Color,
                     ),
                   ),
                 ),
@@ -145,6 +156,10 @@ class _AdvertiseDetailState extends State<AdvertiseDetail> {
                   Map<String, String> attributes, dom.Element? element) {
                 _launchUrl(url!);
               },
+            ),
+            Container(
+              padding: EdgeInsets.only(bottom: Dimensions.h10),
+              child: GridViewCustom(lstProduct: lstProduct),
             ),
           ],
         ),

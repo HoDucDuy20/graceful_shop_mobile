@@ -70,7 +70,7 @@ class _SettingState extends State<Setting> {
                 child: Icon(
                   Icons.chevron_left,
                   size: Dimensions.font40,
-                  color: AppColors.blackColor,
+                  color: AppColors.black2Color,
                 ),
               ),
             ),

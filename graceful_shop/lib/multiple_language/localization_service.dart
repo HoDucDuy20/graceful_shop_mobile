@@ -7,7 +7,6 @@ import 'package:graceful_shop/multiple_language/languages/st_vi_vn.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalizationService extends Translations {
-
   static var langCodeValue = null;
 
   static void setLangCode(String langCode) async {
@@ -49,7 +48,6 @@ class LocalizationService extends Translations {
 
 // function change language nếu bạn không muốn phụ thuộc vào ngôn ngữ hệ thống
   static void changeLocale(String langCode) {
-    setLangCode(langCode);
     final locale = _getLocaleFromLanguage(langCode: langCode);
     Get.updateLocale(locale!);
   }
@@ -66,6 +64,7 @@ class LocalizationService extends Translations {
       langCode = langCodeValue.toString();
     }
     var lang = langCode ?? Get.deviceLocale!.languageCode;
+    setLangCode(lang);
     for (int i = 0; i < langCodes.length; i++) {
       if (lang == langCodes[i]) return locales[i];
     }

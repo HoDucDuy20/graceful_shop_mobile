@@ -26,7 +26,7 @@ class Service extends StatelessWidget {
             horizontalTitleGap: 0,
             leading: Icon(
               Icons.flip_to_back_outlined,
-              color: AppColors.blackColor,
+              color: AppColors.black2Color,
               size: Dimensions.font30,
             ),
             title: Text(
@@ -34,7 +34,7 @@ class Service extends StatelessWidget {
               style: TextStyle(
                 fontSize: Dimensions.font16,
                 fontWeight: FontWeight.w400,
-                color: AppColors.blackColor,
+                color: AppColors.black2Color,
               ),
             ),
           ),

@@ -133,7 +133,7 @@ class _LoginState extends State<Login> {
                         'Forgot_Pass'.tr,
                         style: TextStyle(
                           fontSize: Dimensions.font15,
-                          color: AppColors.blackColor,
+                          color: AppColors.black2Color,
                         ),
                       ),
                     ),

@@ -16,7 +16,7 @@ class _ImgSlideState extends State<ImgSlide> {
   @override
   Widget build(BuildContext context) {
     return ImageSlideshow(
-      width: Dimensions.screenWidth,
+      width: Dimensions.width,
       // height: Dimensions.h250,
       initialPage: 0,
       indicatorColor: AppColors.mainColor,

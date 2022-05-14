@@ -1,164 +1,89 @@
 // ignore_for_file: no_logic_in_create_state, must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:graceful_shop/object/product_object.dart';
 import 'package:graceful_shop/resources/utils/colors.dart';
 import 'package:graceful_shop/resources/utils/dimensions.dart';
+import 'package:graceful_shop/resources/widgets/grid_view.dart';
 
 class GridProduct extends StatefulWidget {
   String titleName;
-  GridProduct({Key? key, required this.titleName}) : super(key: key);
+  List<ProductObject> lstProduct;
+  GridProduct({Key? key, required this.titleName, required this.lstProduct})
+      : super(key: key);
 
   @override
-  State<GridProduct> createState() => _GridProductState(titleName: titleName);
+  State<GridProduct> createState() =>
+      _GridProductState(titleName: titleName, lstProduct: lstProduct);
 }
 
 class _GridProductState extends State<GridProduct> {
   String titleName;
-  _GridProductState({required this.titleName});
+  List<ProductObject> lstProduct;
+  _GridProductState({required this.titleName, required this.lstProduct});
+  List<String> t = [
+    'rộng gợi cảm Áo cổ rộng gợi cảm Áo cổ rộng gợi cảmrộng gợi cảm Áo cổ rộng gợi cảm Áo cổ rộng gợi cảm',
+    'Áo cổ rộng gợi cảm',
+  ];
   @override
   Widget build(BuildContext context) {
     final orientation = MediaQuery.of(context).orientation;
-    return Container(
-      child: Column(
-        children: [
-          InkWell(
-            onTap: () {},
-            child: ListTile(
-              // tileColor: Colors.blueGrey,
-              title: Text(
-                titleName,
-                style: TextStyle(
-                    fontSize: Dimensions.font20, fontWeight: FontWeight.w600),
-              ),
-              trailing: Icon(
-                Icons.chevron_right,
-                size: Dimensions.font40,
-              ),
+    return Column(
+      children: [
+        InkWell(
+          highlightColor: AppColors.blueAccentSearchColor,
+          onTap: () {},
+          child: ListTile(
+            // tileColor: Colors.blueGrey,
+            title: Text(
+              titleName,
+              style: TextStyle(
+                  fontSize: Dimensions.font20, fontWeight: FontWeight.w600),
+            ),
+            trailing: Icon(
+              Icons.chevron_right,
+              size: Dimensions.font40,
             ),
           ),
-          MediaQuery.removePadding(
-            context: context,
-            removeTop: true,
-            child: GridView.builder(
-              physics: const NeverScrollableScrollPhysics(),
-              shrinkWrap: true,
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: (orientation == Orientation.portrait) ? 2 : 3,
-                childAspectRatio: 0.7,
-              ),
-              itemCount: 6,
-              itemBuilder: (BuildContext context, int index) {
-                return InkWell(
-                  onTap: () {},
-                  child: Container(
-                    margin: const EdgeInsets.all(10),
-                    decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(20.0),
-                      ),
-                      color: Colors.white,
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 5,
-                          blurRadius: 15,
-                          offset: const Offset(0, 3),
-                        ),
-                      ],
-                    ),
-                    child: Column(
-                      // mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Container(
-                          height: 150,
-                          decoration: const BoxDecoration(
-                            borderRadius: BorderRadius.all(
-                              Radius.circular(20.0),
-                            ),
-                            image: DecorationImage(
-                              image: AssetImage('assets/images/img_2.jpg'),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.symmetric(
-                              horizontal: 15, vertical: 10),
-                          child: Text(
-                            "Áo cổ rộng gợi cảm",
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              color: Color.fromRGBO(50, 54, 67, 1),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 15),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              const Text(
-                                "250.00",
-                                style: TextStyle(
-                                  fontSize: 15,
-                                  color: Color.fromRGBO(50, 54, 67, 1),
-                                ),
-                              ),
-                              Row(
-                                children: [
-                                  IconButton(
-                                    onPressed: () {},
-                                    icon: Icon(Icons.favorite),
-                                  ),
-                                  Text('20')
-                                ],
-                              ),
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
-          InkWell(
-            onTap: () {},
-            child: Container(
-              margin: const EdgeInsets.all(15.0),
-              padding: const EdgeInsets.symmetric(vertical: 5),
-              decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(20.0),
-                  ),
-                  color: AppColors.blueAccentSearchColor),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Xem thêm',
-                    style: TextStyle(
-                      fontSize: Dimensions.font17,
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.mainColor,
-                    ),
-                  ),
-                  SizedBox(
-                    width: Dimensions.w5,
-                  ),
-                  Icon(
-                    Icons.expand_more,
+        ),
+        GridViewCustom(
+          lstProduct: lstProduct,
+        ),
+        InkWell(
+          highlightColor: AppColors.white3Color,
+          onTap: () {},
+          child: Container(
+            margin: EdgeInsets.all(Dimensions.w15),
+            padding: EdgeInsets.symmetric(vertical: Dimensions.h5),
+            decoration: BoxDecoration(
+                borderRadius: const BorderRadius.all(
+                  Radius.circular(20.0),
+                ),
+                color: AppColors.blueAccentSearchColor),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'SeeMore'.tr,
+                  style: TextStyle(
+                    fontSize: Dimensions.font17,
+                    fontWeight: FontWeight.w500,
                     color: AppColors.mainColor,
                   ),
-                ],
-              ),
+                ),
+                SizedBox(
+                  width: Dimensions.w5,
+                ),
+                Icon(
+                  Icons.expand_more,
+                  color: AppColors.mainColor,
+                ),
+              ],
             ),
           ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

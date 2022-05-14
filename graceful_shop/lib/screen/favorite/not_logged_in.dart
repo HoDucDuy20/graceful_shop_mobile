@@ -29,7 +29,7 @@ class NotLoggedIn extends StatelessWidget {
               style: TextStyle(
                 fontSize: Dimensions.font27,
                 fontWeight: FontWeight.w500,
-                color: AppColors.blackColor,
+                color: AppColors.black2Color,
               ),
             ),
           ),
@@ -41,7 +41,7 @@ class NotLoggedIn extends StatelessWidget {
               style: TextStyle(
                 fontSize: Dimensions.font20,
                 fontWeight: FontWeight.w400,
-                color: AppColors.blackColor,
+                color: AppColors.black2Color,
               ),
             ),
           ),

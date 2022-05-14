@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:graceful_shop/resources/utils/colors.dart';
@@ -80,19 +81,19 @@ class _SearchState extends State<Search> {
           title: Padding(
             padding: EdgeInsets.only(left: Dimensions.w20),
             child: SizedBox(
-              height: Dimensions.h40,
+              height: Dimensions.hSearch2,
               child: TextField(
-                autofocus: true,
-                controller: txtSearch,
-                textInputAction: TextInputAction.search,
                 onSubmitted: (value) {
                   if (txtSearch.text != '') {
                     _addItem(txtSearch.text);
                     Get.to(() => SearchDetail(value: value));
                   }
                 },
+                autofocus: true,
+                textAlignVertical: TextAlignVertical.bottom,
+                controller: txtSearch,
+                textInputAction: TextInputAction.search,
                 decoration: InputDecoration(
-                  contentPadding: EdgeInsets.only(top: Dimensions.h5),
                   filled: true,
                   fillColor: AppColors.gray2Color,
                   prefixIcon: Icon(
@@ -127,7 +128,7 @@ class _SearchState extends State<Search> {
               child: Text(
                 'Cancel'.tr,
                 style: TextStyle(
-                  color: AppColors.blackColor,
+                  color: AppColors.black2Color,
                   fontSize: Dimensions.font17,
                   fontWeight: FontWeight.w500,
                 ),
@@ -150,7 +151,7 @@ class _SearchState extends State<Search> {
                     style: TextStyle(
                       fontSize: Dimensions.font17,
                       fontWeight: FontWeight.w600,
-                      color: AppColors.blackColor,
+                      color: AppColors.black2Color,
                     ),
                   ),
                   trailing: searchHistory!.isEmpty
@@ -163,7 +164,7 @@ class _SearchState extends State<Search> {
                             'DeleteAll'.tr,
                             style: TextStyle(
                               fontSize: 15,
-                              color: AppColors.blackColor,
+                              color: AppColors.black2Color,
                             ),
                           ),
                         ),

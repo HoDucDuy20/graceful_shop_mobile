@@ -22,7 +22,7 @@ class ListTileItem extends StatelessWidget {
             style: TextStyle(
               fontSize: Dimensions.font17,
               fontWeight: FontWeight.w500,
-              color: AppColors.blackColor,
+              color: AppColors.black2Color,
             ),
           ),
           trailing,

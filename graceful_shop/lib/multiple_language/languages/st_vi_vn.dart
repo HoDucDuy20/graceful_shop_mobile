@@ -28,6 +28,7 @@ const Map<String, String> vi = {
   'Required_Name_Max': 'Họ tên tối đa 40 ký tự',
   //Home
   'Search': 'Tìm kiếm',
+  'SeeMore': 'Xem thêm',
   //Search
   'Cancel': 'Huỷ',
   'SearchHistory': 'Lịch sử tìm kiếm',

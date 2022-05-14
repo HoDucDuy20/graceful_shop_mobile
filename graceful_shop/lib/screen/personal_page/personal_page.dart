@@ -104,7 +104,7 @@ class _PersonalPageState extends State<PersonalPage> {
             style: TextStyle(
               height: 1.5,
               fontSize: Dimensions.font25,
-              color: AppColors.blackColor,
+              color: AppColors.black2Color,
             ),
           ),
         ],

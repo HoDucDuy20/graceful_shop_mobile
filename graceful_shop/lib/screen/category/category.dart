@@ -45,9 +45,19 @@ class _CategoryState extends State<Category> {
         child: Column(
           children: [
             Container(
-              height: Dimensions.h100,
-              width: Dimensions.screenWidth,
-              decoration: BoxDecoration(color: AppColors.whiteColor),
+              height: Dimensions.hLstCategory,
+              width: Dimensions.width,
+              decoration: BoxDecoration(
+                color: AppColors.whiteColor,
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.gray2Color,
+                    spreadRadius: 0.5,
+                    blurRadius: 2,
+                    offset: const Offset(0, 0.5),
+                  ),
+                ],
+              ),
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
                 shrinkWrap: true,

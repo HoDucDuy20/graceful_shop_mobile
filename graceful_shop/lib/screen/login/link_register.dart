@@ -15,7 +15,7 @@ class LinkRegister extends StatelessWidget {
         text: 'If_Not_Account'.tr + '\n',
         style: TextStyle(
           fontSize: Dimensions.font16,
-          color: AppColors.blackColor,
+          color: AppColors.black2Color,
         ),
         children: <TextSpan>[
           TextSpan(
@@ -33,7 +33,7 @@ class LinkRegister extends StatelessWidget {
             text: 'To_Register'.tr,
             style: TextStyle(
               fontSize: Dimensions.font16,
-              color: AppColors.blackColor,
+              color: AppColors.black2Color,
             ),
           ),
         ],

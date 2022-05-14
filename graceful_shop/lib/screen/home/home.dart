@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:graceful_shop/object/product_object.dart';
 import 'package:graceful_shop/screen/home/grid_product.dart';
 import 'package:graceful_shop/screen/home/menu_top.dart';
 import 'package:graceful_shop/screen/home/slide_advertise.dart';
@@ -13,6 +14,15 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  List<ProductObject> lstProduct = [
+    ProductObject('Áo cổ rộng gợi cảm', 'assets/images/img_2.jpg', 250000, 20),
+    ProductObject('Áo cổ rộng gợi cảm Áo cổ rộng gợi cảm',
+        'assets/images/img_1.jpg', 250000, 20),
+    ProductObject('Áo cổ rộng gợi cảm', 'assets/images/img_2.jpg', 250000, 20),
+    ProductObject('Áo cổ rộng gợi cảm Áo cổ rộng gợi cảm Áo cổ rộng gợi cảm',
+        'assets/images/img_1.jpg', 250000, 20),
+    ProductObject('Áo cổ rộng gợi cảm', 'assets/images/img_2.jpg', 250000, 20),
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -38,9 +48,11 @@ class _HomeState extends State<Home> {
                 ),
                 GridProduct(
                   titleName: 'Dành riêng cho bạn',
+                  lstProduct: lstProduct,
                 ),
                 GridProduct(
                   titleName: 'Hàng mới',
+                  lstProduct: lstProduct,
                 ),
               ],
             ),

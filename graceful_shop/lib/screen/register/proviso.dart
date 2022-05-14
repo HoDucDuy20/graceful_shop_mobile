@@ -17,7 +17,7 @@ class Proviso extends StatelessWidget {
           style: TextStyle(
             fontSize: Dimensions.font15,
             fontWeight: FontWeight.w600,
-            color: AppColors.blackColor,
+            color: AppColors.black2Color,
           ),
           children: <TextSpan>[
             TextSpan(

@@ -18,7 +18,7 @@ class MenuTop extends StatelessWidget {
         height: Dimensions.h40,
       ),
       title: SizedBox(
-        height: Dimensions.h30,
+        height: Dimensions.hSearch1,
         child: TextField(
           autofocus: false,
           readOnly: true,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:graceful_shop/resources/utils/colors.dart';
 import 'package:graceful_shop/resources/utils/dimensions.dart';
+import 'package:graceful_shop/screen/login/login.dart';
 
 void showLogIn() async {
   await Get.dialog(
@@ -28,7 +29,7 @@ void showLogIn() async {
         child: Text(
           'PleaseLogIn'.tr,
           style: TextStyle(
-            color: AppColors.blackColor,
+            color: AppColors.black2Color,
             fontSize: Dimensions.font15,
             fontWeight: FontWeight.w400,
           ),
@@ -54,7 +55,10 @@ void showLogIn() async {
                 ),
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Get.back();
+                  Get.to(() => const Login());
+                },
                 child: Text(
                   'Login'.tr,
                   style: TextStyle(
@@ -92,7 +96,7 @@ void showLanguage(List<Widget> lstItem) async {
         ),
       ),
       content: SizedBox(
-        height: Dimensions.screenHeight / 2,
+        height: Dimensions.height / 2,
         child: SingleChildScrollView(
           child: Column(
             mainAxisSize: MainAxisSize.min,

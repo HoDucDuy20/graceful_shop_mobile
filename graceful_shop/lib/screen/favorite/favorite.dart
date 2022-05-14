@@ -4,6 +4,7 @@ import 'package:graceful_shop/object/product_object.dart';
 import 'package:graceful_shop/resources/utils/colors.dart';
 import 'package:graceful_shop/resources/utils/dimensions.dart';
 import 'package:graceful_shop/resources/widgets/actions.dart';
+import 'package:graceful_shop/resources/widgets/grid_view.dart';
 import 'package:graceful_shop/screen/favorite/no_product.dart';
 import 'package:graceful_shop/screen/favorite/not_logged_in.dart';
 
@@ -41,11 +42,16 @@ class _FavoriteState extends State<Favorite> {
         actions: lstAction1,
       ),
       body: SingleChildScrollView(
-        child: Token.isEmpty
+        child: !Token.isEmpty
             ? NotLoggedIn()
             : Column(
                 children: [
-                  if (lstProduct.isEmpty) NoProduct() else Container(),
+                  if (lstProduct.isEmpty)
+                    NoProduct()
+                  else
+                    Container(
+                      child: GridViewCustom(lstProduct: lstProduct),
+                    ),
                 ],
               ),
       ),

@@ -39,7 +39,7 @@ class _SearchDetailState extends State<SearchDetail> {
               child: Icon(
                 Icons.chevron_left,
                 size: Dimensions.font40,
-                color: AppColors.blackColor,
+                color: AppColors.black2Color,
               ),
             ),
           ),
@@ -47,18 +47,18 @@ class _SearchDetailState extends State<SearchDetail> {
             padding:
                 EdgeInsets.only(left: Dimensions.w20, right: Dimensions.w10),
             child: SizedBox(
-              height: Dimensions.h40,
+              height: Dimensions.hSearch2,
               child: TextField(
-                autofocus: false,
-                readOnly: true,
                 onTap: () {
                   FocusScope.of(context).requestFocus(FocusNode());
                   Get.back();
                 },
+                autofocus: false,
+                readOnly: true,
+                textAlignVertical: TextAlignVertical.bottom,
                 controller: txtSearch,
                 textInputAction: TextInputAction.search,
                 decoration: InputDecoration(
-                  contentPadding: EdgeInsets.only(top: Dimensions.h5),
                   filled: true,
                   fillColor: AppColors.gray2Color,
                   prefixIcon: Icon(

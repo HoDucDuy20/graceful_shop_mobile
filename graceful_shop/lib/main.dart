@@ -24,6 +24,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primaryColor: AppColors.mainColor,
         fontFamily: 'Dosis',
+        scaffoldBackgroundColor: AppColors.whiteColor,
       ),
       locale: LocalizationService.locale,
       fallbackLocale: LocalizationService.fallbackLocale,
