@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:graceful_shop/resources/utils/colors.dart';
 import 'package:graceful_shop/resources/utils/dimensions.dart';
-import 'package:graceful_shop/screen/login/login.dart';
+import 'package:graceful_shop/screens/login/login.dart';
 
 void showLogIn() async {
   await Get.dialog(

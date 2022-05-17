@@ -18,6 +18,7 @@ class IconOnTap1 extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       highlightColor: AppColors.noneColor,
+      splashColor: AppColors.noneColor,
       onTap: onPressed,
       child: Container(
         padding: EdgeInsets.all(Dimensions.h7),
@@ -52,6 +53,7 @@ class IconOnTap2 extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       highlightColor: AppColors.noneColor,
+      splashColor: AppColors.noneColor,
       onTap: onPressed,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,

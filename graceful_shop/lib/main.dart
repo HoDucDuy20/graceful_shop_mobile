@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:graceful_shop/multiple_language/localization_service.dart';
-import 'package:graceful_shop/screen/welcome/welcome.dart';
+import 'package:graceful_shop/resources/multiple_language/localization_service.dart';
+import 'package:graceful_shop/screens/welcome/welcome.dart';
 import 'package:graceful_shop/resources/utils/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

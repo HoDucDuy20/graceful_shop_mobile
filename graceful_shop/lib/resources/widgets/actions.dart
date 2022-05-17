@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:graceful_shop/resources/utils/dimensions.dart';
 import 'package:graceful_shop/resources/widgets/icon_onTap.dart';
 import 'package:graceful_shop/resources/widgets/show_dialog.dart';
-import 'package:graceful_shop/screen/search/search.dart';
-import 'package:graceful_shop/screen/tab_bar/tab_bar.dart';
+import 'package:graceful_shop/screens/search/search.dart';
+import 'package:graceful_shop/screens/tab_bar/tab_bar.dart';
 
 class Action_Search extends StatelessWidget {
   const Action_Search({Key? key}) : super(key: key);
