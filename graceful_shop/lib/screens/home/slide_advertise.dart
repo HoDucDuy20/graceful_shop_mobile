@@ -1,45 +1,93 @@
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_image_slideshow/flutter_image_slideshow.dart';
 import 'package:get/get.dart';
-import 'package:graceful_shop/screens/advertise_detail/advertise_detail.dart';
+import 'package:graceful_shop/controllers/slide_ads_controller.dart';
 import 'package:graceful_shop/resources/utils/colors.dart';
+import 'package:graceful_shop/screens/advertise_detail/advertise_detail.dart';
 import 'package:graceful_shop/resources/utils/dimensions.dart';
+import 'package:graceful_shop/services/url.dart';
 
-class ImgSlide extends StatefulWidget {
-  const ImgSlide({Key? key}) : super(key: key);
-
-  @override
-  State<ImgSlide> createState() => _ImgSlideState();
-}
-
-class _ImgSlideState extends State<ImgSlide> {
+class ImgSlide extends StatelessWidget {
+  ImgSlide({Key? key}) : super(key: key);
+  final CarouselController _controller = CarouselController();
+  SlideAdsController slideAdsController = Get.find<SlideAdsController>();
+  RxInt i = 0.obs;
   @override
   Widget build(BuildContext context) {
-    return ImageSlideshow(
-      width: Dimensions.width,
-      // height: Dimensions.h250,
-      initialPage: 0,
-      indicatorColor: AppColors.mainColor,
-      indicatorBackgroundColor: AppColors.grayColor,
-      children: [
-        InkWell(
-          onTap: () {
-            Get.to(() => const AdvertiseDetail());
-          },
-          child: Image.asset('assets/images/img_1.jpg', fit: BoxFit.cover),
-        ),
-        InkWell(
-          onTap: () {
-            Get.to(() => const AdvertiseDetail());
-          },
-          child: Image.asset('assets/images/img_2.jpg', fit: BoxFit.cover),
-        ),
-      ],
-      onPageChanged: (value) {
-        // print('Page changed: $value');
+    final orientation = MediaQuery.of(context).orientation;
+    return Obx(
+      () {
+        return Stack(
+          children: [
+            CarouselSlider(
+              carouselController: _controller,
+              options: CarouselOptions(
+                height: (orientation == Orientation.portrait)
+                    ? Dimensions.height
+                    : Dimensions.width,
+                aspectRatio: 16 / 9,
+                viewportFraction: 1,
+                initialPage: 0,
+                enableInfiniteScroll: true,
+                onPageChanged: (index, reason) {
+                  i.value = index;
+                },
+                reverse: false,
+                autoPlay: true,
+                autoPlayInterval: const Duration(seconds: 5),
+                autoPlayAnimationDuration: const Duration(milliseconds: 900),
+                autoPlayCurve: Curves.easeOut,
+                enlargeCenterPage: true,
+                scrollDirection: Axis.horizontal,
+              ),
+              items: slideAdsController.slideAdsList.value.map((i) {
+                return Builder(
+                  builder: (BuildContext context) {
+                    return InkWell(
+                      onTap: () {
+                        slideAdsController.getSlideAdsDetail(i.id);
+                        Get.to(() => AdvertiseDetail(
+                              slideAdsDetail: i,
+                            ));
+                      },
+                      child: SizedBox(
+                        width: (orientation == Orientation.portrait)
+                            ? Dimensions.width
+                            : Dimensions.height,
+                        child: Image(
+                          image: FadeInImage.assetNetwork(
+                            placeholder: 'assets/gif/loader.gif',
+                            image: formaterImg(i.picture),
+                          ).image,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    );
+                  },
+                );
+              }).toList(),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: DotsIndicator(
+                dotsCount: slideAdsController.slideAdsList.length == 0
+                    ? 1
+                    : slideAdsController.slideAdsList.length,
+                position: i.toDouble(),
+                decorator: DotsDecorator(
+                  activeColor: AppColors.mainColor,
+                  size: Size.square(Dimensions.w7),
+                  activeSize: Size.square(Dimensions.w10),
+                  activeShape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(25.0),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        );
       },
-      autoPlayInterval: null,
-      isLoop: true,
     );
   }
 }

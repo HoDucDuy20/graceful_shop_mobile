@@ -1,25 +1,28 @@
+// ignore_for_file: must_be_immutable, no_logic_in_create_state, unused_element
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:graceful_shop/models/product_type.dart';
 import 'package:graceful_shop/resources/utils/colors.dart';
 import 'package:graceful_shop/resources/utils/dimensions.dart';
 
 class TitleCategoryDetail extends StatefulWidget {
   int categoryIndex;
-  List<String> lstCategory;
+  List<ProductType> lstProductType;
   TitleCategoryDetail(
-      {Key? key, required this.categoryIndex, required this.lstCategory})
+      {Key? key, required this.categoryIndex, required this.lstProductType})
       : super(key: key);
 
   @override
   State<TitleCategoryDetail> createState() => _TitleCategoryDetailState(
-      categoryIndex: categoryIndex, lstCategory: lstCategory);
+      categoryIndex: categoryIndex, lstProductType: lstProductType);
 }
 
 class _TitleCategoryDetailState extends State<TitleCategoryDetail> {
   int categoryIndex;
-  List<String> lstCategory;
+  List<ProductType> lstProductType;
   _TitleCategoryDetailState(
-      {Key? key, required this.categoryIndex, required this.lstCategory});
+      {Key? key, required this.categoryIndex, required this.lstProductType});
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -56,7 +59,7 @@ class _TitleCategoryDetailState extends State<TitleCategoryDetail> {
             scrollDirection: Axis.horizontal,
             shrinkWrap: true,
             primary: false,
-            itemCount: lstCategory.length,
+            itemCount: lstProductType.length,
             itemBuilder: ((context, index) {
               return InkWell(
                 onTap: () {
@@ -76,7 +79,7 @@ class _TitleCategoryDetailState extends State<TitleCategoryDetail> {
                     ),
                   ),
                   child: Text(
-                    lstCategory[index],
+                    lstProductType[index].productTypeName,
                     style: TextStyle(
                       fontSize: Dimensions.font16,
                       fontWeight: categoryIndex == index

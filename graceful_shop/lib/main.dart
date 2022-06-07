@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:graceful_shop/controllers/category_controller.dart';
+import 'package:graceful_shop/controllers/product_controller.dart';
+import 'package:graceful_shop/controllers/slide_ads_controller.dart';
 import 'package:graceful_shop/resources/multiple_language/localization_service.dart';
 import 'package:graceful_shop/screens/welcome/welcome.dart';
 import 'package:graceful_shop/resources/utils/colors.dart';
@@ -10,6 +13,9 @@ Future<void> main() async {
   final prefs = await SharedPreferences.getInstance();
   // await prefs.setString('lagCode', 'vi');
   LocalizationService.langCodeValue = prefs.getString('lagCode');
+  Get.put(ProductController());
+  Get.put(CategoryController());
+  Get.put(SlideAdsController());
   runApp(const MyApp());
 }
 

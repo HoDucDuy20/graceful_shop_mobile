@@ -51,8 +51,8 @@ class MenuTop extends StatelessWidget {
       trailing: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Action_Cart(border: true),
-          Action_Message(border: true),
+          Action_Cart(true),
+          Action_Message(true),
         ],
       ),
     );

@@ -139,6 +139,9 @@ class _LoginState extends State<Login> {
                     ),
                     const LoginWithGoogle(),
                     const LinkRegister(),
+                    SizedBox(
+                      height: Dimensions.h40,
+                    ),
                   ],
                 ),
               ),

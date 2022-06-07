@@ -29,6 +29,8 @@ const Map<String, String> vi = {
   //Home
   'Search': 'Tìm kiếm',
   'SeeMore': 'Xem thêm',
+  'Featured':'Nổi bật',
+  'New':'Mới nhất',
   //Search
   'Cancel': 'Huỷ',
   'SearchHistory': 'Lịch sử tìm kiếm',
@@ -64,5 +66,11 @@ const Map<String, String> vi = {
   'Language': 'Ngôn ngữ',
   'LanguageSettings': 'Cài đặt ngôn ngữ',
   //Showdialog
-  'PleaseLogIn':'Hãy đăng nhập Gracefull Shop\nđể trải nghiệm cảm giác mua sắm tốt nhất bạn nhé!'
+  'PleaseLogIn':'Hãy đăng nhập Gracefull Shop\nđể trải nghiệm cảm giác mua sắm tốt nhất bạn nhé!',
+  //Product Detail
+  'Size': 'Kích thước',
+  'Color': 'Màu sắc',
+  'Quantity': 'Số lượng',
+  'AddCart': 'Thêm vào giỏ hàng',
+  'BuyNow': 'Mua ngay'
 };

@@ -1,30 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:graceful_shop/objects/product_object.dart';
+import 'package:graceful_shop/models/category.dart';
 import 'package:graceful_shop/resources/utils/colors.dart';
 import 'package:graceful_shop/resources/utils/dimensions.dart';
 import 'package:graceful_shop/resources/widgets/actions.dart';
-import 'package:graceful_shop/resources/widgets/grid_view.dart';
 import 'package:graceful_shop/screens/category_detail/title_category_detail.dart';
 
 class CategoryDetail extends StatefulWidget {
-  const CategoryDetail({Key? key}) : super(key: key);
+  CategoryDetail({Key? key, required this.category}) : super(key: key);
+  Category category;
 
   @override
-  State<CategoryDetail> createState() => _CategoryDetailState();
+  State<CategoryDetail> createState() => _CategoryDetailState(category: category);
 }
 
 class _CategoryDetailState extends State<CategoryDetail> {
+  _CategoryDetailState({required this.category});
   int categoryIndex = -1;
-  List<String> lstCategory = ['Áo', 'Sơ mi', 'T-Shirt', 'Hai dây', 'Áo thun'];
-  List<ProductObject> lstProduct = [
-    ProductObject('Áo cổ rộng gợi cảm', 'assets/images/img_2.jpg', 250000, 20),
-    ProductObject('Áo cổ rộng gợi cảm', 'assets/images/img_2.jpg', 250000, 20),
-    ProductObject('Áo cổ rộng gợi cảm', 'assets/images/img_2.jpg', 250000, 20),
-    ProductObject('Áo cổ rộng gợi cảm', 'assets/images/img_2.jpg', 250000, 20),
-    ProductObject('Áo cổ rộng gợi cảm', 'assets/images/img_2.jpg', 250000, 20),
-    ProductObject('Áo cổ rộng gợi cảm', 'assets/images/img_2.jpg', 250000, 20),
-  ];
+  Category category;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -52,7 +46,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
               ),
             ),
             Text(
-              'Áo',
+              category.categoryName,
               style: TextStyle(
                 fontSize: Dimensions.font25,
                 fontWeight: FontWeight.w500,
@@ -71,7 +65,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
             pinned: true,
             title: TitleCategoryDetail(
               categoryIndex: categoryIndex,
-              lstCategory: lstCategory,
+              lstProductType: category.productTypes,
             ),
           ),
           SliverList(
@@ -89,10 +83,10 @@ class _CategoryDetailState extends State<CategoryDetail> {
                     ),
                   ),
                 ),
-                Container(
-                  padding: EdgeInsets.only(bottom: Dimensions.h10),
-                  child: GridViewCustom(lstProduct: lstProduct),
-                ),
+                // Container(
+                //   padding: EdgeInsets.only(bottom: Dimensions.h10),
+                //   child: GridViewProduct(lstProduct: lstProduct),
+                // ),
               ],
             ),
           ),

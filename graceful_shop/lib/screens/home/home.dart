@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:graceful_shop/objects/product_object.dart';
-import 'package:graceful_shop/screens/home/grid_product.dart';
+import 'package:get/get.dart';
+import 'package:graceful_shop/controllers/product_controller.dart';
+import 'package:graceful_shop/screens/home/grid_product_featured.dart';
+import 'package:graceful_shop/screens/home/grid_product_new.dart';
 import 'package:graceful_shop/screens/home/menu_top.dart';
 import 'package:graceful_shop/screens/home/slide_advertise.dart';
 import 'package:graceful_shop/resources/utils/colors.dart';
@@ -13,16 +15,9 @@ class Home extends StatefulWidget {
   State<Home> createState() => _HomeState();
 }
 
-class _HomeState extends State<Home> {
-  List<ProductObject> lstProduct = [
-    ProductObject('Áo cổ rộng gợi cảm', 'assets/images/img_2.jpg', 250000, 20),
-    ProductObject('Áo cổ rộng gợi cảm Áo cổ rộng gợi cảm',
-        'assets/images/img_1.jpg', 250000, 20),
-    ProductObject('Áo cổ rộng gợi cảm', 'assets/images/img_2.jpg', 250000, 20),
-    ProductObject('Áo cổ rộng gợi cảm Áo cổ rộng gợi cảm Áo cổ rộng gợi cảm',
-        'assets/images/img_1.jpg', 250000, 20),
-    ProductObject('Áo cổ rộng gợi cảm', 'assets/images/img_2.jpg', 250000, 20),
-  ];
+class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
+  ProductController productController = Get.find<ProductController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,30 +29,106 @@ class _HomeState extends State<Home> {
             title: const MenuTop(),
             expandedHeight: Dimensions.h250,
             backgroundColor: AppColors.whiteColor,
-            flexibleSpace: const FlexibleSpaceBar(
+            flexibleSpace: FlexibleSpaceBar(
               background: ImgSlide(),
             ),
           ),
-          SliverList(
-            delegate: SliverChildListDelegate(
-              [
-                Padding(
-                  padding: EdgeInsets.only(
-                    top: Dimensions.h10,
-                  ),
+          Obx(
+            () {
+              return SliverList(
+                delegate: SliverChildListDelegate(
+                  [
+                    Container(
+                      width: Dimensions.width,
+                      height: Dimensions.h40,
+                      // padding: EdgeInsets.symmetric(vertical: Dimensions.h5),
+                      decoration: BoxDecoration(
+                        border: Border(
+                          top: BorderSide(
+                            color: AppColors.gray2Color,
+                            width: 3.5,
+                          ),
+                          bottom: BorderSide(
+                            color: AppColors.gray2Color,
+                            width: 3.5,
+                          ),
+                        ),
+                      ),
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: [
+                          tab('Featured'.tr, 0),
+                          tab('New'.tr, 1),
+                        ],
+                      ),
+                    ),
+                    IndexedStack(
+                      children: <Widget>[
+                        Visibility(
+                          child: GridProductFeatured(),
+                          maintainState: true,
+                          visible: productController.tab.value == 0,
+                        ),
+                        Visibility(
+                          child: GridProductNew(),
+                          maintainState: true,
+                          visible: productController.tab.value == 1,
+                        ),
+                      ],
+                      index: productController.tab.value,
+                    ),
+                  ],
                 ),
-                GridProduct(
-                  titleName: 'Dành riêng cho bạn',
-                  lstProduct: lstProduct,
-                ),
-                GridProduct(
-                  titleName: 'Hàng mới',
-                  lstProduct: lstProduct,
-                ),
-              ],
-            ),
+              );
+            },
           ),
         ],
+      ),
+    );
+  }
+
+  Widget tabBarText(String title) {
+    return Text(
+      title,
+      maxLines: 1,
+      overflow: TextOverflow.ellipsis,
+      style: TextStyle(
+        fontSize: Dimensions.font17,
+        fontWeight: FontWeight.w500,
+        color: AppColors.black2Color,
+        letterSpacing: 0.5,
+      ),
+    );
+  }
+
+  Widget tab(String title, int index) {
+    return InkWell(
+      onTap: () {
+        if (productController.tab.value != index) {
+          productController.tab.value = index;
+          productController.total.value = 0;
+          productController.page.value = 0;
+          productController.productList.value = [];
+          if (index == 0) {
+            productController.getPopularProducts();
+          } else {
+            productController.getNewProducts();
+          }
+        }
+      },
+      child: Container(
+        width: Dimensions.width / 2,
+        alignment: Alignment.center,
+        decoration: productController.tab.value == index
+            ? BoxDecoration(
+                border: Border.all(
+                  color: AppColors.blueAccentColor,
+                  width: 1.5,
+                ),
+                color: AppColors.blueAccentSearchColor,
+              )
+            : null,
+        child: tabBarText(title),
       ),
     );
   }

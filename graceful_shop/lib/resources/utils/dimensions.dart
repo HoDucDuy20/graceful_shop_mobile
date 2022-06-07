@@ -23,12 +23,14 @@ class Dimensions {
   static double w7 = width / 56.1 > 9 ? 9 : width / 56.1;
   static double w5 = width / 78.54 > 7 ? 7 : width / 78.54;
 
+  static double h275 = height / 2.84 > 277 ? 277 : height / 2.84;
   static double h250 = height / 3.12 > 252 ? 252 : height / 3.12;
   static double h205 = height / 3.81 > 207 ? 207 : height / 3.81;
   static double h200 = height / 3.91 > 202 ? 202 : height / 3.91;
   static double h180 = height / 4.34 > 182 ? 182 : height / 4.34;
   static double h150 = height / 5.21 > 152 ? 152 : height / 5.21;
   static double h100 = height / 7.81 > 102 ? 102 : height / 7.81;
+  static double h80 = height / 9.76 > 82 ? 82 : height / 9.76;
   static double h65 = height / 12.02 > 67 ? 67 : height / 12.02;
   static double h50 = height / 15.62 > 52 ? 52 : height / 15.62;
   static double h40 = height / 19.53 > 42 ? 42 : height / 19.53;
@@ -39,7 +41,7 @@ class Dimensions {
   static double h10 = height / 78.11 > 12 ? 12 : height / 78.11;
   static double h7 = height / 111.57 > 9 ? 9 : height / 111.57;
   static double h5 = height / 156.22 > 6 ? 6 : height / 156.22;
-  static double hCard = height / 2.60 > 306 ? 306 : height / 2.60 < 220 ? 220 : height / 2.60;
+  static double hCard = height / 1.95 > 406 ? 406 : height / 1.95 < 350 ? 350 : height / 1.95;
   static double hLstCategory = height / 7.81 > 104 ? 104 : height / 7.81 < 75 ? 75 : height / 7.81;
   static double hSearch1 = height / 26.04 > 32 ? 32 : height / 26.04 < 27 ? 27 : height / 26.04;
   static double hSearch2 = height / 19.53 > 42 ? 42 : height / 19.53 < 38 ? 38 : height / 19.53;

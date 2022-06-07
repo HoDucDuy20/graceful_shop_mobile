@@ -18,9 +18,9 @@ class HeaderLoginRegister extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(top: Dimensions.h40, left: Dimensions.w35),
+      padding: EdgeInsets.only(
+          top: Dimensions.h40, left: Dimensions.w35, bottom: Dimensions.h10),
       margin: EdgeInsets.only(bottom: Dimensions.h40),
-      height: Dimensions.h205,
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(70)),
         color: AppColors.mainColor,

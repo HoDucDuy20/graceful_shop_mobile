@@ -2,11 +2,12 @@ import 'dart:collection';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:graceful_shop/multiple_language/languages/st_en_us.dart';
-import 'package:graceful_shop/multiple_language/languages/st_vi_vn.dart';
+import 'package:graceful_shop/resources/multiple_language/languages/st_en_us.dart';
+import 'package:graceful_shop/resources/multiple_language/languages/st_vi_vn.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LocalizationService extends Translations {
+  // ignore: avoid_init_to_null
   static var langCodeValue = null;
 
   static void setLangCode(String langCode) async {
@@ -26,6 +27,7 @@ class LocalizationService extends Translations {
   static final locale = _getLocaleFromLanguage();
 
 // fallbackLocale là locale default nếu locale được set không nằm trong những Locale support
+  // ignore: prefer_const_constructors
   static final fallbackLocale = Locale('en', 'US');
 
 // language code của những locale được support
