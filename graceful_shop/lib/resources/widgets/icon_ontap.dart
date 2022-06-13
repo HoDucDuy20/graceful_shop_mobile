@@ -9,12 +9,14 @@ class IconOnTap1 extends StatelessWidget {
   IconData icon;
   double size;
   bool border;
+  Color color;
   IconOnTap1(
       {Key? key,
       required this.onPressed,
       required this.icon,
       required this.size,
-      required this.border})
+      required this.border,
+      required this.color})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -33,7 +35,7 @@ class IconOnTap1 extends StatelessWidget {
             : null,
         child: Icon(
           icon,
-          color: AppColors.mainColor,
+          color: color,
           size: size,
         ),
       ),
@@ -79,3 +81,5 @@ class IconOnTap2 extends StatelessWidget {
     );
   }
 }
+
+

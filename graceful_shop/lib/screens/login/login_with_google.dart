@@ -17,7 +17,7 @@ class _LoginWithGoogleState extends State<LoginWithGoogle> {
     return Column(
       children: [
         Text(
-          'Or_Login'.tr,
+          'OrLogin'.tr,
           style: TextStyle(
             fontSize: Dimensions.font17,
             fontWeight: FontWeight.w600,

@@ -14,7 +14,7 @@ class LinkLogin extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: Dimensions.h12),
       child: Text.rich(
         TextSpan(
-          text: 'If_Account'.tr + '\n',
+          text: 'IfAccount'.tr + '\n',
           style: TextStyle(
             fontSize: Dimensions.font16,
             color: AppColors.black2Color,
@@ -32,7 +32,7 @@ class LinkLogin extends StatelessWidget {
                 },
             ),
             TextSpan(
-              text: 'To_Login'.tr,
+              text: 'ToLogin'.tr,
               style: TextStyle(
                 fontSize: Dimensions.font16,
                 color: AppColors.black2Color,

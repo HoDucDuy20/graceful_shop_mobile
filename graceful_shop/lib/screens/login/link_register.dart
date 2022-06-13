@@ -12,7 +12,7 @@ class LinkRegister extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text.rich(
       TextSpan(
-        text: 'If_Not_Account'.tr + '\n',
+        text: 'IfNotAccount'.tr + '\n',
         style: TextStyle(
           fontSize: Dimensions.font16,
           color: AppColors.black2Color,
@@ -30,7 +30,7 @@ class LinkRegister extends StatelessWidget {
               },
           ),
           TextSpan(
-            text: 'To_Register'.tr,
+            text: 'ToRegister'.tr,
             style: TextStyle(
               fontSize: Dimensions.font16,
               color: AppColors.black2Color,

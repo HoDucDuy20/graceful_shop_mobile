@@ -57,7 +57,7 @@ class ImgSlide extends StatelessWidget {
                             : Dimensions.height,
                         child: Image(
                           image: FadeInImage.assetNetwork(
-                            placeholder: 'assets/gif/loader.gif',
+                            placeholder: 'assets/gif/loading_2.gif',
                             image: formaterImg(i.picture),
                           ).image,
                           fit: BoxFit.cover,

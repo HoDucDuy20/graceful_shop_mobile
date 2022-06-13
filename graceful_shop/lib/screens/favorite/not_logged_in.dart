@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:graceful_shop/resources/utils/colors.dart';
 import 'package:graceful_shop/resources/utils/dimensions.dart';
-import 'package:graceful_shop/resources/widgets/button_sign_in_up.dart';
+import 'package:graceful_shop/resources/widgets/button.dart';
 import 'package:graceful_shop/screens/login/login.dart';
 
 class NotLoggedIn extends StatelessWidget {

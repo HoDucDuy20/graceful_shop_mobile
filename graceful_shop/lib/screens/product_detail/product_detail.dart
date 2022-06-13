@@ -1,6 +1,7 @@
 // ignore_for_file: must_be_immutable
 
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
 import 'package:graceful_shop/controllers/product_controller.dart';
 import 'package:graceful_shop/models/product.dart';
@@ -8,9 +9,12 @@ import 'package:graceful_shop/resources/utils/colors.dart';
 import 'package:graceful_shop/resources/utils/dimensions.dart';
 import 'package:graceful_shop/resources/utils/format.dart';
 import 'package:graceful_shop/resources/widgets/actions.dart';
+import 'package:graceful_shop/resources/widgets/button.dart';
 import 'package:graceful_shop/resources/widgets/show_model.dart';
 import 'package:graceful_shop/screens/product_detail/list_img.dart';
 import 'package:graceful_shop/services/url.dart';
+import 'package:html/dom.dart' as dom;
+import 'package:url_launcher/url_launcher.dart';
 
 class ProductDetail extends StatefulWidget {
   ProductDetail({Key? key, required this.product}) : super(key: key);
@@ -27,6 +31,12 @@ class _ProductDetailState extends State<ProductDetail> {
 
   late ScrollController scrollController;
   double scrollControllerOffset = 0.0;
+
+  void _launchUrl(String url) async {
+    Uri _url = Uri.parse(url);
+    print(_url);
+    if (!await launchUrl(_url)) throw 'Could not launch $_url';
+  }
 
   scrollListenner() {
     setState(() {
@@ -67,8 +77,8 @@ class _ProductDetailState extends State<ProductDetail> {
                             Text(
                               product.productName,
                               style: TextStyle(
-                                fontSize: Dimensions.font16,
-                                fontWeight: FontWeight.w600,
+                                fontSize: Dimensions.font20,
+                                fontWeight: FontWeight.w900,
                                 color: AppColors.black2Color,
                                 letterSpacing: 0.5,
                               ),
@@ -96,37 +106,31 @@ class _ProductDetailState extends State<ProductDetail> {
                                               letterSpacing: 0.5,
                                             ),
                                           ),
-                                          product.discountPrice != 0
-                                              ? Container(
-                                                  margin: EdgeInsets.only(
-                                                      left: Dimensions.w7),
-                                                  padding: EdgeInsets.symmetric(
-                                                      horizontal:
-                                                          Dimensions.w5),
-                                                  decoration: BoxDecoration(
-                                                    border: Border.all(
-                                                      color:
-                                                          AppColors.yellowColor,
-                                                      width: 1.5,
-                                                    ),
-                                                    color:
-                                                        AppColors.yellow2Color,
-                                                  ),
-                                                  child: Text(
-                                                    Format.percentReduction(
-                                                        product.price,
-                                                        product.discountPrice),
-                                                    style: TextStyle(
-                                                      fontSize:
-                                                          Dimensions.font15,
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      color: AppColors.redColor,
-                                                      letterSpacing: 0.5,
-                                                    ),
-                                                  ),
-                                                )
-                                              : Container(),
+                                          if (product.discountPrice != 0)
+                                            Container(
+                                              margin: EdgeInsets.only(
+                                                  left: Dimensions.w7),
+                                              padding: EdgeInsets.symmetric(
+                                                  horizontal: Dimensions.w5),
+                                              decoration: BoxDecoration(
+                                                border: Border.all(
+                                                  color: AppColors.yellowColor,
+                                                  width: 1.5,
+                                                ),
+                                                color: AppColors.yellow2Color,
+                                              ),
+                                              child: Text(
+                                                Format.percentReduction(
+                                                    product.price,
+                                                    product.discountPrice),
+                                                style: TextStyle(
+                                                  fontSize: Dimensions.font15,
+                                                  fontWeight: FontWeight.w500,
+                                                  color: AppColors.redColor,
+                                                  letterSpacing: 0.5,
+                                                ),
+                                              ),
+                                            ),
                                         ],
                                       ),
                                       Row(
@@ -151,106 +155,157 @@ class _ProductDetailState extends State<ProductDetail> {
                                       ),
                                     ],
                                   ),
-                                  product.discountPrice != 0
-                                      ? Text(
-                                          Format.numPrice(
-                                              product.discountPrice +
-                                                  product.price),
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                            decoration:
-                                                TextDecoration.lineThrough,
-                                            fontSize: Dimensions.font15,
-                                            fontWeight: FontWeight.w400,
-                                            fontStyle: FontStyle.italic,
-                                            color: AppColors.grayColor,
-                                            letterSpacing: 0.5,
-                                          ),
-                                        )
-                                      : Container(),
+                                  if (product.discountPrice != 0)
+                                    Text(
+                                      Format.numPrice(product.discountPrice +
+                                          product.price),
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                        decoration: TextDecoration.lineThrough,
+                                        fontSize: Dimensions.font15,
+                                        fontWeight: FontWeight.w400,
+                                        fontStyle: FontStyle.italic,
+                                        color: AppColors.grayColor,
+                                        letterSpacing: 0.5,
+                                      ),
+                                    ),
                                 ],
                               ),
                             ),
-                            InkWell(
-                              onTap: () {
-                                showSizeColor(context);
-                              },
-                              child: productController.colorList.isEmpty
-                                  ? Container()
-                                  : Container(
-                                      padding: EdgeInsets.all(Dimensions.w5),
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                          color: AppColors.grayColor,
-                                          width: 0.5,
-                                        ),
-                                        color: AppColors.whiteColor,
-                                      ),
-                                      child: ListTile(
-                                        contentPadding: EdgeInsets.zero,
-                                        minVerticalPadding: 0,
-                                        leading: Image(
-                                          image: FadeInImage.assetNetwork(
-                                            placeholder:
-                                                'assets/gif/loader.gif',
-                                            image: formaterImg(productController
-                                                .colorList[productController
-                                                    .indexColor.value]
-                                                .picture),
-                                          ).image,
-                                          fit: BoxFit.cover,
-                                        ),
-                                        title: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              'Color'.tr + ', ' + 'Size'.tr,
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: TextStyle(
-                                                fontSize: Dimensions.font15,
-                                                fontWeight: FontWeight.w400,
-                                                color: AppColors.grayColor,
-                                                letterSpacing: 0.5,
-                                              ),
-                                            ),
-                                            const SizedBox(
-                                              height: 5,
-                                            ),
-                                            Text(
-                                              productController
-                                                      .colorList[
-                                                          productController
-                                                              .indexColor.value]
-                                                      .colorName +
-                                                  ' / ' +
-                                                  productController
-                                                      .sizeList[
-                                                          productController
-                                                              .indexSize.value]
-                                                      .sizeName,
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: TextStyle(
-                                                fontSize: Dimensions.font16,
-                                                fontWeight: FontWeight.w500,
-                                                color: AppColors.black2Color,
-                                                letterSpacing: 0.5,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                        trailing: Icon(
-                                          Icons.chevron_right,
-                                          size: Dimensions.font40,
-                                          color: AppColors.gray2Color,
-                                        ),
-                                      ),
+                            if (productController.colorList.isNotEmpty)
+                              InkWell(
+                                onTap: () {
+                                  showSizeColor(context);
+                                },
+                                child: Container(
+                                  padding: EdgeInsets.all(Dimensions.w5),
+                                  decoration: BoxDecoration(
+                                    border: Border.all(
+                                      color: AppColors.grayColor,
+                                      width: 0.5,
                                     ),
+                                    color: AppColors.whiteColor,
+                                  ),
+                                  child: ListTile(
+                                    contentPadding: EdgeInsets.zero,
+                                    minVerticalPadding: 0,
+                                    leading: Image(
+                                      image: FadeInImage.assetNetwork(
+                                        placeholder: 'assets/gif/loading_2.gif',
+                                        image: formaterImg(productController
+                                            .colorList[productController
+                                                .indexColor.value]
+                                            .picture),
+                                      ).image,
+                                      fit: BoxFit.cover,
+                                    ),
+                                    title: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          'Color'.tr + ', ' + 'Size'.tr,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                            fontSize: Dimensions.font15,
+                                            fontWeight: FontWeight.w400,
+                                            color: AppColors.grayColor,
+                                            letterSpacing: 0.5,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 5,
+                                        ),
+                                        Text(
+                                          productController
+                                                  .colorList[productController
+                                                      .indexColor.value]
+                                                  .colorName +
+                                              ' / ' +
+                                              productController
+                                                  .sizeList[productController
+                                                      .indexSize.value]
+                                                  .sizeName,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                            fontSize: Dimensions.font16,
+                                            fontWeight: FontWeight.w500,
+                                            color: AppColors.black2Color,
+                                            letterSpacing: 0.5,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    trailing: Icon(
+                                      Icons.chevron_right,
+                                      size: Dimensions.font40,
+                                      color: AppColors.gray2Color,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            Container(
+                              width: Dimensions.width,
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  top: BorderSide(
+                                    color: AppColors.gray2Color,
+                                    width: 10.0,
+                                  ),
+                                ),
+                              ),
+                              margin: EdgeInsets.only(top: Dimensions.h10),
+                              padding: EdgeInsets.only(
+                                  top: Dimensions.h10, bottom: Dimensions.h12),
+                              child: Text(
+                                'ProductDescription'.tr,
+                                style: TextStyle(
+                                  fontSize: Dimensions.font16,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.black2Color,
+                                  letterSpacing: 0.5,
+                                ),
+                              ),
+                            ),
+                            Html(
+                              data: product.description,
+                              onLinkTap: (String? url,
+                                  RenderContext context,
+                                  Map<String, String> attributes,
+                                  dom.Element? element) {
+                                _launchUrl(url!);
+                              },
+                            ),
+                            Container(
+                              width: Dimensions.width,
+                              decoration: BoxDecoration(
+                                border: Border(
+                                  top: BorderSide(
+                                    color: AppColors.gray2Color,
+                                    width: 10.0,
+                                  ),
+                                ),
+                              ),
+                              margin: EdgeInsets.only(top: Dimensions.h10),
+                              padding: EdgeInsets.only(
+                                  top: Dimensions.h10, bottom: Dimensions.h12),
+                              child: Text(
+                                'CustomerRatings'.tr,
+                                style: TextStyle(
+                                  fontSize: Dimensions.font16,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.black2Color,
+                                  letterSpacing: 0.5,
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: Dimensions.h65,
                             ),
                           ],
                         ),
@@ -293,6 +348,29 @@ class _ProductDetailState extends State<ProductDetail> {
                     Row(mainAxisSize: MainAxisSize.min, children: lstAction3),
               ),
             ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                // height: Dimensions.h65,
+                padding: EdgeInsets.all(Dimensions.w10),
+                decoration: BoxDecoration(
+                  border: Border(
+                    top: BorderSide(
+                      color: AppColors.black2Color,
+                      width: 0.5,
+                    ),
+                  ),
+                  color: AppColors.whiteColor,
+                ),
+                child: ButtonBuyNow(
+                  title: 'BuyNow'.tr,
+                  onPressed: () {
+                    showSizeColor(context);
+                  },
+                  color: AppColors.redColor,
+                ),
+              ),
+            )
           ],
         );
       }),

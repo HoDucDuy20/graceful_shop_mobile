@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:graceful_shop/controllers/product_controller.dart';
 import 'package:graceful_shop/resources/utils/colors.dart';
 import 'package:graceful_shop/resources/utils/dimensions.dart';
+import 'package:graceful_shop/resources/widgets/button.dart';
+import 'package:graceful_shop/resources/widgets/grid_view.dart';
 import 'package:graceful_shop/resources/widgets/icon_onTap.dart';
 
 class SearchDetail extends StatefulWidget {
@@ -13,9 +16,13 @@ class SearchDetail extends StatefulWidget {
 }
 
 class _SearchDetailState extends State<SearchDetail> {
+  ProductController productController = Get.find<ProductController>();
+
   String value;
   _SearchDetailState({Key? key, required this.value});
+
   TextEditingController txtSearch = TextEditingController();
+
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   Widget _buildRow(List<Widget> widgets) {
@@ -70,7 +77,7 @@ class _SearchDetailState extends State<SearchDetail> {
               padding: EdgeInsets.symmetric(horizontal: Dimensions.w5),
               child: Icon(
                 Icons.chevron_left,
-                size: Dimensions.font40,
+                size: Dimensions.font30,
                 color: AppColors.black2Color,
               ),
             ),
@@ -111,6 +118,7 @@ class _SearchDetailState extends State<SearchDetail> {
                 },
                 icon: Icons.filter_alt_outlined,
                 size: Dimensions.font30,
+                color: AppColors.mainColor,
                 border: false,
               ),
             ),
@@ -163,12 +171,39 @@ class _SearchDetailState extends State<SearchDetail> {
         ),
         body: SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.symmetric(
-                vertical: Dimensions.h10, horizontal: Dimensions.w20),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [],
-            ),
+            padding: EdgeInsets.symmetric(vertical: Dimensions.w10),
+            child: Obx(() {
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  GridViewProduct(
+                    context,
+                    productController.productListSearch,
+                    productController.totalSearch.value,
+                    true,
+                    false,
+                  ),
+                  (productController.checkFullSearch.value == true ||
+                          productController.productListSearch.value.length == 0)
+                      ? SizedBox(
+                          height: Dimensions.h40,
+                        )
+                      : productController.loading.value
+                          ? Center(
+                              child: Image.asset(
+                                'assets/gif/loading_2_2.gif',
+                                height: Dimensions.h50,
+                              ),
+                            )
+                          : ButtonShowMore(
+                              onPressed: () {
+                                productController.loading.value = true;
+                                productController.searchProducts(value);
+                              },
+                            ),
+                ],
+              );
+            }),
           ),
         ),
       ),

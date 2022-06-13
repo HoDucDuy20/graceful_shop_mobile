@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:graceful_shop/controllers/product_controller.dart';
 import 'package:graceful_shop/resources/utils/colors.dart';
 import 'package:graceful_shop/resources/utils/dimensions.dart';
 import 'package:graceful_shop/screens/search_detail/search_detail.dart';
@@ -13,6 +14,8 @@ class Search extends StatefulWidget {
 }
 
 class _SearchState extends State<Search> {
+  ProductController productController = Get.find<ProductController>();
+
   TextEditingController txtSearch = TextEditingController();
   List<String>? searchHistory = [];
 
@@ -83,8 +86,10 @@ class _SearchState extends State<Search> {
               height: Dimensions.hSearch2,
               child: TextField(
                 onSubmitted: (value) {
-                  if (txtSearch.text != '') {
-                    _addItem(txtSearch.text);
+                  if (value != '') {
+                    _addItem(value);
+                    productController.resetSearch();
+                    productController.searchProducts(value);
                     Get.to(() => SearchDetail(value: value));
                   }
                 },
@@ -128,7 +133,7 @@ class _SearchState extends State<Search> {
                 'Cancel'.tr,
                 style: TextStyle(
                   color: AppColors.black2Color,
-                  fontSize: Dimensions.font17,
+                  fontSize: Dimensions.font16,
                   fontWeight: FontWeight.w500,
                 ),
               ),
@@ -189,8 +194,9 @@ class _SearchState extends State<Search> {
                             splashColor: AppColors.noneColor,
                             onTap: () {
                               txtSearch.text = searchHistory![i];
-                              Get.to(
-                                  () => SearchDetail(value: searchHistory![i]));
+                              productController.resetSearch();
+                              productController.searchProducts(txtSearch.text);
+                              Get.to(() => SearchDetail(value: txtSearch.text));
                             },
                             child: Padding(
                               padding: EdgeInsets.only(

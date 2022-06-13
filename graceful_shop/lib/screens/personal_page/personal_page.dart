@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:graceful_shop/controllers/user_controller.dart';
 import 'package:graceful_shop/resources/utils/colors.dart';
 import 'package:graceful_shop/resources/utils/dimensions.dart';
 import 'package:graceful_shop/resources/widgets/actions.dart';
-import 'package:graceful_shop/resources/widgets/button_sign_in_up.dart';
+import 'package:graceful_shop/resources/widgets/button.dart';
 import 'package:graceful_shop/resources/widgets/list_tile_ontap.dart';
+import 'package:graceful_shop/resources/widgets/show_dialog.dart';
 import 'package:graceful_shop/screens/login/login.dart';
 import 'package:graceful_shop/screens/personal_page/activity_diary.dart';
 import 'package:graceful_shop/screens/personal_page/service.dart';
+import 'package:graceful_shop/screens/personal_page_detail/personal_page_detail.dart';
 import 'package:graceful_shop/screens/setting/setting.dart';
+import 'package:graceful_shop/services/url.dart';
 
 class PersonalPage extends StatefulWidget {
   const PersonalPage({Key? key}) : super(key: key);
@@ -19,7 +23,13 @@ class PersonalPage extends StatefulWidget {
 }
 
 class _PersonalPageState extends State<PersonalPage> {
-  String Token = '';
+  UserController userController = Get.find<UserController>();
+
+  @override
+  void initState() {
+    super.initState();
+    userController.isLoading.value = false;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,46 +53,45 @@ class _PersonalPageState extends State<PersonalPage> {
       body: SingleChildScrollView(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: Dimensions.w15),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              if (Token.isEmpty)
-                Group('Hồ Đức Duy', 'assets/images/img_1.jpg')
-              else
-                LoginRequired(),
-              ListTileOnTap(
-                onPressed: () {},
-                icon: Icons.book_outlined,
-                title: 'Address'.tr,
-              ),
-              ListTileOnTap(
-                onPressed: () {},
-                icon: Icons.percent_outlined,
-                title: 'Voucher'.tr,
-              ),
-              ListTileOnTap(
-                onPressed: () {},
-                icon: Icons.policy_outlined,
-                title: 'Policy'.tr,
-              ),
-              ListTileOnTap(
-                onPressed: () {
-                  Get.to(() => const Setting());
-                },
-                icon: Icons.settings_outlined,
-                title: 'Setting'.tr,
-              ),
-              if (Token.isEmpty)
-                Container(
-                  padding: EdgeInsets.symmetric(vertical: Dimensions.h12),
-                  alignment: Alignment.center,
-                  child: ButtonSignInUp(
-                    onPressed: () {},
-                    title: 'LogOut'.tr.toUpperCase(),
-                  ),
+          child: Obx(() {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                if (userController.token.value != '')
+                  Group(userController.user.value.fullName,
+                      userController.user.value.avatar)
+                else
+                  LoginRequired(),
+                ListTileOnTap(
+                  onPressed: () {},
+                  icon: Icons.policy_outlined,
+                  title: 'Policy'.tr,
                 ),
-            ],
-          ),
+                ListTileOnTap(
+                  onPressed: () {
+                    Get.to(() => const Setting());
+                  },
+                  icon: Icons.settings_outlined,
+                  title: 'Setting'.tr,
+                ),
+                if (userController.token.value != '')
+                  Container(
+                    padding: EdgeInsets.symmetric(vertical: Dimensions.h12),
+                    alignment: Alignment.center,
+                    child: ButtonSignInUp(
+                      isLoading: userController.isLoading.value,
+                      onPressed: () {
+                        showLogOut(() {
+                          Get.back();
+                          userController.logOut();
+                        });
+                      },
+                      title: 'LogOut'.tr.toUpperCase(),
+                    ),
+                  ),
+              ],
+            );
+          }),
         ),
       ),
     );
@@ -153,18 +162,46 @@ class _PersonalPageState extends State<PersonalPage> {
       crossAxisAlignment: CrossAxisAlignment.start,
       mainAxisSize: MainAxisSize.min,
       children: [
-        Container(
-          padding: EdgeInsets.only(top: Dimensions.h12, bottom: Dimensions.h5),
-          alignment: Alignment.center,
-          child: CircleAvatar(
-            radius: Dimensions.w80,
-            backgroundColor: AppColors.white2Color,
-            backgroundImage: AssetImage(img),
+        InkWell(
+          onTap: () {
+            userController.getUserInfo();
+            Get.to(() => const PersonalDetail());
+          },
+          child: Container(
+            padding:
+                EdgeInsets.only(top: Dimensions.h12, bottom: Dimensions.h5),
+            alignment: Alignment.center,
+            child: CircleAvatar(
+                radius: Dimensions.w80,
+                backgroundColor: AppColors.gray2Color,
+                backgroundImage: (img == null || img == '')
+                    ? Image.asset(
+                        'assets/gif/loading_1.gif',
+                        height: Dimensions.w250,
+                        width: Dimensions.w250,
+                      ).image
+                    : DecorationImage(
+                        image: FadeInImage.assetNetwork(
+                          placeholder: 'assets/gif/loading_2.gif',
+                          image: formaterImg(img),
+                        ).image,
+                        fit: BoxFit.cover,
+                      ).image),
           ),
         ),
-        Name('Hồ Đức Duy'),
+        Name(name),
         ActivityDiary(),
         Service(),
+        ListTileOnTap(
+          onPressed: () {},
+          icon: Icons.book_outlined,
+          title: 'AddressBook'.tr,
+        ),
+        ListTileOnTap(
+          onPressed: () {},
+          icon: Icons.percent_outlined,
+          title: 'Voucher'.tr,
+        ),
       ],
     );
   }

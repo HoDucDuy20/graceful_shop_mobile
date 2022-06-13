@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:graceful_shop/resources/utils/colors.dart';
 import 'package:graceful_shop/resources/utils/dimensions.dart';
 import 'package:graceful_shop/resources/widgets/icon_onTap.dart';
 import 'package:graceful_shop/resources/widgets/show_dialog.dart';
@@ -15,6 +16,7 @@ Widget Action_Search() {
     },
     icon: Icons.search,
     size: Dimensions.font27,
+    color: AppColors.mainColor,
     border: false,
   );
 }
@@ -26,6 +28,7 @@ Widget Action_Cart(bool border) {
     },
     icon: Icons.shopping_cart_outlined,
     size: Dimensions.font25,
+    color: AppColors.mainColor,
     border: border,
   );
 }
@@ -37,6 +40,7 @@ Widget Action_Message(bool border) {
     },
     icon: Icons.message_outlined,
     size: Dimensions.font25,
+    color: AppColors.mainColor,
     border: border,
   );
 }
@@ -48,6 +52,7 @@ Widget Action_Shared(bool border) {
     },
     icon: Icons.share_rounded,
     size: Dimensions.font25,
+    color: AppColors.mainColor,
     border: border,
   );
 }
@@ -57,6 +62,7 @@ Widget Action_Notification() {
     onPressed: () {},
     icon: Icons.notifications_outlined,
     size: Dimensions.font25,
+    color: AppColors.mainColor,
     border: false,
   );
 }
@@ -68,6 +74,7 @@ Widget Action_Home() {
     },
     icon: Icons.home_outlined,
     size: Dimensions.font25,
+    color: AppColors.mainColor,
     border: false,
   );
 }

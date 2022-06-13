@@ -125,3 +125,72 @@ void showLanguage(List<Widget> lstItem) async {
     ),
   );
 }
+
+void showLogOut(VoidCallback f) async {
+  await Get.dialog(
+    AlertDialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      backgroundColor: Colors.white,
+      titlePadding: EdgeInsets.zero,
+      contentPadding: EdgeInsets.zero,
+      actionsPadding: EdgeInsets.zero,
+      title: Padding(
+        padding: EdgeInsets.symmetric(
+            vertical: Dimensions.h12, horizontal: Dimensions.w15),
+        child: Text(
+          'LogOut'.tr,
+          style: TextStyle(
+            color: AppColors.mainColor,
+            fontSize: Dimensions.font25,
+            fontWeight: FontWeight.w500,
+          ),
+        ),
+      ),
+      content: Padding(
+        padding: EdgeInsets.symmetric(horizontal: Dimensions.w15),
+        child: Text(
+          'DoYouWantSignOut'.tr,
+          style: TextStyle(
+            color: AppColors.black2Color,
+            fontSize: Dimensions.font15,
+            fontWeight: FontWeight.w400,
+          ),
+        ),
+      ),
+      actions: [
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: Dimensions.w15),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              TextButton(
+                onPressed: () {
+                  Get.back();
+                },
+                child: Text(
+                  'Cancel'.tr,
+                  style: TextStyle(
+                    color: AppColors.grayColor,
+                    fontSize: Dimensions.font16,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ),
+              TextButton(
+                onPressed: f,
+                child: Text(
+                  'LogOut'.tr,
+                  style: TextStyle(
+                    color: AppColors.mainColor,
+                    fontSize: Dimensions.font16,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
+    ),
+  );
+}

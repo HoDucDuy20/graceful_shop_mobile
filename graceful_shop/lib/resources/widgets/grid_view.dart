@@ -2,31 +2,48 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:graceful_shop/controllers/favorite_controller.dart';
 import 'package:graceful_shop/controllers/product_controller.dart';
 import 'package:graceful_shop/models/product.dart';
 import 'package:graceful_shop/resources/utils/colors.dart';
 import 'package:graceful_shop/resources/utils/dimensions.dart';
-import 'package:graceful_shop/resources/utils/format.dart';
 import 'package:graceful_shop/resources/widgets/draw_triangle_shape.dart';
+import 'package:graceful_shop/resources/widgets/item_grid_view.dart';
 import 'package:graceful_shop/screens/product_detail/product_detail.dart';
 import 'package:graceful_shop/services/url.dart';
 
 ProductController productController = Get.find<ProductController>();
+FavoriteController favoriteController = Get.find<FavoriteController>();
 
-Widget GridViewProduct(BuildContext context, List<Product> lstProduct) {
+Widget GridViewProduct(BuildContext context, List<Product> lstProduct,
+    int total, bool isSearch, bool isFavorite) {
   final orientation = MediaQuery.of(context).orientation;
 
   return MediaQuery.removePadding(
     context: context,
     removeTop: true,
     child: lstProduct.isEmpty
-        ? Center(
-            child: Image.asset(
-              'assets/gif/loader.gif',
-              height: 125.0,
-              width: 125.0,
-            ),
-          )
+        ? total == 0
+            ? Container(
+                alignment: Alignment.center,
+                padding: EdgeInsets.all(Dimensions.w40),
+                child: Text(
+                  'NoProducts'.tr,
+                  style: TextStyle(
+                    fontSize: Dimensions.font17,
+                    fontWeight: FontWeight.w400,
+                    color: AppColors.grayColor,
+                    letterSpacing: 0.5,
+                  ),
+                ),
+              )
+            : Center(
+                child: Image.asset(
+                  'assets/gif/loading_5.gif',
+                  height: Dimensions.w250,
+                  width: Dimensions.w250,
+                ),
+              )
         : GridView.builder(
             physics: const NeverScrollableScrollPhysics(),
             shrinkWrap: true,
@@ -57,100 +74,11 @@ Widget GridViewProduct(BuildContext context, List<Product> lstProduct) {
                       ),
                     ],
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Container(
-                        height: Dimensions.h275,
-                        alignment: Alignment.bottomRight,
-                        padding: EdgeInsets.all(Dimensions.w10),
-                        decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(20.0),
-                          ),
-                          image: DecorationImage(
-                            image: FadeInImage.assetNetwork(
-                              placeholder: 'assets/gif/loader.gif',
-                              image: formaterImg(
-                                  lstProduct[index].pictures[0].pictureValue),
-                            ).image,
-                            fit: BoxFit.cover,
-                          ),
-                        ),
-                        child: InkWell(
-                          onTap: () {},
-                          child: Container(
-                            padding: EdgeInsets.all(Dimensions.h7),
-                            margin: EdgeInsets.only(left: Dimensions.w5),
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(100),
-                              color: AppColors.whiteColor,
-                            ),
-                            child: Icon(
-                              Icons.favorite_outline,
-                              size: Dimensions.font20,
-                              color: AppColors.grayColor,
-                            ),
-                          ),
-                        ),
-                      ),
-                      Container(
-                        height: Dimensions.h65,
-                        alignment: Alignment.centerLeft,
-                        padding:
-                            EdgeInsets.symmetric(horizontal: Dimensions.w10),
-                        child: Text(
-                          lstProduct[index].productName,
-                          maxLines: 2,
-                          overflow: TextOverflow.ellipsis,
-                          style: TextStyle(
-                            fontSize: Dimensions.font16,
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.black2Color,
-                            letterSpacing: 0.5,
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: Dimensions.w10),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              Format.numPrice(lstProduct[index].price),
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontSize: Dimensions.font15,
-                                color: AppColors.mainColor,
-                              ),
-                            ),
-                            Row(
-                              children: [
-                                Padding(
-                                  padding:
-                                      EdgeInsets.only(right: Dimensions.w5),
-                                  child: Icon(
-                                    Icons.favorite,
-                                    size: Dimensions.font17,
-                                    color: AppColors.redColor,
-                                  ),
-                                ),
-                                Text(
-                                  lstProduct[index].numLike.toString(),
-                                  style: TextStyle(
-                                    fontSize: Dimensions.font15,
-                                    color: AppColors.black2Color,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+                  child: ItemGridView(
+                      product: lstProduct[index],
+                      index: index,
+                      isSearch: isSearch,
+                      isFavorite: isFavorite),
                 ),
               );
             },
@@ -183,7 +111,7 @@ Widget GridViewColor(BuildContext context) {
     child: productController.colorList.isEmpty
         ? Center(
             child: Image.asset(
-              'assets/gif/loader.gif',
+              'assets/gif/loading_2.gif',
               height: 50.0,
               width: 50.0,
             ),
@@ -226,7 +154,7 @@ Widget GridViewColor(BuildContext context) {
                           contentPadding: EdgeInsets.zero,
                           leading: Image(
                             image: FadeInImage.assetNetwork(
-                              placeholder: 'assets/gif/loader.gif',
+                              placeholder: 'assets/gif/loading_2.gif',
                               image: formaterImg(
                                   productController.colorList[index].picture),
                             ).image,
@@ -283,7 +211,7 @@ Widget GridViewSize(BuildContext context) {
     child: productController.sizeList.isEmpty
         ? Center(
             child: Image.asset(
-              'assets/gif/loader.gif',
+              'assets/gif/loading_2.gif',
               height: 50.0,
               width: 50.0,
             ),

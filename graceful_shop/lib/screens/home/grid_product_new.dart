@@ -3,8 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:graceful_shop/controllers/product_controller.dart';
-import 'package:graceful_shop/resources/utils/colors.dart';
 import 'package:graceful_shop/resources/utils/dimensions.dart';
+import 'package:graceful_shop/resources/widgets/button.dart';
 import 'package:graceful_shop/resources/widgets/grid_view.dart';
 
 class GridProductNew extends StatelessWidget {
@@ -32,9 +32,16 @@ class GridProductNew extends StatelessWidget {
           //     ),
           //   ),
           // ),
-          GridViewProduct(
-            context,
-            productController.productList.value,
+          Obx(
+            () {
+              return GridViewProduct(
+                context,
+                productController.productList,
+                  productController.total.value,
+                false,
+                false,
+              );
+            }
           ),
           (productController.checkFull.value == true ||
                   productController.productList.value.length == 0)
@@ -42,43 +49,17 @@ class GridProductNew extends StatelessWidget {
                   height: Dimensions.h40,
                 )
               : productController.loading.value
-                  ? CircularProgressIndicator.adaptive()
-                  : InkWell(
-                      highlightColor: AppColors.white3Color,
-                      onTap: () {
+                  ? Center(
+                      child: Image.asset(
+                        'assets/gif/loading_2_2.gif',
+                        height: Dimensions.h50,
+                      ),
+                    )
+                  : ButtonShowMore(
+                      onPressed: () {
                         productController.loading.value = true;
                         productController.getNewProducts();
                       },
-                      child: Container(
-                        margin: EdgeInsets.all(Dimensions.w15),
-                        padding: EdgeInsets.symmetric(vertical: Dimensions.h5),
-                        decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(20.0),
-                          ),
-                          color: AppColors.blueAccentSearchColor,
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              'SeeMore'.tr,
-                              style: TextStyle(
-                                fontSize: Dimensions.font17,
-                                fontWeight: FontWeight.w500,
-                                color: AppColors.mainColor,
-                              ),
-                            ),
-                            SizedBox(
-                              width: Dimensions.w5,
-                            ),
-                            Icon(
-                              Icons.expand_more,
-                              color: AppColors.mainColor,
-                            ),
-                          ],
-                        ),
-                      ),
                     ),
         ],
       );

@@ -106,9 +106,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       onTap: () {
         if (productController.tab.value != index) {
           productController.tab.value = index;
-          productController.total.value = 0;
-          productController.page.value = 0;
-          productController.productList.value = [];
+          productController.reset();
           if (index == 0) {
             productController.getPopularProducts();
           } else {

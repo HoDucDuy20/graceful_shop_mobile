@@ -11,6 +11,7 @@ class Dimensions {
 
   static double w250 = width / 1.57 > 252 ? 252 : width / 1.57;
   static double w210 = width / 1.87 > 212 ? 212 : width / 1.87;
+  static double w100 = width / 3.93 > 102 ? 102 : width / 3.93;
   static double w80 = width / 4.91 > 82 ? 82 : width / 4.91;
   static double w50 = width / 7.85 > 52 ? 52 : width / 7.85;
   static double w40 = width / 9.82 > 42 ? 42 : width / 9.82;

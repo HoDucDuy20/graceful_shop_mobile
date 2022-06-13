@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:graceful_shop/controllers/product_controller.dart';
 import 'package:graceful_shop/resources/utils/colors.dart';
 import 'package:graceful_shop/resources/utils/dimensions.dart';
-import 'package:graceful_shop/resources/widgets/button_add_cart.dart';
+import 'package:graceful_shop/resources/widgets/button.dart';
 import 'package:graceful_shop/resources/widgets/grid_view.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 

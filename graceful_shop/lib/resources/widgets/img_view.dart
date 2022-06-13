@@ -37,7 +37,7 @@ class _ImgViewState extends State<ImgView> {
             builder: (BuildContext context, int index) {
               return PhotoViewGalleryPageOptions(
                 imageProvider: FadeInImage.assetNetwork(
-                  placeholder: 'assets/gif/loader.gif',
+                  placeholder: 'assets/gif/loading_2.gif',
                   image: formaterImg(lstImg[index].pictureValue),
                   fit: BoxFit.cover,
                 ).image,

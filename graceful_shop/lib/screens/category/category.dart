@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:graceful_shop/controllers/category_controller.dart';
+import 'package:graceful_shop/controllers/product_controller.dart';
 import 'package:graceful_shop/resources/utils/colors.dart';
 import 'package:graceful_shop/resources/utils/dimensions.dart';
 import 'package:graceful_shop/resources/widgets/actions.dart';
@@ -17,6 +18,8 @@ class Category extends StatefulWidget {
 
 class _CategoryState extends State<Category> {
   CategoryController categoryController = Get.find<CategoryController>();
+  ProductController productController = Get.find<ProductController>();
+
 
   @override
   Widget build(BuildContext context) {
@@ -65,6 +68,8 @@ class _CategoryState extends State<Category> {
                   itemBuilder: ((context, index) {
                     return InkWell(
                       onTap: () {
+                        productController.resetSearch();
+                        productController.getProductsOfAllType(categoryController.categoryList.value[index].id);
                         Get.to(() => CategoryDetail(category: categoryController.categoryList.value[index]));
                       },
                       child: Container(

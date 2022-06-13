@@ -1,10 +1,13 @@
 import 'dart:convert';
 
+import 'package:graceful_shop/models/like.dart';
 import 'package:graceful_shop/models/picture.dart';
 
 ProductTotal productTotalFromJson(String str) => ProductTotal.fromJson(jsonDecode(str)['data']);
 
 List<Product> productFromJson(String str) => List<Product>.from(json.decode(str)['data'].map((x) => Product.fromJson(x)));
+
+List<Product> productFavoriteFromJson(String str) => List<Product>.from(json.decode(str)['data'].map((x) => Product.fromJson(x['products'])));
 
 String productToJson(List<Product> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
@@ -25,6 +28,8 @@ class Product {
     required this.numRate,
     required this.description,
     required this.pictures,
+    required this.likes,
+    this.isLike = false,
   });
 
   int id;
@@ -42,6 +47,8 @@ class Product {
   int numRate;
   String description;
   List<Picture> pictures;
+  List<Like> likes;
+  bool isLike;
 
   factory Product.fromJson(Map<String, dynamic> json) => Product(
     id: json["id"],
@@ -59,6 +66,7 @@ class Product {
     numRate: json["num_rate"],
     description: json["description"],
     pictures: List<Picture>.from(json["pictures"].map((x) => Picture.fromJson(x))),
+    likes: List<Like>.from(json["likes"].map((x) => Like.fromJson(x))),
   );
 
   Map<String, dynamic> toJson() => {
@@ -77,6 +85,7 @@ class Product {
     "num_rate": numRate,
     "description": description,
     "pictures": List<dynamic>.from(pictures.map((x) => x.toJson())),
+    "likes": List<dynamic>.from(likes.map((x) => x.toJson())),
   };
 }
 

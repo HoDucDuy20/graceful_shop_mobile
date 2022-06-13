@@ -25,7 +25,6 @@ class _AdvertiseDetailState extends State<AdvertiseDetail> {
 
   void _launchUrl(String url) async {
     Uri _url = Uri.parse(url);
-    // ignore: avoid_print
     print(_url);
     if (!await launchUrl(_url)) throw 'Could not launch $_url';
   }
@@ -33,81 +32,82 @@ class _AdvertiseDetailState extends State<AdvertiseDetail> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Obx(
-        () {
-          return SingleChildScrollView(
-            child: Column(
-              children: [
-                Container(
-                  height: Dimensions.h250,
-                  padding: EdgeInsets.only(
-                      left: Dimensions.w20,
-                      right: Dimensions.w20,
-                      top: Dimensions.h25),
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: AssetImage('assets/images/img_1.jpg'),
-                      fit: BoxFit.cover,
-                    ),
+      body: Obx(() {
+        return SingleChildScrollView(
+          child: Column(
+            children: [
+              Container(
+                height: Dimensions.h250,
+                padding: EdgeInsets.only(
+                    left: Dimensions.w20,
+                    right: Dimensions.w20,
+                    top: Dimensions.h25),
+                decoration: const BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage('assets/images/img_1.jpg'),
+                    fit: BoxFit.cover,
                   ),
-                  child: ListTile(
-                    contentPadding: EdgeInsets.zero,
-                    leading: InkWell(
-                      onTap: () {
-                        Get.back();
-                      },
-                      child: Container(
-                        decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(100.0),
-                          ),
-                          color: AppColors.whiteColor,
+                ),
+                child: ListTile(
+                  contentPadding: EdgeInsets.zero,
+                  leading: InkWell(
+                    onTap: () {
+                      Get.back();
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(100.0),
                         ),
-                        child: Icon(
-                          Icons.chevron_left,
-                          size: Dimensions.font30,
-                          color: AppColors.black2Color,
-                        ),
+                        color: AppColors.whiteColor,
                       ),
-                    ),
-                    trailing: InkWell(
-                      onTap: () {},
-                      child: Container(
-                        padding: EdgeInsets.all(Dimensions.w5),
-                        decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.all(
-                            Radius.circular(100.0),
-                          ),
-                          color: AppColors.whiteColor,
-                        ),
-                        child: Icon(
-                          Icons.share_rounded,
-                          size: Dimensions.font20,
-                          color: AppColors.black2Color,
-                        ),
+                      child: Icon(
+                        Icons.chevron_left,
+                        size: Dimensions.font30,
+                        color: AppColors.black2Color,
                       ),
                     ),
                   ),
-                ),
-                Html(
-                  data: slideAdsDetail.description,
-                  onLinkTap: (String? url, RenderContext context,
-                      Map<String, String> attributes, dom.Element? element) {
-                    _launchUrl(url!);
-                  },
-                ),
-                Container(
-                  padding: EdgeInsets.only(bottom: Dimensions.h10),
-                  child: GridViewProduct(
-                    context,
-                    slideAdsController.productList.value,
+                  trailing: InkWell(
+                    onTap: () {},
+                    child: Container(
+                      padding: EdgeInsets.all(Dimensions.w5),
+                      decoration: BoxDecoration(
+                        borderRadius: const BorderRadius.all(
+                          Radius.circular(100.0),
+                        ),
+                        color: AppColors.whiteColor,
+                      ),
+                      child: Icon(
+                        Icons.share_rounded,
+                        size: Dimensions.font20,
+                        color: AppColors.black2Color,
+                      ),
+                    ),
                   ),
                 ),
-              ],
-            ),
-          );
-        }
-      ),
+              ),
+              Html(
+                data: slideAdsDetail.description,
+                onLinkTap: (String? url, RenderContext context,
+                    Map<String, String> attributes, dom.Element? element) {
+                  _launchUrl(url!);
+                },
+              ),
+              Container(
+                padding: EdgeInsets.only(bottom: Dimensions.h10),
+                child: GridViewProduct(
+                  context,
+                  slideAdsController.productList.value,
+                  slideAdsController.productList.value.length,
+                  false,
+                  false,
+                ),
+              ),
+            ],
+          ),
+        );
+      }),
     );
   }
 }

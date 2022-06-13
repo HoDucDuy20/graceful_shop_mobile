@@ -68,7 +68,7 @@ class _SettingState extends State<Setting> {
                 padding: EdgeInsets.symmetric(horizontal: Dimensions.w5),
                 child: Icon(
                   Icons.chevron_left,
-                  size: Dimensions.font40,
+                  size: Dimensions.font30,
                   color: AppColors.black2Color,
                 ),
               ),
@@ -76,7 +76,7 @@ class _SettingState extends State<Setting> {
             Text(
               'Setting'.tr,
               style: TextStyle(
-                fontSize: Dimensions.font25,
+                fontSize: Dimensions.font20,
                 fontWeight: FontWeight.w500,
               ),
             ),

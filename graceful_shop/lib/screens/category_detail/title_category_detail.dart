@@ -2,27 +2,40 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:graceful_shop/controllers/product_controller.dart';
 import 'package:graceful_shop/models/product_type.dart';
 import 'package:graceful_shop/resources/utils/colors.dart';
 import 'package:graceful_shop/resources/utils/dimensions.dart';
 
 class TitleCategoryDetail extends StatefulWidget {
   int categoryIndex;
+  int categoryId;
   List<ProductType> lstProductType;
   TitleCategoryDetail(
-      {Key? key, required this.categoryIndex, required this.lstProductType})
+      {Key? key,
+      required this.categoryIndex,
+      required this.categoryId,
+      required this.lstProductType})
       : super(key: key);
 
   @override
   State<TitleCategoryDetail> createState() => _TitleCategoryDetailState(
-      categoryIndex: categoryIndex, lstProductType: lstProductType);
+      categoryIndex: categoryIndex,
+      categoryId: categoryId,
+      lstProductType: lstProductType);
 }
 
 class _TitleCategoryDetailState extends State<TitleCategoryDetail> {
   int categoryIndex;
+  int categoryId;
   List<ProductType> lstProductType;
   _TitleCategoryDetailState(
-      {Key? key, required this.categoryIndex, required this.lstProductType});
+      {Key? key,
+      required this.categoryIndex,
+      required this.categoryId,
+      required this.lstProductType});
+  ProductController productController = Get.find<ProductController>();
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -36,6 +49,8 @@ class _TitleCategoryDetailState extends State<TitleCategoryDetail> {
           InkWell(
             onTap: () {
               setState(() {
+                productController.resetSearch();
+                productController.getProductsOfAllType(categoryId);
                 categoryIndex = -1;
               });
             },
@@ -64,6 +79,8 @@ class _TitleCategoryDetailState extends State<TitleCategoryDetail> {
               return InkWell(
                 onTap: () {
                   setState(() {
+                    productController.resetSearch();
+                    productController.getProductsOfType(categoryId);
                     categoryIndex = index;
                   });
                 },
