@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:graceful_shop/controllers/product_controller.dart';
 import 'package:graceful_shop/models/product.dart';
@@ -10,8 +11,11 @@ import 'package:graceful_shop/resources/utils/dimensions.dart';
 import 'package:graceful_shop/resources/utils/format.dart';
 import 'package:graceful_shop/resources/widgets/actions.dart';
 import 'package:graceful_shop/resources/widgets/button.dart';
+import 'package:graceful_shop/resources/widgets/grid_view.dart';
 import 'package:graceful_shop/resources/widgets/show_model.dart';
+import 'package:graceful_shop/resources/widgets/title.dart';
 import 'package:graceful_shop/screens/product_detail/list_img.dart';
+import 'package:graceful_shop/screens/product_detail/view_rate.dart';
 import 'package:graceful_shop/services/url.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:url_launcher/url_launcher.dart';
@@ -47,7 +51,8 @@ class _ProductDetailState extends State<ProductDetail> {
   @override
   void initState() {
     super.initState();
-    productController.getColorSize();
+    productController.getColorSize(product.id);
+    productController.getRateOfProduct(product.id);
     scrollController = ScrollController();
     scrollController.addListener(scrollListenner);
   }
@@ -84,14 +89,12 @@ class _ProductDetailState extends State<ProductDetail> {
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.symmetric(
-                                  vertical: Dimensions.h12),
+                              padding: EdgeInsets.symmetric(vertical: Dimensions.h12),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Row(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
+                                    mainAxisAlignment:MainAxisAlignment.spaceBetween,
                                     children: [
                                       Row(
                                         children: [
@@ -108,10 +111,8 @@ class _ProductDetailState extends State<ProductDetail> {
                                           ),
                                           if (product.discountPrice != 0)
                                             Container(
-                                              margin: EdgeInsets.only(
-                                                  left: Dimensions.w7),
-                                              padding: EdgeInsets.symmetric(
-                                                  horizontal: Dimensions.w5),
+                                              margin: EdgeInsets.only(left: Dimensions.w7),
+                                              padding: EdgeInsets.symmetric(horizontal: Dimensions.w5),
                                               decoration: BoxDecoration(
                                                 border: Border.all(
                                                   color: AppColors.yellowColor,
@@ -120,9 +121,7 @@ class _ProductDetailState extends State<ProductDetail> {
                                                 color: AppColors.yellow2Color,
                                               ),
                                               child: Text(
-                                                Format.percentReduction(
-                                                    product.price,
-                                                    product.discountPrice),
+                                                Format.percentReduction(product.price,product.discountPrice),
                                                 style: TextStyle(
                                                   fontSize: Dimensions.font15,
                                                   fontWeight: FontWeight.w500,
@@ -136,8 +135,7 @@ class _ProductDetailState extends State<ProductDetail> {
                                       Row(
                                         children: [
                                           Padding(
-                                            padding: EdgeInsets.only(
-                                                right: Dimensions.w5),
+                                            padding: EdgeInsets.only(right: Dimensions.w5),
                                             child: Icon(
                                               Icons.favorite,
                                               size: Dimensions.font17,
@@ -157,8 +155,7 @@ class _ProductDetailState extends State<ProductDetail> {
                                   ),
                                   if (product.discountPrice != 0)
                                     Text(
-                                      Format.numPrice(product.discountPrice +
-                                          product.price),
+                                      Format.numPrice(product.discountPrice + product.price),
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
@@ -176,7 +173,7 @@ class _ProductDetailState extends State<ProductDetail> {
                             if (productController.colorList.isNotEmpty)
                               InkWell(
                                 onTap: () {
-                                  showSizeColor(context);
+                                  showSizeColor(context, product.id);
                                 },
                                 child: Container(
                                   padding: EdgeInsets.all(Dimensions.w5),
@@ -193,21 +190,16 @@ class _ProductDetailState extends State<ProductDetail> {
                                     leading: Image(
                                       image: FadeInImage.assetNetwork(
                                         placeholder: 'assets/gif/loading_2.gif',
-                                        image: formaterImg(productController
-                                            .colorList[productController
-                                                .indexColor.value]
-                                            .picture),
+                                        image: formaterImg(productController.colorList[productController.indexColor.value].picture),
                                       ).image,
                                       fit: BoxFit.cover,
                                     ),
                                     title: Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       children: [
                                         Text(
-                                          'Color'.tr + ', ' + 'Size'.tr,
+                                          '${'Color'.tr}, ${'Size'.tr}',
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
                                           style: TextStyle(
@@ -217,19 +209,9 @@ class _ProductDetailState extends State<ProductDetail> {
                                             letterSpacing: 0.5,
                                           ),
                                         ),
-                                        const SizedBox(
-                                          height: 5,
-                                        ),
+                                        const SizedBox(height: 5),
                                         Text(
-                                          productController
-                                                  .colorList[productController
-                                                      .indexColor.value]
-                                                  .colorName +
-                                              ' / ' +
-                                              productController
-                                                  .sizeList[productController
-                                                      .indexSize.value]
-                                                  .sizeName,
+                                          '${productController.colorList[productController.indexColor.value].colorName} / ${productController.sizeList[productController .indexSize.value].sizeName}',
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
                                           style: TextStyle(
@@ -249,29 +231,7 @@ class _ProductDetailState extends State<ProductDetail> {
                                   ),
                                 ),
                               ),
-                            Container(
-                              width: Dimensions.width,
-                              decoration: BoxDecoration(
-                                border: Border(
-                                  top: BorderSide(
-                                    color: AppColors.gray2Color,
-                                    width: 10.0,
-                                  ),
-                                ),
-                              ),
-                              margin: EdgeInsets.only(top: Dimensions.h10),
-                              padding: EdgeInsets.only(
-                                  top: Dimensions.h10, bottom: Dimensions.h12),
-                              child: Text(
-                                'ProductDescription'.tr,
-                                style: TextStyle(
-                                  fontSize: Dimensions.font16,
-                                  fontWeight: FontWeight.w600,
-                                  color: AppColors.black2Color,
-                                  letterSpacing: 0.5,
-                                ),
-                              ),
-                            ),
+                            titleProductDetail('ProductDescription'.tr),
                             Html(
                               data: product.description,
                               onLinkTap: (String? url,
@@ -281,31 +241,162 @@ class _ProductDetailState extends State<ProductDetail> {
                                 _launchUrl(url!);
                               },
                             ),
-                            Container(
-                              width: Dimensions.width,
-                              decoration: BoxDecoration(
-                                border: Border(
-                                  top: BorderSide(
-                                    color: AppColors.gray2Color,
-                                    width: 10.0,
+                            titleProductDetail('CustomerRatings'.tr),
+                            Row(
+                              children: [
+                                RatingBarIndicator(
+                                  rating: product.numRate,
+                                  itemBuilder: (context, index) => Icon(
+                                    Icons.star,
+                                    color: AppColors.yellowColor,
+                                  ),
+                                  itemCount: 5,
+                                  itemSize: Dimensions.w30,
+                                  direction: Axis.horizontal,
+                                ),
+                                const SizedBox(width: 10),
+                                Text.rich(
+                                  TextSpan(
+                                    text: '${product.numRate}/5.0  ',
+                                    style: TextStyle(
+                                      wordSpacing: 1.5,
+                                      fontSize: Dimensions.font14,
+                                      fontWeight: FontWeight.w400,
+                                      color: AppColors.red3Color,
+                                    ),
+                                    children: <TextSpan>[
+                                      TextSpan(
+                                        text: '(${productController.rateList.length} ${'Rating'.tr})',
+                                        style: TextStyle(
+                                          height: 1.5,
+                                          fontSize: Dimensions.font14,
+                                          fontWeight: FontWeight.w400,
+                                          color: AppColors.grayColor,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  textAlign: TextAlign.start,
+                                ),
+                              ],
+                            ),
+                            if (productController.rateList.isNotEmpty)
+                              ListView.builder(
+                                physics: const NeverScrollableScrollPhysics(),
+                                padding: EdgeInsets.symmetric(vertical: Dimensions.h7),
+                                shrinkWrap: true,
+                                itemCount: productController.rateList.length > 3 ? 3 : productController.rateList.length,
+                                itemBuilder: (context, index) {
+                                  return Container(
+                                    padding: EdgeInsets.symmetric(vertical: Dimensions.h7),
+                                    decoration: BoxDecoration(
+                                      border: Border(
+                                        top: BorderSide(
+                                          color: AppColors.gray2Color,
+                                          width: 0.5,
+                                        ),
+                                      ),
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment:CrossAxisAlignment.start,
+                                      children: [
+                                        ListTile(
+                                          leading: CircleAvatar(
+                                            child: FadeInImage.assetNetwork(
+                                              placeholder:'assets/gif/loading_2.gif',
+                                              image: formaterImg(productController.rateList[index].user.avatar),
+                                              fit: BoxFit.cover,
+                                            ),
+                                          ),
+                                          title: Text(
+                                            productController.rateList[index].user.fullName,
+                                            style: TextStyle(
+                                              height: 1.5,
+                                              fontSize: Dimensions.font14,
+                                              fontWeight: FontWeight.w600,
+                                              color: AppColors.grayColor,
+                                            ),
+                                          ),
+                                          subtitle: RatingBarIndicator(
+                                            rating: productController.rateList[index].numRate,
+                                            itemBuilder: (context, index) => Icon(
+                                              Icons.star,
+                                              color: AppColors.yellowColor,
+                                            ),
+                                            itemCount: 5,
+                                            itemSize: Dimensions.w15,
+                                            direction: Axis.horizontal,
+                                          ),
+                                          trailing: Text(
+                                            Format.dateTime(productController.rateList[index].createdAt,
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsets.only(bottom: Dimensions.h7),
+                                          child: Text(
+                                            productController.rateList[index].description,
+                                            style: TextStyle(
+                                              height: 1.5,
+                                              fontSize: Dimensions.font15,
+                                              fontWeight: FontWeight.w500,
+                                              color: AppColors.black2Color,
+                                            ),
+                                          ),
+                                        ),
+                                        if (productController.rateList[index].picturesRate.isNotEmpty)
+                                          GridViewImageRate(context, productController.rateList[index].picturesRate)
+                                      ],
+                                    ),
+                                  );
+                                },
+                              ),
+                            if (productController.rateList.length > 3)
+                              InkWell(
+                                onTap: () {
+                                  Get.to(() => ViewRate(product: product));
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    border: Border(
+                                      top: BorderSide(
+                                        color: AppColors.gray2Color,
+                                        width: 1,
+                                      ),
+                                    ),
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            top: 4, bottom: 5),
+                                        child: Text(
+                                          'SeeMore'.tr,
+                                          style: TextStyle(
+                                            fontSize: Dimensions.font14,
+                                            fontWeight: FontWeight.w500,
+                                            color: AppColors.mainColor,
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: Dimensions.w5,
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 5),
+                                        child: Icon(
+                                          Icons.expand_more,
+                                          size: Dimensions.font15,
+                                          color: AppColors.mainColor,
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
-                              margin: EdgeInsets.only(top: Dimensions.h10),
-                              padding: EdgeInsets.only(
-                                  top: Dimensions.h10, bottom: Dimensions.h12),
-                              child: Text(
-                                'CustomerRatings'.tr,
-                                style: TextStyle(
-                                  fontSize: Dimensions.font16,
-                                  fontWeight: FontWeight.w600,
-                                  color: AppColors.black2Color,
-                                  letterSpacing: 0.5,
-                                ),
-                              ),
-                            ),
                             SizedBox(
-                              height: Dimensions.h65,
+                              height: Dimensions.h80,
                             ),
                           ],
                         ),
@@ -316,13 +407,11 @@ class _ProductDetailState extends State<ProductDetail> {
               ],
             ),
             PreferredSize(
-              child: FadeAppBar(scrollOffset: scrollControllerOffset),
               preferredSize: Size(Dimensions.width, Dimensions.h20),
+              child: FadeAppBar(scrollOffset: scrollControllerOffset),
             ),
             Container(
-              padding: EdgeInsets.symmetric(
-                vertical: Dimensions.h25,
-                horizontal: Dimensions.w20,
+              padding: EdgeInsets.symmetric(vertical: Dimensions.h25, horizontal: Dimensions.w20,
               ),
               child: ListTile(
                 contentPadding: EdgeInsets.zero,
@@ -332,9 +421,7 @@ class _ProductDetailState extends State<ProductDetail> {
                   },
                   child: Container(
                     decoration: BoxDecoration(
-                      borderRadius: const BorderRadius.all(
-                        Radius.circular(100.0),
-                      ),
+                      borderRadius: const BorderRadius.all(Radius.circular(100.0)),
                       color: AppColors.whiteColor,
                     ),
                     child: Icon(
@@ -344,8 +431,7 @@ class _ProductDetailState extends State<ProductDetail> {
                     ),
                   ),
                 ),
-                trailing:
-                    Row(mainAxisSize: MainAxisSize.min, children: lstAction3),
+                trailing: Row(mainAxisSize: MainAxisSize.min, children: lstAction3),
               ),
             ),
             Align(
@@ -365,7 +451,7 @@ class _ProductDetailState extends State<ProductDetail> {
                 child: ButtonBuyNow(
                   title: 'BuyNow'.tr,
                   onPressed: () {
-                    showSizeColor(context);
+                    showSizeColor(context, product.id);
                   },
                   color: AppColors.redColor,
                 ),
@@ -379,7 +465,7 @@ class _ProductDetailState extends State<ProductDetail> {
 }
 
 class FadeAppBar extends StatelessWidget {
-  FadeAppBar({Key? key, required this.scrollOffset}) : super(key: key);
+  const FadeAppBar({Key? key, required this.scrollOffset}) : super(key: key);
   final double scrollOffset;
 
   @override

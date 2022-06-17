@@ -13,6 +13,7 @@ class ImgSlide extends StatelessWidget {
   final CarouselController _controller = CarouselController();
   SlideAdsController slideAdsController = Get.find<SlideAdsController>();
   RxInt i = 0.obs;
+  
   @override
   Widget build(BuildContext context) {
     final orientation = MediaQuery.of(context).orientation;
@@ -23,9 +24,7 @@ class ImgSlide extends StatelessWidget {
             CarouselSlider(
               carouselController: _controller,
               options: CarouselOptions(
-                height: (orientation == Orientation.portrait)
-                    ? Dimensions.height
-                    : Dimensions.width,
+                height: (orientation == Orientation.portrait) ? Dimensions.height : Dimensions.width,
                 aspectRatio: 16 / 9,
                 viewportFraction: 1,
                 initialPage: 0,
@@ -47,14 +46,10 @@ class ImgSlide extends StatelessWidget {
                     return InkWell(
                       onTap: () {
                         slideAdsController.getSlideAdsDetail(i.id);
-                        Get.to(() => AdvertiseDetail(
-                              slideAdsDetail: i,
-                            ));
+                        Get.to(() => AdvertiseDetail(slideAdsDetail: i));
                       },
                       child: SizedBox(
-                        width: (orientation == Orientation.portrait)
-                            ? Dimensions.width
-                            : Dimensions.height,
+                        width: (orientation == Orientation.portrait) ? Dimensions.width : Dimensions.height,
                         child: Image(
                           image: FadeInImage.assetNetwork(
                             placeholder: 'assets/gif/loading_2.gif',
@@ -71,9 +66,7 @@ class ImgSlide extends StatelessWidget {
             Align(
               alignment: Alignment.bottomCenter,
               child: DotsIndicator(
-                dotsCount: slideAdsController.slideAdsList.length == 0
-                    ? 1
-                    : slideAdsController.slideAdsList.length,
+                dotsCount: slideAdsController.slideAdsList.isEmpty ? 1 : slideAdsController.slideAdsList.length,
                 position: i.toDouble(),
                 decorator: DotsDecorator(
                   activeColor: AppColors.mainColor,

@@ -26,15 +26,11 @@ class TitleCategoryDetail extends StatefulWidget {
 }
 
 class _TitleCategoryDetailState extends State<TitleCategoryDetail> {
+  _TitleCategoryDetailState({Key? key, required this.categoryIndex, required this.categoryId, required this.lstProductType});
+  ProductController productController = Get.find<ProductController>();
   int categoryIndex;
   int categoryId;
   List<ProductType> lstProductType;
-  _TitleCategoryDetailState(
-      {Key? key,
-      required this.categoryIndex,
-      required this.categoryId,
-      required this.lstProductType});
-  ProductController productController = Get.find<ProductController>();
 
   @override
   Widget build(BuildContext context) {
@@ -61,11 +57,8 @@ class _TitleCategoryDetailState extends State<TitleCategoryDetail> {
                 'All'.tr,
                 style: TextStyle(
                   fontSize: Dimensions.font17,
-                  fontWeight:
-                      categoryIndex == -1 ? FontWeight.w600 : FontWeight.w500,
-                  color: categoryIndex == -1
-                      ? AppColors.mainColor
-                      : AppColors.grayColor,
+                  fontWeight: categoryIndex == -1 ? FontWeight.w600 : FontWeight.w500,
+                  color: categoryIndex == -1 ? AppColors.mainColor : AppColors.grayColor,
                 ),
               ),
             ),
@@ -99,12 +92,8 @@ class _TitleCategoryDetailState extends State<TitleCategoryDetail> {
                     lstProductType[index].productTypeName,
                     style: TextStyle(
                       fontSize: Dimensions.font16,
-                      fontWeight: categoryIndex == index
-                          ? FontWeight.w600
-                          : FontWeight.w500,
-                      color: categoryIndex == index
-                          ? AppColors.mainColor
-                          : AppColors.grayColor,
+                      fontWeight: categoryIndex == index ? FontWeight.w600 : FontWeight.w500,
+                      color: categoryIndex == index ? AppColors.mainColor : AppColors.grayColor,
                     ),
                   ),
                 ),

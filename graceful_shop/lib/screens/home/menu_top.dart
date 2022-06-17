@@ -37,9 +37,7 @@ class MenuTop extends StatelessWidget {
                 Icons.search,
                 size: Dimensions.font25,
               ),
-              SizedBox(
-                width: Dimensions.w7,
-              ),
+              SizedBox(width: Dimensions.w7),
               Text(
                 'Search'.tr,
                 style: TextStyle(fontSize: Dimensions.font16),

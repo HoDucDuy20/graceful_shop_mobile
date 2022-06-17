@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:graceful_shop/controllers/favorite_controller.dart';
 import 'package:graceful_shop/controllers/product_controller.dart';
+import 'package:graceful_shop/models/picture.dart';
 import 'package:graceful_shop/models/product.dart';
 import 'package:graceful_shop/resources/utils/colors.dart';
 import 'package:graceful_shop/resources/utils/dimensions.dart';
 import 'package:graceful_shop/resources/widgets/draw_triangle_shape.dart';
+import 'package:graceful_shop/resources/widgets/img_view.dart';
 import 'package:graceful_shop/resources/widgets/item_grid_view.dart';
 import 'package:graceful_shop/screens/product_detail/product_detail.dart';
 import 'package:graceful_shop/services/url.dart';
@@ -75,10 +77,11 @@ Widget GridViewProduct(BuildContext context, List<Product> lstProduct,
                     ],
                   ),
                   child: ItemGridView(
-                      product: lstProduct[index],
-                      index: index,
-                      isSearch: isSearch,
-                      isFavorite: isFavorite),
+                    product: lstProduct[index],
+                    index: index,
+                    isSearch: isSearch,
+                    isFavorite: isFavorite,
+                  ),
                 ),
               );
             },
@@ -129,6 +132,9 @@ Widget GridViewColor(BuildContext context) {
                 return InkWell(
                   highlightColor: AppColors.whiteColor,
                   onTap: () {
+                    if (productController.indexColor.value != index) {
+                      productController.quantity.value = 1;
+                    }
                     productController.indexColor.value = index;
                   },
                   child: Container(
@@ -165,7 +171,7 @@ Widget GridViewColor(BuildContext context) {
                             child: Text(
                               productController.colorList[index].colorName,
                               maxLines: 2,
-                              overflow: TextOverflow.visible,
+                              overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                 fontWeight: FontWeight.w400,
                                 color: AppColors.blackColor,
@@ -229,6 +235,9 @@ Widget GridViewSize(BuildContext context) {
                 return InkWell(
                   highlightColor: AppColors.whiteColor,
                   onTap: () {
+                    if (productController.indexSize.value != index) {
+                      productController.quantity.value = 1;
+                    }
                     productController.indexSize.value = index;
                   },
                   child: Container(
@@ -255,7 +264,7 @@ Widget GridViewSize(BuildContext context) {
                           child: Text(
                             productController.sizeList[index].sizeName,
                             maxLines: 1,
-                            overflow: TextOverflow.visible,
+                            overflow: TextOverflow.ellipsis,
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontWeight: FontWeight.w400,
@@ -289,5 +298,59 @@ Widget GridViewSize(BuildContext context) {
               });
             },
           ),
+  );
+}
+
+Widget GridViewImageRate(
+    BuildContext context, List<PicturesRate> lstPictureRate) {
+  final orientation = MediaQuery.of(context).orientation;
+
+  return MediaQuery.removePadding(
+    context: context,
+    removeTop: true,
+    child: GridView.builder(
+      physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+        crossAxisCount: (orientation == Orientation.portrait) ? 3 : 5,
+        mainAxisExtent: Dimensions.h180,
+      ),
+      itemCount: lstPictureRate.length,
+      itemBuilder: (BuildContext context, int index) {
+        return InkWell(
+          highlightColor: AppColors.whiteColor,
+          onTap: () {
+            Get.to(
+              () => ImgRateView(lstImgRate: lstPictureRate, i: index),
+            );
+          },
+          child: Container(
+            margin: EdgeInsets.symmetric(horizontal: Dimensions.w5),
+            padding: EdgeInsets.symmetric(vertical: Dimensions.h5),
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.all(
+                Radius.circular(20.0),
+              ),
+              color: AppColors.whiteColor,
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.gray2Color,
+                  spreadRadius: 0.5,
+                  blurRadius: 2,
+                  offset: const Offset(1.5, 2.5),
+                ),
+              ],
+            ),
+            child: FadeInImage.assetNetwork(
+              placeholder: 'assets/gif/loading_2.gif',
+              image: formaterImg(
+                lstPictureRate[index].pictureValue,
+              ),
+              fit: BoxFit.cover,
+            ),
+          ),
+        );
+      },
+    ),
   );
 }

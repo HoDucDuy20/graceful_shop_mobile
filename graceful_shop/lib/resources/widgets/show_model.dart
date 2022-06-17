@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:graceful_shop/controllers/cart_controller.dart';
 import 'package:graceful_shop/controllers/product_controller.dart';
 import 'package:graceful_shop/resources/utils/colors.dart';
 import 'package:graceful_shop/resources/utils/dimensions.dart';
@@ -8,8 +9,9 @@ import 'package:graceful_shop/resources/widgets/grid_view.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 ProductController productController = Get.find<ProductController>();
+CartController cartController = Get.find<CartController>();
 
-void showSizeColor(BuildContext context) async {
+void showSizeColor(BuildContext context, int product_id) async {
   showMaterialModalBottomSheet(
     context: context,
     shape: const RoundedRectangleBorder(
@@ -189,7 +191,16 @@ void showSizeColor(BuildContext context) async {
                   children: [
                     ButtonAddCart(
                       title: 'AddCart'.tr,
-                      onPressed: () {},
+                      onPressed: () {
+                        cartController.addCart(
+                          product_id,
+                          productController
+                              .colorList[productController.indexColor.value].id,
+                          productController
+                              .sizeList[productController.indexSize.value].id,
+                          productController.quantity.value,
+                        );
+                      },
                       color: AppColors.blueAccentColor,
                     ),
                     SizedBox(width: Dimensions.w25),

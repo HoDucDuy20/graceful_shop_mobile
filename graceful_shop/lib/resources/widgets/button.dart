@@ -107,32 +107,32 @@ class ButtonBuyNow extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return isLoading
-        ? Image.asset(
-            'assets/gif/loading_3_2.gif',
-            height: Dimensions.h50,
-          )
-        : MaterialButton(
-            onPressed: onPressed,
-            shape: const RoundedRectangleBorder(
-              borderRadius: BorderRadius.all(
-                Radius.circular(5),
-              ),
-            ),
-            color: color,
-            height: Dimensions.h50,
-            minWidth: Dimensions.width,
-            child: Text(
-              title,
-              maxLines: 1,
-              overflow: TextOverflow.visible,
-              style: TextStyle(
-                fontSize: Dimensions.font15,
-                fontWeight: FontWeight.w400,
-                color: AppColors.whiteColor,
-              ),
-            ),
-          );
+    return isLoading 
+    ? Image.asset(
+        'assets/gif/loading_3_2.gif',
+        height: Dimensions.h50,
+      ) 
+    : MaterialButton(
+        onPressed: onPressed,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(5),
+          ),
+        ),
+        color: color,
+        height: Dimensions.h50,
+        minWidth: Dimensions.width,
+        child: Text(
+          title,
+          maxLines: 1,
+          overflow: TextOverflow.visible,
+          style: TextStyle(
+            fontSize: Dimensions.font15,
+            fontWeight: FontWeight.w400,
+            color: AppColors.whiteColor,
+          ),
+        ),
+      );
   }
 }
 

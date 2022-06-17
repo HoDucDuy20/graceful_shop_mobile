@@ -5,7 +5,6 @@ import 'package:graceful_shop/resources/utils/colors.dart';
 import 'package:graceful_shop/resources/utils/dimensions.dart';
 import 'package:graceful_shop/resources/utils/format.dart';
 import 'package:graceful_shop/resources/widgets/button.dart';
-import 'package:graceful_shop/screens/personal_page_detail/password_edit.dart';
 import 'package:graceful_shop/screens/personal_page_detail/personal_page_edit.dart';
 import 'package:graceful_shop/services/url.dart';
 
@@ -77,39 +76,12 @@ class _PersonalDetailState extends State<PersonalDetail> {
                 ),
                 title('PersonalPageInfo'.tr),
                 info('InputName'.tr, userController.user.value.fullName),
-                info('DateOfBirth'.tr,
-                    Format.dateTime(userController.user.value.dateOfBirth)),
+                info('DateOfBirth'.tr, Format.dateTime(userController.user.value.dateOfBirth)),
                 info('Sex'.tr, userController.user.value.sexName),
                 title('AccountInformation'.tr),
                 info('Phone'.tr, userController.user.value.phone),
                 info('Email'.tr, userController.user.value.email),
                 info('Address'.tr, userController.user.value.address),
-                Container(
-                  margin: EdgeInsets.symmetric(vertical: Dimensions.w10),
-                  padding: EdgeInsets.symmetric(horizontal: Dimensions.w10),
-                  decoration: BoxDecoration(
-                    color: AppColors.gray3Color,
-                  ),
-                  child: ListTile(
-                    onTap: () {
-                      Get.to(() => const PasswordEdit());
-                    },
-                    contentPadding: EdgeInsets.zero,
-                    title: Text(
-                      'InputPass'.tr,
-                      style: TextStyle(
-                        wordSpacing: 1.5,
-                        fontSize: Dimensions.font16,
-                        fontWeight: FontWeight.w400,
-                        color: AppColors.blackColor,
-                      ),
-                    ),
-                    trailing: Icon(
-                      Icons.chevron_right,
-                      size: Dimensions.font25,
-                    ),
-                  ),
-                ),
                 Container(
                   margin: EdgeInsets.all(Dimensions.w20),
                   alignment: Alignment.center,

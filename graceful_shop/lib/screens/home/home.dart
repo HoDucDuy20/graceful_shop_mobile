@@ -63,19 +63,19 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                       ),
                     ),
                     IndexedStack(
+                      index: productController.tab.value,
                       children: <Widget>[
                         Visibility(
-                          child: GridProductFeatured(),
                           maintainState: true,
                           visible: productController.tab.value == 0,
+                          child: const GridProductFeatured(),
                         ),
                         Visibility(
-                          child: GridProductNew(),
                           maintainState: true,
                           visible: productController.tab.value == 1,
+                          child: GridProductNew(),
                         ),
                       ],
-                      index: productController.tab.value,
                     ),
                   ],
                 ),

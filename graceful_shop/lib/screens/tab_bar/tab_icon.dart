@@ -23,9 +23,7 @@ class TabIcon extends StatelessWidget {
       children: [
         SvgPicture.asset(
           assetIcon,
-          color: tabController.index == index
-              ? AppColors.mainColor
-              : AppColors.grayColor,
+          color: tabController.index == index ? AppColors.mainColor : AppColors.grayColor,
           height: Dimensions.h25,
           width: Dimensions.w25,
         ),

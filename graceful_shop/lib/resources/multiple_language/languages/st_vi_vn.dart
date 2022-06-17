@@ -50,8 +50,7 @@ const Map<String, String> vi = {
   'NotLoggedIn': 'Chưa đăng nhập',
   'SignInRequired': 'Vui lòng đăng nhập để nhận thông báo mới nhất từ shop',
   'NoProduct': 'Chưa có sản phẩm',
-  'TitleAddProduct':
-      'Thêm sản phẩm vào để có thể dể dàng tìm lại các sản phẩm yêu thích của mình với Graceful Shop nhé!',
+  'TitleAddProduct': 'Thêm sản phẩm vào để có thể dể dàng tìm lại các sản phẩm yêu thích của mình với Graceful Shop nhé!',
   //Personal Page
   'PersonalPage': 'Trang cá nhân',
   'Hello': 'Xin chào!',
@@ -97,8 +96,7 @@ const Map<String, String> vi = {
   'Language': 'Ngôn ngữ',
   'LanguageSettings': 'Cài đặt ngôn ngữ',
   //Showdialog
-  'PleaseLogIn':
-      'Hãy đăng nhập Gracefull Shop\nđể trải nghiệm cảm giác mua sắm tốt nhất bạn nhé!',
+  'PleaseLogIn': 'Hãy đăng nhập Gracefull Shop\nđể trải nghiệm cảm giác mua sắm tốt nhất bạn nhé!',
   //Product Detail
   'Size': 'Kích thước',
   'Color': 'Màu sắc',
@@ -106,5 +104,16 @@ const Map<String, String> vi = {
   'AddCart': 'Thêm vào giỏ hàng',
   'BuyNow': 'Mua ngay',
   'ProductDescription': 'Mô tả sản phẩm',
-  'CustomerRatings': 'Khách hàng đánh giá'
+  'CustomerRatings': 'Khách hàng đánh giá',
+  'Rating': 'đánh giá',
+  'AddedToCart': 'Đã thêm vào giỏ hàng',
+  //Cart
+  'Cart': 'Giỏ hàng',
+  'Classify': 'Phân loại',
+  'AreYouSureQuitProduct': 'Bạn có chắc muốn bỏ sản phẩm này?',
+  'Yes': 'Có',
+  'No': 'Không',
+  'BuyProduct': 'Mua hàng',
+  //Pay
+  'Pay': 'Thanh toán',
 };

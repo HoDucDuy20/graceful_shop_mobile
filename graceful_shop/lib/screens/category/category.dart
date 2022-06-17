@@ -46,9 +46,7 @@ class _CategoryState extends State<Category> {
           children: [
             Container(
               height: Dimensions.hLstCategory,
-              width: (orientation == Orientation.portrait)
-                  ? Dimensions.width * 1.5
-                  : Dimensions.height * 1.5,
+              width: (orientation == Orientation.portrait) ? Dimensions.width * 1.5 : Dimensions.height * 1.5,
               decoration: BoxDecoration(
                 color: AppColors.whiteColor,
                 boxShadow: [
@@ -64,13 +62,13 @@ class _CategoryState extends State<Category> {
                 return ListView.builder(
                   scrollDirection: Axis.horizontal,
                   shrinkWrap: true,
-                  itemCount: categoryController.categoryList.value.length,
+                  itemCount: categoryController.categoryList.length,
                   itemBuilder: ((context, index) {
                     return InkWell(
                       onTap: () {
                         productController.resetSearch();
-                        productController.getProductsOfAllType(categoryController.categoryList.value[index].id);
-                        Get.to(() => CategoryDetail(category: categoryController.categoryList.value[index]));
+                        productController.getProductsOfAllType(categoryController.categoryList[index].id);
+                        Get.to(() => CategoryDetail(category: categoryController.categoryList[index]));
                       },
                       child: Container(
                         margin: EdgeInsets.only(left: Dimensions.w25),
@@ -79,14 +77,14 @@ class _CategoryState extends State<Category> {
                           mainAxisSize: MainAxisSize.min,
                           children: [
                             SvgPicture.network(
-                              formaterImg(categoryController.categoryList.value[index].icon),                   
+                              formaterImg(categoryController.categoryList[index].icon),                   
                               height: Dimensions.h50,
                             ),
                             const SizedBox(
                               height: 5,
                             ),
                             Text(
-                              categoryController.categoryList.value[index].categoryName,
+                              categoryController.categoryList[index].categoryName,
                               style: TextStyle(
                                 fontSize: Dimensions.font17,
                                 fontWeight: FontWeight.w400,

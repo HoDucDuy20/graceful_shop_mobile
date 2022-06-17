@@ -13,6 +13,7 @@ class Dimensions {
   static double w210 = width / 1.87 > 212 ? 212 : width / 1.87;
   static double w100 = width / 3.93 > 102 ? 102 : width / 3.93;
   static double w80 = width / 4.91 > 82 ? 82 : width / 4.91;
+  static double w65 = width / 6.04 > 67 ? 67 : width / 6.04;
   static double w50 = width / 7.85 > 52 ? 52 : width / 7.85;
   static double w40 = width / 9.82 > 42 ? 42 : width / 9.82;
   static double w35 = width / 11.22 > 37 ? 37 : width / 11.22;
@@ -53,7 +54,10 @@ class Dimensions {
   static double font27 = width / 14.54 > 29 ? 29 : width / 14.54;
   static double font25 = width / 15.71 > 27 ? 27 : width / 15.71;
   static double font20 = width / 19.64 > 22 ? 22 : width / 19.64;
-  static double font17 = width / 23.1 > 19 ? 19 : width / 23.1;
+  static double font17 = width / 23.10 > 19 ? 19 : width / 23.10;
   static double font16 = width / 24.54 > 18 ? 18 : width / 24.54;
   static double font15 = width / 26.18 > 17 ? 17 : width / 26.18;
+  static double font14 = width / 28.05 > 16 ? 16 : width / 28.05;
+  static double font13 = width / 30.21 > 15 ? 15 : width / 30.21;
+  static double font12 = width / 32.73 > 14 ? 14 : width / 32.73;
 }

@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:graceful_shop/controllers/user_controller.dart';
 import 'package:graceful_shop/resources/multiple_language/localization_service.dart';
 import 'package:graceful_shop/resources/utils/colors.dart';
 import 'package:graceful_shop/resources/utils/dimensions.dart';
 import 'package:graceful_shop/resources/widgets/show_dialog.dart';
+import 'package:graceful_shop/screens/personal_page_detail/personal_page_detail.dart';
 import 'package:graceful_shop/screens/setting/list_tile.dart';
 
 class Setting extends StatefulWidget {
@@ -15,8 +17,10 @@ class Setting extends StatefulWidget {
 }
 
 class _SettingState extends State<Setting> {
+  UserController userController = Get.find<UserController>();
   List<Widget> lstItem = [];
   String langCode = LocalizationService.langCodeValue;
+  
   _loadListItem() {
     LocalizationService.langs.forEach((key, value) {
       lstItem.add(
@@ -91,7 +95,10 @@ class _SettingState extends State<Setting> {
           child: Column(
             children: [
               InkWell(
-                onTap: () {},
+                onTap: () {
+                  userController.getUserInfo();
+                  Get.to(() => const PersonalDetail());
+                },
                 child: ListTileItem(
                   title: 'Infor'.tr,
                   trailing: const Icon(Icons.chevron_right),

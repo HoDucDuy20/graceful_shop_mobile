@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:get/get.dart';
+import 'package:graceful_shop/controllers/cart_controller.dart';
 import 'package:graceful_shop/controllers/favorite_controller.dart';
 import 'package:graceful_shop/models/user.dart';
 import 'package:graceful_shop/screens/login/login.dart';
@@ -31,6 +32,7 @@ class UserController extends GetxController {
     token.value = prefs.getString('token') ?? '';
     getUserInfo();
     Get.put(FavoriteController());
+    Get.put(CartController());
   }
 
   void getSex() async {
@@ -134,55 +136,23 @@ class UserController extends GetxController {
   void updateProfile(File? image) async {
     isLoading.value = true;
     if (token.value != '') {
-      if (image != null) {
-        var responseDataAvatar =
-            await RemoteService.changeAvatar(token.value, image.path);
-        var responseDataInfo =
-            await RemoteService.changeInfo(token.value, user.value);
-        if (responseDataInfo != null && responseDataAvatar != null) {
-          if (responseDataInfo.status != 0) {
-            isLoading.value = false;
-            Get.snackbar(
-              'FailedAction'.tr,
-              responseDataInfo.message,
-              snackPosition: SnackPosition.BOTTOM,
-            );
-          }
-          if (responseDataAvatar.status != 0) {
-            isLoading.value = false;
-            Get.snackbar(
-              'FailedAction'.tr,
-              responseDataAvatar.message,
-              snackPosition: SnackPosition.BOTTOM,
-            );
-          }
-          if (responseDataInfo.status == 0 && responseDataAvatar.status == 0) {
-            getUserInfo();
-            getSex();
-            Get.back();
-            isLoading.value = false;
-          }
-          return;
+      var responseDataInfo =
+          await RemoteService.changeInfo(token.value, user.value, image?.path);
+      if (responseDataInfo != null) {
+        if (responseDataInfo.status != 0) {
+          isLoading.value = false;
+          Get.snackbar(
+            'FailedAction'.tr,
+            responseDataInfo.message,
+            snackPosition: SnackPosition.BOTTOM,
+          );
+        } else {
+          getUserInfo();
+          getSex();
+          Get.back();
+          isLoading.value = false;
         }
-      } else {
-        var responseDataInfo =
-            await RemoteService.changeInfo(token.value, user.value);
-        if (responseDataInfo != null) {
-          if (responseDataInfo.status != 0) {
-            isLoading.value = false;
-            Get.snackbar(
-              'FailedAction'.tr,
-              responseDataInfo.message,
-              snackPosition: SnackPosition.BOTTOM,
-            );
-          } else {
-            getUserInfo();
-            getSex();
-            Get.back();
-            isLoading.value = false;
-          }
-          return;
-        }
+        return;
       }
       isLoading.value = false;
       Get.snackbar(

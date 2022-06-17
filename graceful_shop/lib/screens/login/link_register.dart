@@ -12,14 +12,14 @@ class LinkRegister extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text.rich(
       TextSpan(
-        text: 'IfNotAccount'.tr + '\n',
+        text: '${'IfNotAccount'.tr}\n',
         style: TextStyle(
           fontSize: Dimensions.font16,
           color: AppColors.black2Color,
         ),
         children: <TextSpan>[
           TextSpan(
-            text: 'Here'.tr + ' ',
+            text: '${'Here'.tr} ',
             style: TextStyle(
               fontSize: Dimensions.font16,
               color: AppColors.mainColor,

@@ -14,8 +14,7 @@ class AdvertiseDetail extends StatefulWidget {
   SlideAds slideAdsDetail;
 
   @override
-  State<AdvertiseDetail> createState() =>
-      _AdvertiseDetailState(slideAdsDetail: slideAdsDetail);
+  State<AdvertiseDetail> createState() => _AdvertiseDetailState(slideAdsDetail: slideAdsDetail);
 }
 
 class _AdvertiseDetailState extends State<AdvertiseDetail> {
@@ -73,9 +72,7 @@ class _AdvertiseDetailState extends State<AdvertiseDetail> {
                     child: Container(
                       padding: EdgeInsets.all(Dimensions.w5),
                       decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.all(
-                          Radius.circular(100.0),
-                        ),
+                        borderRadius: const BorderRadius.all(Radius.circular(100.0)),
                         color: AppColors.whiteColor,
                       ),
                       child: Icon(
@@ -89,20 +86,13 @@ class _AdvertiseDetailState extends State<AdvertiseDetail> {
               ),
               Html(
                 data: slideAdsDetail.description,
-                onLinkTap: (String? url, RenderContext context,
-                    Map<String, String> attributes, dom.Element? element) {
+                onLinkTap: ( String? url,  RenderContext context, Map<String, String> attributes, dom.Element? element) {
                   _launchUrl(url!);
                 },
               ),
               Container(
                 padding: EdgeInsets.only(bottom: Dimensions.h10),
-                child: GridViewProduct(
-                  context,
-                  slideAdsController.productList.value,
-                  slideAdsController.productList.value.length,
-                  false,
-                  false,
-                ),
+                child: GridViewProduct( context, slideAdsController.productList, slideAdsController.productList.length, false, false),
               ),
             ],
           ),

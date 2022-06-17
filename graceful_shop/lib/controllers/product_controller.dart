@@ -3,6 +3,7 @@ import 'package:graceful_shop/controllers/user_controller.dart';
 import 'package:graceful_shop/models/color_size.dart';
 import 'package:graceful_shop/models/like.dart';
 import 'package:graceful_shop/models/product.dart';
+import 'package:graceful_shop/models/rate.dart';
 import 'package:graceful_shop/services/remote_service.dart';
 
 class ProductController extends GetxController {
@@ -11,6 +12,7 @@ class ProductController extends GetxController {
   var productListSearch = <Product>[].obs;
   var colorList = <ProductColor>[].obs;
   var sizeList = <ProductSize>[].obs;
+  var rateList = <Rate>[].obs;
   var quantity = 1.obs;
   var quantityOfType = <QuantityOfType>[].obs;
   var tab = 0.obs;
@@ -51,9 +53,7 @@ class ProductController extends GetxController {
          value.isLike = value.likes.firstWhere((x) => x.userId == userController.user.value.id , orElse: () => Like(productId: -1, userId: -1)).productId != -1;
       });
       productList.addAll(productTotal.products); 
-      total.value == productList.length
-          ? checkFull.value = true
-          : checkFull.value = false;
+      total.value == productList.length ? checkFull.value = true : checkFull.value = false;
       loading.value = false;
     }
   }
@@ -67,21 +67,19 @@ class ProductController extends GetxController {
          value.isLike = value.likes.firstWhere((x) => x.userId == userController.user.value.id , orElse: () => Like(productId: -1, userId: -1)).productId != -1;
       });
       productList.addAll(productTotal.products);
-      total.value == productList.length
-          ? checkFull.value = true
-          : checkFull.value = false;
+      total.value == productList.length ? checkFull.value = true : checkFull.value = false;
       loading.value = false;
     }
   }
 
-  void getColorSize() async {
+  void getColorSize(int productId) async {
     indexColor.value = 0;
     indexSize.value = 0;
     quantity.value = 1;
     colorList.value = [];
     sizeList.value = [];
     quantityOfType.value = [];
-    var newColorSize = await RemoteService.getColorSize(page.value);
+    var newColorSize = await RemoteService.getColorSize(productId);
     if (newColorSize != null) {
       colorList.value = newColorSize.colors;
       sizeList.value = newColorSize.sizes;
@@ -111,9 +109,7 @@ class ProductController extends GetxController {
          value.isLike = value.likes.firstWhere((x) => x.userId == userController.user.value.id , orElse: () => Like(productId: -1, userId: -1)).productId != -1;
       });
       productListSearch.addAll(productTotal.products);
-      totalSearch.value == productListSearch.length
-          ? checkFullSearch.value = true
-          : checkFullSearch.value = false;
+      totalSearch.value == productListSearch.length ? checkFullSearch.value = true : checkFullSearch.value = false;
       loading.value = false;
     }
   }
@@ -128,9 +124,7 @@ class ProductController extends GetxController {
          value.isLike = value.likes.firstWhere((x) => x.userId == userController.user.value.id , orElse: () => Like(productId: -1, userId: -1)).productId != -1;
       });
       productListSearch.addAll(productTotal.products);
-      totalSearch.value == productListSearch.length
-          ? checkFullSearch.value = true
-          : checkFullSearch.value = false;
+      totalSearch.value == productListSearch.length ? checkFullSearch.value = true : checkFullSearch.value = false;
       loading.value = false;
     }
   }
@@ -145,10 +139,16 @@ class ProductController extends GetxController {
          value.isLike = value.likes.firstWhere((x) => x.userId == userController.user.value.id , orElse: () => Like(productId: -1, userId: -1)).productId != -1;
       });
       productListSearch.addAll(productTotal.products);
-      totalSearch.value == productListSearch.length
-          ? checkFullSearch.value = true
-          : checkFullSearch.value = false;
+      totalSearch.value == productListSearch.length ? checkFullSearch.value = true : checkFullSearch.value = false;
       loading.value = false;
+    }
+  }
+
+  void getRateOfProduct(int productId) async {
+    rateList.value = [];
+    var rates = await RemoteService.getRateOfProduct(productId);
+    if (rates != null) {
+      rateList.value = rates;
     }
   }
 }

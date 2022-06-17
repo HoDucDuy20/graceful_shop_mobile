@@ -42,13 +42,9 @@ class FavoriteController extends GetxController {
         await RemoteService.getProductFavorite(userController.token.value);
     if (products != null) {
       products.forEach((value) {
-        value.isLike = value.likes
-                .firstWhere((x) => x.userId == userController.user.value.id,
-                    orElse: () => Like(productId: -1, userId: -1))
-                .productId !=
-            -1;
+        value.isLike = value.likes.firstWhere((x) => x.userId == userController.user.value.id, orElse: () => Like(productId: -1, userId: -1)).productId != -1;
       });
-      producFavoritetList.addAll(products);
+      producFavoritetList.value = products;
       loading.value = false;
     }
   }
@@ -61,8 +57,7 @@ class FavoriteController extends GetxController {
           userController.token.value, productController.productList[index].id);
       if (responseData != null) {
         if (responseData.status == 0) {
-          productController.productList[index].isLike =
-              !productController.productList[index].isLike;
+          productController.productList[index].isLike = !productController.productList[index].isLike;
           if (productController.productList[index].isLike) {
             var product = producFavoritetList.firstWhere(
                 (x) => x.id == productController.productList[index].id,
@@ -73,13 +68,11 @@ class FavoriteController extends GetxController {
           } else {
             producFavoritetList.add(productController.productList[index]);
           }
-          productController.productList[index].isLike =
-              !productController.productList[index].isLike;
+          productController.productList[index].isLike = !productController.productList[index].isLike;
           return;
         }
       }
-      productController.productList[index].isLike =
-          !productController.productList[index].isLike;
+      productController.productList[index].isLike = !productController.productList[index].isLike;
       Get.snackbar(
         'FailedAction'.tr,
         'AnErrorOccurred'.tr,
@@ -101,9 +94,7 @@ class FavoriteController extends GetxController {
         if (responseData.status == 0) {
           if (!productController.productListSearch[index].isLike) {
             
-            var product = producFavoritetList.firstWhere(
-                (x) => x.id == productController.productListSearch[index].id,
-                orElse: () => p);
+            var product = producFavoritetList.firstWhere((x) => x.id == productController.productListSearch[index].id, orElse: () => p);
             if (product.id != -1) {
               producFavoritetList.remove(product);
             }
@@ -119,8 +110,7 @@ class FavoriteController extends GetxController {
           return;
         }
       }
-      productController.productListSearch[index].isLike =
-          !productController.productListSearch[index].isLike;
+      productController.productListSearch[index].isLike = !productController.productListSearch[index].isLike;
       Get.snackbar(
         'FailedAction'.tr,
         'AnErrorOccurred'.tr,
@@ -133,8 +123,7 @@ class FavoriteController extends GetxController {
     if (userController.token.value == '') {
       showLogIn();
     } else {
-      var responseData = await RemoteService.favorite(
-          userController.token.value, producFavoritetList[index].id);
+      var responseData = await RemoteService.favorite(userController.token.value, producFavoritetList[index].id);
       if (responseData != null) {
         if (responseData.status == 0) {
           productController.productList.forEach((value) {
@@ -146,8 +135,7 @@ class FavoriteController extends GetxController {
           return;
         }
       }
-      productController.productListSearch[index].isLike =
-          !productController.productListSearch[index].isLike;
+      productController.productListSearch[index].isLike = !productController.productListSearch[index].isLike;
       Get.snackbar(
         'FailedAction'.tr,
         'AnErrorOccurred'.tr,

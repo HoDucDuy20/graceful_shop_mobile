@@ -92,14 +92,11 @@ class _PasswordEditState extends State<PasswordEdit> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     info('CurrentPassword'.tr),
-                    textField(txtOldPass, 'EnterCurrentPassword'.tr,
-                        errorOldPass, isHidenOld, changeHidenOldPass),
+                    textField(txtOldPass, 'EnterCurrentPassword'.tr, errorOldPass, isHidenOld, changeHidenOldPass),
                     info('ANewPassword'.tr),
-                    textField(txtNewPass1, 'EnterNewPassword'.tr, errorNewPass1,
-                        isHidenNew, changeHidenNewPass),
+                    textField(txtNewPass1, 'EnterNewPassword'.tr, errorNewPass1, isHidenNew, changeHidenNewPass),
                     info('InputPass2'.tr),
-                    textField(txtNewPass2, 'ConfirmNewPassword'.tr,
-                        errorNewPass2, isHidenNew, changeHidenNewPass),
+                    textField(txtNewPass2, 'ConfirmNewPassword'.tr, errorNewPass2, isHidenNew, changeHidenNewPass),
                     Container(
                       margin: EdgeInsets.all(Dimensions.w20),
                       alignment: Alignment.center,
@@ -179,8 +176,7 @@ class _PasswordEditState extends State<PasswordEdit> {
     );
   }
 
-  Widget textField(TextEditingController textEditingController, String hintText,
-      String error, bool isHiden, VoidCallback f) {
+  Widget textField(TextEditingController textEditingController, String hintText, String error, bool isHiden, VoidCallback f) {
     return TextField(
       obscureText: isHiden,
       controller: textEditingController,

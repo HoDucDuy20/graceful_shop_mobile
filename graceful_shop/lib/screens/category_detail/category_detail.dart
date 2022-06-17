@@ -13,8 +13,7 @@ class CategoryDetail extends StatefulWidget {
   Category category;
 
   @override
-  State<CategoryDetail> createState() =>
-      _CategoryDetailState(category: category);
+  State<CategoryDetail> createState() => _CategoryDetailState(category: category);
 }
 
 class _CategoryDetailState extends State<CategoryDetail> {
@@ -98,11 +97,8 @@ class _CategoryDetailState extends State<CategoryDetail> {
                       false,
                     ),
                   ),
-                  (productController.checkFull.value == true ||
-                          productController.productListSearch.value.length == 0)
-                      ? SizedBox(
-                          height: Dimensions.h40,
-                        )
+                  (productController.checkFull.value == true || productController.productListSearch.isEmpty)
+                      ? SizedBox(height: Dimensions.h40)
                       : productController.loading.value
                           ? Center(
                               child: Image.asset(

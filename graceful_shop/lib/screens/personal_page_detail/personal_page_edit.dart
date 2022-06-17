@@ -50,7 +50,7 @@ class _PersonalEditState extends State<PersonalEdit> {
   void saveChange() {
     userController.user.value.fullName = txtName.text;
     userController.user.value.sex = sexVal;
-    userController.user.value.sexName = sexData[sexVal]['display'];
+    userController.user.value.sexName = sexVal < 0 ? '' : sexData[sexVal]['display'];
     userController.user.value.dateOfBirth = dateOfBirth;
     userController.user.value.email = txtEmail.text;
     userController.user.value.address = txtAddress.text;
@@ -116,8 +116,7 @@ class _PersonalEditState extends State<PersonalEdit> {
                               ? FileImage(File(image!.path))
                               : FadeInImage.assetNetwork(
                                   placeholder: 'assets/gif/loading_2.gif',
-                                  image: formaterImg(
-                                      userController.user.value.avatar),
+                                  image: formaterImg(userController.user.value.avatar),
                                 ).image,
                         ),
                         Positioned(
@@ -125,9 +124,7 @@ class _PersonalEditState extends State<PersonalEdit> {
                           right: 15,
                           child: IconOnTap1(
                             onPressed: () {
-                              showModalBottomSheet(
-                                  context: context,
-                                  builder: (context) => buttonSheet());
+                              showModalBottomSheet(context: context, builder: (context) => buttonSheet());
                             },
                             icon: Icons.camera_alt,
                             size: Dimensions.w35,

@@ -2,12 +2,15 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:graceful_shop/controllers/cart_controller.dart';
 import 'package:graceful_shop/resources/utils/colors.dart';
 import 'package:graceful_shop/resources/utils/dimensions.dart';
 import 'package:graceful_shop/resources/widgets/icon_onTap.dart';
 import 'package:graceful_shop/resources/widgets/show_dialog.dart';
 import 'package:graceful_shop/screens/search/search.dart';
 import 'package:graceful_shop/screens/tab_bar/tab_bar.dart';
+
+CartController cartController = Get.find<CartController>();
 
 Widget Action_Search() {
   return IconOnTap1(
@@ -24,7 +27,7 @@ Widget Action_Search() {
 Widget Action_Cart(bool border) {
   return IconOnTap1(
     onPressed: () async {
-      showLogIn();
+      cartController.showCart();
     },
     icon: Icons.shopping_cart_outlined,
     size: Dimensions.font25,

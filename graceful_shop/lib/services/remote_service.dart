@@ -1,8 +1,10 @@
 import 'dart:convert';
 
+import 'package:graceful_shop/models/cart.dart';
 import 'package:graceful_shop/models/category.dart';
 import 'package:graceful_shop/models/color_size.dart';
 import 'package:graceful_shop/models/product.dart';
+import 'package:graceful_shop/models/rate.dart';
 import 'package:graceful_shop/models/response_data.dart';
 import 'package:graceful_shop/models/slide_ads.dart';
 import 'package:graceful_shop/models/user.dart';
@@ -291,9 +293,9 @@ class RemoteService {
     );
     if (response.statusCode == 200) {
       var jsonString = response.body;
-      return productFavoriteFromJson(jsonString);
+      return productForUserFromJson(jsonString);
     } else {
-      print('getPopularProducts error: ' + response.statusCode.toString());
+      print('getProductFavorite error: ' + response.statusCode.toString());
       return null;
     }
   }
@@ -311,7 +313,7 @@ class RemoteService {
       var jsonString = response.body;
       return userFromJson(jsonString);
     } else {
-      print('getPopularProducts error: ' + response.statusCode.toString());
+      print('getUserInfo error: ' + response.statusCode.toString());
       return null;
     }
   }
@@ -334,15 +336,106 @@ class RemoteService {
     }
   }
 
-  static Future<ResponseData?> changeInfo(String token, User user) async {
+  // static Future<ResponseData?> changeInfo(String token, User user) async {
+  //   var response = await client.post(
+  //     uriChangeInfo(),
+  //     body: jsonEncode({
+  //       "full_name": user.fullName,
+  //       "date_of_birth": user.dateOfBirth,
+  //       "sex": user.sex,
+  //       "email": user.email,
+  //       "address": user.address,
+  //     }),
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //       'Accept': 'application/json',
+  //       'Authorization': 'Bearer $token',
+  //     },
+  //   );
+  //   if (response.statusCode == 200) {
+  //     var jsonString = response.body;
+  //     return responseDataFromJson(jsonString);
+  //   } else {
+  //     print('register error: ' + response.statusCode.toString());
+  //     return null;
+  //   }
+  // }
+
+  static Future<ResponseData?> changeInfo(
+      String token, User user, String? profileImg) async {
+    var request = http.MultipartRequest('POST', uriChangeInfo());
+    request.headers['Authorization'] = 'Bearer $token';
+    request.headers['Content-Type'] = 'multipart/form-data';
+    request.fields['full_name'] = user.fullName;
+    request.fields['date_of_birth'] = user.dateOfBirth;
+    request.fields['sex'] = user.sex.toString();
+    request.fields['email'] = user.email;
+    request.fields['address'] = user.address;
+    profileImg != null
+        ? request.files
+            .add(await http.MultipartFile.fromPath('avatar', profileImg))
+        : null;
+
+    var streamedResponse = await request.send();
+    var response = await http.Response.fromStream(streamedResponse);
+    if (response.statusCode == 200) {
+      var jsonString = response.body;
+      return responseDataFromJson(jsonString);
+    } else {
+      print('changeInfo error: ' + response.statusCode.toString());
+      return null;
+    }
+  }
+
+  static Future<List<Rate>?> getRateOfProduct(int product_id) async {
+    // print(token);
     var response = await client.post(
-      uriChangeInfo(),
+      uriRateOfProduct(),
       body: jsonEncode({
-        "full_name": user.fullName,
-        "date_of_birth": user.dateOfBirth,
-        "sex": user.sex,
-        "email": user.email,
-        "address": user.address,
+        "product_id": product_id,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+    );
+    if (response.statusCode == 200) {
+      var jsonString = response.body;
+      return rateFromJson(jsonString);
+    } else {
+      print('getRateOfProduct error: ' + response.statusCode.toString());
+      return null;
+    }
+  }
+
+  static Future<List<Cart>?> getProductCart(String token) async {
+    var response = await client.get(
+      uriProductCart(),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    if (response.statusCode == 200) {
+      var jsonString = response.body;
+      return cartFromJson(jsonString);
+    } else {
+      print('getProductCart error: ' + response.statusCode.toString());
+      return null;
+    }
+  }
+
+  static Future<ResponseData?> addCart(String token, int product_id,
+      int color_id, int size_id, int quantity) async {
+    // print(token);
+    var response = await client.post(
+      uriAddCart(),
+      body: jsonEncode({
+        "product_id": product_id,
+        "color_id": color_id,
+        "size_id": size_id,
+        "quantity": quantity,
       }),
       headers: {
         'Content-Type': 'application/json',
@@ -354,7 +447,55 @@ class RemoteService {
       var jsonString = response.body;
       return responseDataFromJson(jsonString);
     } else {
-      print('register error: ' + response.statusCode.toString());
+      print('addCart error: ' + response.statusCode.toString());
+      return null;
+    }
+  }
+
+  static Future<ResponseData?> updateCart(String token, int product_id,
+      int color_id, int size_id, int quantity) async {
+    // print(token);
+    var response = await client.post(
+      uriUpdateCart(),
+      body: jsonEncode({
+        "product_id": product_id,
+        "color_id": color_id,
+        "size_id": size_id,
+        "quantity": quantity,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    if (response.statusCode == 200) {
+      var jsonString = response.body;
+      return responseDataFromJson(jsonString);
+    } else {
+      print('updateCart error: ' + response.statusCode.toString());
+      return null;
+    }
+  }
+
+  static Future<ResponseData?> deleteCart(String token, List<int> lstCartId) async {
+    // print(token);
+    var response = await client.delete(
+      uriDeleteCart(),
+      body: jsonEncode({
+        "cart_id": lstCartId,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    if (response.statusCode == 200) {
+      var jsonString = response.body;
+      return responseDataFromJson(jsonString);
+    } else {
+      print('deleteCart error: ' + response.statusCode.toString());
       return null;
     }
   }

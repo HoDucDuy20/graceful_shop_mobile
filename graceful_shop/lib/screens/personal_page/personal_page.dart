@@ -8,6 +8,7 @@ import 'package:graceful_shop/resources/widgets/actions.dart';
 import 'package:graceful_shop/resources/widgets/button.dart';
 import 'package:graceful_shop/resources/widgets/list_tile_ontap.dart';
 import 'package:graceful_shop/resources/widgets/show_dialog.dart';
+import 'package:graceful_shop/screens/address/address.dart';
 import 'package:graceful_shop/screens/login/login.dart';
 import 'package:graceful_shop/screens/personal_page/activity_diary.dart';
 import 'package:graceful_shop/screens/personal_page/service.dart';
@@ -58,8 +59,7 @@ class _PersonalPageState extends State<PersonalPage> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 if (userController.token.value != '')
-                  Group(userController.user.value.fullName,
-                      userController.user.value.avatar)
+                  Group(userController.user.value.fullName, userController.user.value.avatar)
                 else
                   LoginRequired(),
                 ListTileOnTap(
@@ -100,7 +100,7 @@ class _PersonalPageState extends State<PersonalPage> {
   Widget Name(String name) {
     return Text.rich(
       TextSpan(
-        text: 'Hello'.tr + '\n',
+        text: '${'Hello'.tr}\n',
         style: TextStyle(
           wordSpacing: 1.5,
           fontSize: Dimensions.font16,
@@ -168,13 +168,12 @@ class _PersonalPageState extends State<PersonalPage> {
             Get.to(() => const PersonalDetail());
           },
           child: Container(
-            padding:
-                EdgeInsets.only(top: Dimensions.h12, bottom: Dimensions.h5),
+            padding: EdgeInsets.only(top: Dimensions.h12, bottom: Dimensions.h5),
             alignment: Alignment.center,
             child: CircleAvatar(
                 radius: Dimensions.w80,
                 backgroundColor: AppColors.gray2Color,
-                backgroundImage: (img == null || img == '')
+                backgroundImage: (img == '')
                     ? Image.asset(
                         'assets/gif/loading_1.gif',
                         height: Dimensions.w250,
@@ -190,10 +189,12 @@ class _PersonalPageState extends State<PersonalPage> {
           ),
         ),
         Name(name),
-        ActivityDiary(),
-        Service(),
+        const ActivityDiary(),
+        const Service(),
         ListTileOnTap(
-          onPressed: () {},
+          onPressed: () {
+            Get.to(() => const AddressScreen());
+          },
           icon: Icons.book_outlined,
           title: 'AddressBook'.tr,
         ),

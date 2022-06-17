@@ -12,6 +12,7 @@ class ListImg extends StatelessWidget {
   List<Picture> lstImg;
   final CarouselController _controller = CarouselController();
   RxInt i = 0.obs;
+  
   @override
   Widget build(BuildContext context) {
     final orientation = MediaQuery.of(context).orientation;
@@ -22,9 +23,7 @@ class ListImg extends StatelessWidget {
             CarouselSlider(
               carouselController: _controller,
               options: CarouselOptions(
-                height: (orientation == Orientation.portrait)
-                    ? Dimensions.height
-                    : Dimensions.width,
+                height: (orientation == Orientation.portrait) ? Dimensions.height : Dimensions.width,
                 aspectRatio: 16 / 9,
                 viewportFraction: 1,
                 initialPage: 0,
@@ -60,14 +59,11 @@ class ListImg extends StatelessWidget {
             Align(
               alignment: Alignment.bottomRight,
               child: Container(
-                margin: EdgeInsets.symmetric(
-                    vertical: Dimensions.h10, horizontal: Dimensions.w15),
+                margin: EdgeInsets.symmetric(vertical: Dimensions.h10, horizontal: Dimensions.w15),
                 padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 6),
                 decoration: BoxDecoration(
                   color: AppColors.whiteColor,
-                  borderRadius: const BorderRadius.all(
-                    Radius.circular(10.0),
-                  ),
+                  borderRadius: const BorderRadius.all(Radius.circular(10.0)),
                 ),
                 child: SizedBox(
                   width: Dimensions.w50,
@@ -75,9 +71,7 @@ class ListImg extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        (i.value + 1).toString() +
-                            '/' +
-                            lstImg.length.toString(),
+                        '${i.value + 1}/${lstImg.length}',
                         style: TextStyle(
                           color: AppColors.black2Color,
                           fontWeight: FontWeight.w500,

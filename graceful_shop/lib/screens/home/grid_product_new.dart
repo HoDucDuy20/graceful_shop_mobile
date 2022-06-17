@@ -32,8 +32,7 @@ class GridProductNew extends StatelessWidget {
           //     ),
           //   ),
           // ),
-          Obx(
-            () {
+          Obx(() {
               return GridViewProduct(
                 context,
                 productController.productList,
@@ -43,11 +42,8 @@ class GridProductNew extends StatelessWidget {
               );
             }
           ),
-          (productController.checkFull.value == true ||
-                  productController.productList.value.length == 0)
-              ? SizedBox(
-                  height: Dimensions.h40,
-                )
+          (productController.checkFull.value == true || productController.productList.isEmpty)
+              ? SizedBox(height: Dimensions.h40)
               : productController.loading.value
                   ? Center(
                       child: Image.asset(
