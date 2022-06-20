@@ -97,7 +97,7 @@ class _CategoryDetailState extends State<CategoryDetail> {
                       false,
                     ),
                   ),
-                  (productController.checkFull.value == true || productController.productListSearch.isEmpty)
+                  (productController.checkFullSearch.value == true || productController.productListSearch.isEmpty)
                       ? SizedBox(height: Dimensions.h40)
                       : productController.loading.value
                           ? Center(

@@ -116,4 +116,19 @@ const Map<String, String> vi = {
   'BuyProduct': 'Mua hàng',
   //Pay
   'Pay': 'Thanh toán',
+  'Order': 'Đặt hàng',
+  'TotalPayment': 'Tổng thanh toán',
+  'OrderSuccess': 'Đặt hàng thành công',
+  //Address
+  'AddressSuccess': 'Thêm địa chỉ mới thành công',
+  'EditAddressSuccess': 'Chỉnh sửa địa chỉ thành công',
+  'DeleteAddressSuccess': 'Xoá địa chỉ thành công',
+  'AddNewAddress': 'Thêm địa chỉ mới',
+  'NewAddress': 'Địa chỉ mới',
+  'FixedAddress': 'Địa chỉ mạc định',
+  'IsNotPossible': 'Không thể huỷ mạc định',
+  'IsYourFirstAddress': 'Vì đây là địa chỉ đầu tiên của bạn',
+  'RequiredAddress': 'Địa chỉ không được bỏ trống',
+  'EditAddress': 'Chỉnh sửa địa chỉ',
+  'AreYouSureDeleteAddress': 'Bạn có muốn xoá địa chỉ?',
 };

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:graceful_shop/controllers/invoice_controller.dart';
 import 'package:graceful_shop/models/cart.dart';
 import 'package:graceful_shop/resources/utils/colors.dart';
 import 'package:graceful_shop/resources/utils/dimensions.dart';
@@ -16,7 +17,25 @@ class PayScreen extends StatefulWidget {
 
 class _PayScreenState extends State<PayScreen> {
   _PayScreenState({Key? key, required this.listCartPay});
+  InvoiceController invoiceController = Get.find<InvoiceController>();
   List<Cart> listCartPay;
+  List<int> listCartId = [];
+  int totalPrice = 0;
+
+  void updateListCartId(){
+    setState(() {});
+    listCartId = [];
+    for (var i = 0; i < listCartPay.length; i++) {
+      totalPrice += listCartPay[i].quantity * listCartPay[i].product.price;
+      listCartId.add(listCartPay[i].id);                        
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    updateListCartId();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,6 +78,18 @@ class _PayScreenState extends State<PayScreen> {
           SingleChildScrollView(
             child: Column(
               children: [
+                Container(
+                  child: ListTile(
+                    leading: Icon(
+                      Icons.location_on_outlined,
+                      color: AppColors.blueAccentColor,
+                    ),
+                    title: Text('Địa chỉ giao hàng'),
+                    subtitle: Text(
+                      '558 Bình Quới, P.28, Q.Bình Thạnh',
+                    ),
+                  ),
+                ),
                 ListView.builder(
                   physics: const NeverScrollableScrollPhysics(),
                   padding: EdgeInsets.symmetric(vertical: Dimensions.h7),
@@ -155,6 +186,76 @@ class _PayScreenState extends State<PayScreen> {
                   },
                 ),
               ],
+            ),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: Container(
+              height: 65,
+              // padding: EdgeInsets.all(Dimensions.w10),
+              decoration: BoxDecoration(
+                border: Border(
+                  top: BorderSide(
+                    color: AppColors.black2Color,
+                    width: 0.5,
+                  ),
+                ),
+                color: AppColors.whiteColor,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Padding(
+                        padding: const EdgeInsets.only(right: 10),
+                        child: Text.rich(
+                          TextSpan(
+                            text: '${'TotalPayment'.tr}\n',
+                            style: TextStyle(
+                              // height: 1.7,
+                              fontSize: Dimensions.font15,
+                              fontWeight: FontWeight.w500,
+                              color: AppColors.black2Color,
+                            ),
+                            children: <TextSpan>[
+                              TextSpan(
+                                text: Format.numPrice(totalPrice),
+                                style:  TextStyle(
+                                // height: 1.7,
+                                fontSize: Dimensions.font16,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.mainColor,
+                              ),
+                              ),
+                            ],
+                          ),
+                          textAlign: TextAlign.end,
+                        ),
+                      ),                      
+                      MaterialButton(
+                        onPressed: (){
+                          invoiceController.addInvoice(listCartId, null, 0);
+                        },
+                        color: AppColors.redColor,
+                        height: Dimensions.h65,
+                        child: Text(
+                          'Order'.tr,
+                          maxLines: 1,
+                          overflow: TextOverflow.visible,
+                          style: TextStyle(
+                            fontSize: Dimensions.font14,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.whiteColor,
+                          ),
+                        ),
+                      )
+                    ],
+                  ),
+                ],
+              ), 
             ),
           ),
         ],

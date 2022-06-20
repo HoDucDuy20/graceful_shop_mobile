@@ -5,19 +5,13 @@ import 'package:graceful_shop/resources/utils/colors.dart';
 import 'package:graceful_shop/resources/utils/dimensions.dart';
 
 class IconOnTap1 extends StatelessWidget {
+  IconOnTap1({Key? key, required this.onPressed, required this.icon, required this.size, required this.border, required this.color}) : super(key: key);
   VoidCallback onPressed;
   IconData icon;
   double size;
   bool border;
   Color color;
-  IconOnTap1(
-      {Key? key,
-      required this.onPressed,
-      required this.icon,
-      required this.size,
-      required this.border,
-      required this.color})
-      : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -44,15 +38,11 @@ class IconOnTap1 extends StatelessWidget {
 }
 
 class IconOnTap2 extends StatelessWidget {
+  IconOnTap2({Key? key, required this.onPressed, required this.icon, required this.title}) : super(key: key);
   VoidCallback onPressed;
   IconData icon;
   String title;
-  IconOnTap2({
-    Key? key,
-    required this.onPressed,
-    required this.icon,
-    required this.title,
-  }) : super(key: key);
+  
   @override
   Widget build(BuildContext context) {
     return InkWell(

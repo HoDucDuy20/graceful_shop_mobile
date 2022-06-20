@@ -116,4 +116,19 @@ const Map<String, String> en = {
   'BuyProduct': 'Buy product',
   //Pay
   'Pay': 'Pay',
+  'Order': 'Order',
+  'TotalPayment': 'Total payment',
+  'OrderSuccess': 'Order success',
+  //Address
+  'AddressSuccess': 'Successfully added new address',
+  'EditAddressSuccess': 'Successfully edited address',
+  'DeleteAddressSuccess': 'Successfully delete address',
+  'AddNewAddress': 'Add new address',
+  'NewAddress': 'New address',
+  'FixedAddress': 'Fixed address',
+  'IsNotPossible': 'It is not possible to cancel the determination',
+  'IsYourFirstAddress': 'Since this is your first address',
+  'RequiredAddress': 'Address not be vacant',
+  'EditAddress': 'Edit address',
+  'AreYouSureDeleteAddress': 'Do you want to delete the address?',
 };

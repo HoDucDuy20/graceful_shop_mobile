@@ -8,21 +8,13 @@ import 'package:graceful_shop/resources/utils/colors.dart';
 import 'package:graceful_shop/resources/utils/dimensions.dart';
 
 class TitleCategoryDetail extends StatefulWidget {
+  TitleCategoryDetail({Key? key, required this.categoryIndex, required this.categoryId, required this.lstProductType}) : super(key: key);
   int categoryIndex;
   int categoryId;
   List<ProductType> lstProductType;
-  TitleCategoryDetail(
-      {Key? key,
-      required this.categoryIndex,
-      required this.categoryId,
-      required this.lstProductType})
-      : super(key: key);
 
   @override
-  State<TitleCategoryDetail> createState() => _TitleCategoryDetailState(
-      categoryIndex: categoryIndex,
-      categoryId: categoryId,
-      lstProductType: lstProductType);
+  State<TitleCategoryDetail> createState() => _TitleCategoryDetailState(categoryIndex: categoryIndex, categoryId: categoryId, lstProductType: lstProductType);
 }
 
 class _TitleCategoryDetailState extends State<TitleCategoryDetail> {

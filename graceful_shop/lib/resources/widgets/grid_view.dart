@@ -17,8 +17,7 @@ import 'package:graceful_shop/services/url.dart';
 ProductController productController = Get.find<ProductController>();
 FavoriteController favoriteController = Get.find<FavoriteController>();
 
-Widget GridViewProduct(BuildContext context, List<Product> lstProduct,
-    int total, bool isSearch, bool isFavorite) {
+Widget GridViewProduct(BuildContext context, List<Product> lstProduct, int total, bool isSearch, bool isFavorite) {
   final orientation = MediaQuery.of(context).orientation;
 
   return MediaQuery.removePadding(
@@ -63,9 +62,7 @@ Widget GridViewProduct(BuildContext context, List<Product> lstProduct,
                 child: Container(
                   margin: EdgeInsets.all(Dimensions.w10),
                   decoration: BoxDecoration(
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(20.0),
-                    ),
+                    borderRadius: const BorderRadius.all(Radius.circular(20.0)),
                     color: AppColors.whiteColor,
                     boxShadow: [
                       BoxShadow(
@@ -151,9 +148,7 @@ Widget GridViewColor(BuildContext context) {
                               ),
                             ],
                           )
-                        : BoxDecoration(
-                            color: AppColors.gray2Color,
-                          ),
+                        : BoxDecoration(color: AppColors.gray2Color),
                     child: Stack(
                       children: [
                         ListTile(
@@ -161,8 +156,7 @@ Widget GridViewColor(BuildContext context) {
                           leading: Image(
                             image: FadeInImage.assetNetwork(
                               placeholder: 'assets/gif/loading_2.gif',
-                              image: formaterImg(
-                                  productController.colorList[index].picture),
+                              image: formaterImg(productController.colorList[index].picture),
                             ).image,
                             fit: BoxFit.cover,
                           ),
@@ -187,8 +181,7 @@ Widget GridViewColor(BuildContext context) {
                                   size: Size(Dimensions.w30, Dimensions.w30),
                                   painter: DrawTriangleShape(),
                                   child: Container(
-                                    padding:
-                                        EdgeInsets.only(left: Dimensions.w20),
+                                    padding: EdgeInsets.only(left: Dimensions.w20),
                                     child: Icon(
                                       Icons.done,
                                       size: Dimensions.w20,
@@ -280,8 +273,7 @@ Widget GridViewSize(BuildContext context) {
                                   size: Size(Dimensions.w30, Dimensions.w30),
                                   painter: DrawTriangleShape(),
                                   child: Container(
-                                    padding:
-                                        EdgeInsets.only(left: Dimensions.w20),
+                                    padding: EdgeInsets.only(left: Dimensions.w20),
                                     child: Icon(
                                       Icons.done,
                                       size: Dimensions.w15,
@@ -301,8 +293,7 @@ Widget GridViewSize(BuildContext context) {
   );
 }
 
-Widget GridViewImageRate(
-    BuildContext context, List<PicturesRate> lstPictureRate) {
+Widget GridViewImageRate(BuildContext context, List<PicturesRate> lstPictureRate) {
   final orientation = MediaQuery.of(context).orientation;
 
   return MediaQuery.removePadding(
@@ -320,17 +311,13 @@ Widget GridViewImageRate(
         return InkWell(
           highlightColor: AppColors.whiteColor,
           onTap: () {
-            Get.to(
-              () => ImgRateView(lstImgRate: lstPictureRate, i: index),
-            );
+            Get.to(() => ImgRateView(lstImgRate: lstPictureRate, i: index));
           },
           child: Container(
             margin: EdgeInsets.symmetric(horizontal: Dimensions.w5),
             padding: EdgeInsets.symmetric(vertical: Dimensions.h5),
             decoration: BoxDecoration(
-              borderRadius: const BorderRadius.all(
-                Radius.circular(20.0),
-              ),
+              borderRadius: const BorderRadius.all(Radius.circular(20.0)),
               color: AppColors.whiteColor,
               boxShadow: [
                 BoxShadow(
@@ -343,9 +330,7 @@ Widget GridViewImageRate(
             ),
             child: FadeInImage.assetNetwork(
               placeholder: 'assets/gif/loading_2.gif',
-              image: formaterImg(
-                lstPictureRate[index].pictureValue,
-              ),
+              image: formaterImg(lstPictureRate[index].pictureValue),
               fit: BoxFit.cover,
             ),
           ),

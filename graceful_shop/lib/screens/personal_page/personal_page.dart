@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:graceful_shop/controllers/address_controller.dart';
 import 'package:graceful_shop/controllers/user_controller.dart';
 import 'package:graceful_shop/resources/utils/colors.dart';
 import 'package:graceful_shop/resources/utils/dimensions.dart';
@@ -25,6 +26,7 @@ class PersonalPage extends StatefulWidget {
 
 class _PersonalPageState extends State<PersonalPage> {
   UserController userController = Get.find<UserController>();
+  AddressController addressController = Get.find<AddressController>();
 
   @override
   void initState() {
@@ -193,7 +195,7 @@ class _PersonalPageState extends State<PersonalPage> {
         const Service(),
         ListTileOnTap(
           onPressed: () {
-            Get.to(() => const AddressScreen());
+            addressController.showAddress();
           },
           icon: Icons.book_outlined,
           title: 'AddressBook'.tr,

@@ -80,9 +80,7 @@ class _CategoryState extends State<Category> {
                               formaterImg(categoryController.categoryList[index].icon),                   
                               height: Dimensions.h50,
                             ),
-                            const SizedBox(
-                              height: 5,
-                            ),
+                            const SizedBox(height: 5),
                             Text(
                               categoryController.categoryList[index].categoryName,
                               style: TextStyle(

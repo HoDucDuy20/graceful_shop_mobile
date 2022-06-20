@@ -26,9 +26,8 @@ class _SettingState extends State<Setting> {
       lstItem.add(
         InkWell(
           onTap: () {
-            setState(() {
-              langCode = key;
-            });
+            setState(() {});
+            langCode = key;
             LocalizationService.changeLocale(key);
             Get.back();
           },
@@ -90,20 +89,20 @@ class _SettingState extends State<Setting> {
       ),
       body: SingleChildScrollView(
         child: Container(
-          padding: EdgeInsets.symmetric(
-              horizontal: Dimensions.w20, vertical: Dimensions.h10),
+          padding: EdgeInsets.symmetric(horizontal: Dimensions.w20, vertical: Dimensions.h10),
           child: Column(
             children: [
-              InkWell(
-                onTap: () {
-                  userController.getUserInfo();
-                  Get.to(() => const PersonalDetail());
-                },
-                child: ListTileItem(
-                  title: 'Infor'.tr,
-                  trailing: const Icon(Icons.chevron_right),
+              if (userController.token.value != '')
+                InkWell(
+                  onTap: () {
+                    userController.getUserInfo();
+                    Get.to(() => const PersonalDetail());
+                  },
+                  child: ListTileItem(
+                    title: 'Infor'.tr,
+                    trailing: const Icon(Icons.chevron_right),
+                  ),
                 ),
-              ),
               ListTileItem(
                 title: 'Version'.tr,
                 trailing: Text(

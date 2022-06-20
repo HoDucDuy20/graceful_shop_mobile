@@ -13,7 +13,7 @@ class Proviso extends StatelessWidget {
       padding: EdgeInsets.only(bottom: Dimensions.h12),
       child: Text.rich(
         TextSpan(
-          text: 'YouAgree'.tr + '\n',
+          text: '${'YouAgree'.tr}\n',
           style: TextStyle(
             fontSize: Dimensions.font15,
             fontWeight: FontWeight.w600,

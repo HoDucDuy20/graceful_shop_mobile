@@ -18,13 +18,10 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   UserController userController = Get.find<UserController>();
-
   TextEditingController txtPhone = TextEditingController();
   TextEditingController txtPass = TextEditingController();
-
   late String errorPhone = '';
   late String errorPass = '';
-
   RxBool isHiden = true.obs;
 
   changeHidenPass() {
@@ -98,8 +95,7 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(
-                            top: Dimensions.h40, bottom: Dimensions.h7),
+                        padding: EdgeInsets.only(top: Dimensions.h40, bottom: Dimensions.h7),
                         child: ButtonSignInUp(
                           isLoading: userController.isLoading.value,
                           title: 'Login'.tr,
@@ -110,13 +106,9 @@ class _LoginState extends State<Login> {
                             final phone = txtPhone.value.text;
                             if (phone.isEmpty) {
                               errorPhone = 'RequiredPhone'.tr;
-                            } else if (phone.length == 10 &&
-                                phone.substring(0, 1) == '0' &&
-                                (phone.substring(1, 2) == '3' ||
-                                    phone.substring(1, 2) == '5' ||
-                                    phone.substring(1, 2) == '7' ||
-                                    phone.substring(1, 2) == '8' ||
-                                    phone.substring(1, 2) == '9')) {
+                            } else if (phone.length == 10 && phone.substring(0, 1) == '0' && (phone.substring(1, 2) == '3' 
+                                        || phone.substring(1, 2) == '5' || phone.substring(1, 2) == '7' || phone.substring(1, 2) == '8' 
+                                        || phone.substring(1, 2) == '9')) {
                               errorPhone = '';
                             } else {
                               errorPhone = 'RequiredPhoneCorrect'.tr;

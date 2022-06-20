@@ -144,13 +144,9 @@ class _RegisterState extends State<Register> {
                               final phone = txtPhone.value.text;
                               if (phone.isEmpty) {
                                 errorPhone = 'RequiredPhone'.tr;
-                              } else if (phone.length == 10 &&
-                                  phone.substring(0, 1) == '0' &&
-                                  (phone.substring(1, 2) == '3' ||
-                                      phone.substring(1, 2) == '5' ||
-                                      phone.substring(1, 2) == '7' ||
-                                      phone.substring(1, 2) == '8' ||
-                                      phone.substring(1, 2) == '9')) {
+                              } else if (phone.length == 10 && phone.substring(0, 1) == '0' && (phone.substring(1, 2) == '3' 
+                                        || phone.substring(1, 2) == '5' || phone.substring(1, 2) == '7' || phone.substring(1, 2) == '8' 
+                                        || phone.substring(1, 2) == '9')) {
                                 errorPhone = '';
                               } else {
                                 errorPhone = 'RequiredPhoneCorrect'.tr;
@@ -189,10 +185,7 @@ class _RegisterState extends State<Register> {
                                 errorFullName = '';
                               }
                               //check error
-                              if (errorPhone != '' ||
-                                  errorPass != '' ||
-                                  errorPassCompare != '' ||
-                                  errorFullName != '') {
+                              if (errorPhone != '' || errorPass != '' || errorPassCompare != '' || errorFullName != '') {
                                 return;
                               } else {
                                 userController.register(fullName, phone, pass);

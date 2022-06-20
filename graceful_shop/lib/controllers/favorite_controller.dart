@@ -38,12 +38,11 @@ class FavoriteController extends GetxController {
   }
 
   void getProductLike() async {
-    var products =
-        await RemoteService.getProductFavorite(userController.token.value);
+    var products = await RemoteService.getProductFavorite(userController.token.value);
     if (products != null) {
-      products.forEach((value) {
+      for (var value in products) {
         value.isLike = value.likes.firstWhere((x) => x.userId == userController.user.value.id, orElse: () => Like(productId: -1, userId: -1)).productId != -1;
-      });
+      }
       producFavoritetList.value = products;
       loading.value = false;
     }
@@ -53,15 +52,12 @@ class FavoriteController extends GetxController {
     if (userController.token.value == '') {
       showLogIn();
     } else {
-      var responseData = await RemoteService.favorite(
-          userController.token.value, productController.productList[index].id);
+      var responseData = await RemoteService.favorite(userController.token.value, productController.productList[index].id);
       if (responseData != null) {
         if (responseData.status == 0) {
           productController.productList[index].isLike = !productController.productList[index].isLike;
           if (productController.productList[index].isLike) {
-            var product = producFavoritetList.firstWhere(
-                (x) => x.id == productController.productList[index].id,
-                orElse: () => p);
+            var product = producFavoritetList.firstWhere((x) => x.id == productController.productList[index].id, orElse: () => p);
             if (product.id != -1) {
               producFavoritetList.remove(product);
             }
@@ -85,15 +81,12 @@ class FavoriteController extends GetxController {
     if (userController.token.value == '') {
       showLogIn();
     } else {
-      var responseData = await RemoteService.favorite(
-          userController.token.value,
-          productController.productListSearch[index].id);
+      var responseData = await RemoteService.favorite(userController.token.value, productController.productListSearch[index].id);
       if (responseData != null) {
         // productController.productListSearch[index].isLike =
         //     !productController.productListSearch[index].isLike;
         if (responseData.status == 0) {
-          if (!productController.productListSearch[index].isLike) {
-            
+          if (!productController.productListSearch[index].isLike) {            
             var product = producFavoritetList.firstWhere((x) => x.id == productController.productListSearch[index].id, orElse: () => p);
             if (product.id != -1) {
               producFavoritetList.remove(product);
@@ -101,12 +94,11 @@ class FavoriteController extends GetxController {
           } else {
             producFavoritetList.add(productController.productListSearch[index]);
           }
-
-          productController.productList.forEach((value) {
+          for (var value in productController.productList) {
             if (value.id == productController.productListSearch[index].id) {
               value.isLike = productController.productListSearch[index].isLike;
             }
-          });
+          }
           return;
         }
       }
@@ -126,11 +118,11 @@ class FavoriteController extends GetxController {
       var responseData = await RemoteService.favorite(userController.token.value, producFavoritetList[index].id);
       if (responseData != null) {
         if (responseData.status == 0) {
-          productController.productList.forEach((value) {
+          for (var value in productController.productList) {
             if (value.id == producFavoritetList[index].id) {
               value.isLike = !producFavoritetList[index].isLike;
             }
-          });
+          }
           producFavoritetList.removeAt(index);
           return;
         }

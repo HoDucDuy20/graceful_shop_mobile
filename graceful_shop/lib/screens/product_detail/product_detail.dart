@@ -38,7 +38,7 @@ class _ProductDetailState extends State<ProductDetail> {
 
   void _launchUrl(String url) async {
     Uri _url = Uri.parse(url);
-    print(_url);
+    // print(_url);
     if (!await launchUrl(_url)) throw 'Could not launch $_url';
   }
 
@@ -328,8 +328,7 @@ class _ProductDetailState extends State<ProductDetail> {
                                             direction: Axis.horizontal,
                                           ),
                                           trailing: Text(
-                                            Format.dateTime(productController.rateList[index].createdAt,
-                                            ),
+                                            Format.dateTime(productController.rateList[index].createdAt),
                                           ),
                                         ),
                                         Padding(
@@ -369,8 +368,7 @@ class _ProductDetailState extends State<ProductDetail> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
                                       Padding(
-                                        padding: const EdgeInsets.only(
-                                            top: 4, bottom: 5),
+                                        padding: const EdgeInsets.only(top: 4, bottom: 5),
                                         child: Text(
                                           'SeeMore'.tr,
                                           style: TextStyle(
@@ -380,9 +378,7 @@ class _ProductDetailState extends State<ProductDetail> {
                                           ),
                                         ),
                                       ),
-                                      SizedBox(
-                                        width: Dimensions.w5,
-                                      ),
+                                      SizedBox(width: Dimensions.w5),
                                       Padding(
                                         padding: const EdgeInsets.only(top: 5),
                                         child: Icon(
@@ -395,9 +391,7 @@ class _ProductDetailState extends State<ProductDetail> {
                                   ),
                                 ),
                               ),
-                            SizedBox(
-                              height: Dimensions.h80,
-                            ),
+                            SizedBox(height: Dimensions.h80),
                           ],
                         ),
                       ),
@@ -411,8 +405,7 @@ class _ProductDetailState extends State<ProductDetail> {
               child: FadeAppBar(scrollOffset: scrollControllerOffset),
             ),
             Container(
-              padding: EdgeInsets.symmetric(vertical: Dimensions.h25, horizontal: Dimensions.w20,
-              ),
+              padding: EdgeInsets.symmetric(vertical: Dimensions.h25, horizontal: Dimensions.w20),
               child: ListTile(
                 contentPadding: EdgeInsets.zero,
                 leading: InkWell(

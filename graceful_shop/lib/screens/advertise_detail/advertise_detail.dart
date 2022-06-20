@@ -6,6 +6,7 @@ import 'package:graceful_shop/models/slide_ads.dart';
 import 'package:graceful_shop/resources/utils/colors.dart';
 import 'package:graceful_shop/resources/utils/dimensions.dart';
 import 'package:graceful_shop/resources/widgets/grid_view.dart';
+import 'package:graceful_shop/services/url.dart';
 import 'package:html/dom.dart' as dom;
 import 'package:url_launcher/url_launcher.dart';
 
@@ -24,7 +25,7 @@ class _AdvertiseDetailState extends State<AdvertiseDetail> {
 
   void _launchUrl(String url) async {
     Uri _url = Uri.parse(url);
-    print(_url);
+    // print(_url);
     if (!await launchUrl(_url)) throw 'Could not launch $_url';
   }
 
@@ -37,13 +38,13 @@ class _AdvertiseDetailState extends State<AdvertiseDetail> {
             children: [
               Container(
                 height: Dimensions.h250,
-                padding: EdgeInsets.only(
-                    left: Dimensions.w20,
-                    right: Dimensions.w20,
-                    top: Dimensions.h25),
-                decoration: const BoxDecoration(
+                padding: EdgeInsets.only(left: Dimensions.w20, right: Dimensions.w20, top: Dimensions.h25),
+                decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage('assets/images/img_1.jpg'),
+                    image: FadeInImage.assetNetwork(
+                      placeholder: 'assets/gif/loading_2.gif',
+                      image: formaterImg(slideAdsDetail.picture),
+                    ).image,
                     fit: BoxFit.cover,
                   ),
                 ),

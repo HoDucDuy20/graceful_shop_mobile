@@ -5,6 +5,7 @@ import 'package:graceful_shop/resources/utils/colors.dart';
 import 'package:graceful_shop/resources/utils/dimensions.dart';
 import 'package:graceful_shop/resources/utils/format.dart';
 import 'package:graceful_shop/resources/widgets/button.dart';
+import 'package:graceful_shop/screens/personal_page_detail/password_edit.dart';
 import 'package:graceful_shop/screens/personal_page_detail/personal_page_edit.dart';
 import 'package:graceful_shop/services/url.dart';
 
@@ -81,7 +82,32 @@ class _PersonalDetailState extends State<PersonalDetail> {
                 title('AccountInformation'.tr),
                 info('Phone'.tr, userController.user.value.phone),
                 info('Email'.tr, userController.user.value.email),
-                info('Address'.tr, userController.user.value.address),
+                // info('Address'.tr, userController.user.value.address),
+                InkWell(
+                  onTap: (){
+                    Get.to(() => const PasswordEdit());
+                  },
+                  child: Container(
+                    margin: EdgeInsets.symmetric(vertical: Dimensions.w10),
+                    padding: EdgeInsets.symmetric(horizontal: Dimensions.w10),
+                    color: AppColors.gray2Color,
+                    child: ListTile(
+                      contentPadding: EdgeInsets.zero,
+                      leading: Text(
+                        'InputPass'.tr,
+                        style: TextStyle(
+                          wordSpacing: 1.5,
+                          fontSize: Dimensions.font16,
+                          fontWeight: FontWeight.w400,
+                          color: AppColors.black2Color,
+                        ),
+                      ),
+                      trailing: const Icon(
+                        Icons.arrow_right,
+                      ),
+                    ),
+                  ),
+                ),
                 Container(
                   margin: EdgeInsets.all(Dimensions.w20),
                   alignment: Alignment.center,
@@ -128,17 +154,17 @@ Widget info(String infoNname, String info) {
         style: TextStyle(
           wordSpacing: 1.5,
           fontSize: Dimensions.font16,
-          fontWeight: FontWeight.w300,
-          color: AppColors.blackColor,
+          fontWeight: FontWeight.w400,
+          color: AppColors.black2Color,
         ),
         children: <TextSpan>[
           TextSpan(
             text: info,
             style: TextStyle(
               height: 1.5,
-              fontSize: Dimensions.font16,
-              fontWeight: FontWeight.w400,
-              color: AppColors.black2Color,
+              fontSize: Dimensions.font17,
+              fontWeight: FontWeight.w500,
+              color: AppColors.blackColor,
             ),
           ),
         ],

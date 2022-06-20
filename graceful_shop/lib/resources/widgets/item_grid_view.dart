@@ -13,36 +13,23 @@ UserController userController = Get.find<UserController>();
 FavoriteController favoriteController = Get.find<FavoriteController>();
 
 class ItemGridView extends StatefulWidget {
-  ItemGridView(
-      {Key? key,
-      required this.product,
-      required this.index,
-      this.isSearch = false,
-      this.isFavorite = false})
-      : super(key: key);
+  ItemGridView({Key? key, required this.product, required this.index, this.isSearch = false, this.isFavorite = false}) : super(key: key);
   Product product;
   int index;
   bool isSearch;
   bool isFavorite;
+
   @override
-  State<ItemGridView> createState() => _ItemGridViewState(
-      product: product,
-      index: index,
-      isSearch: isSearch,
-      isFavorite: isFavorite);
+  State<ItemGridView> createState() => _ItemGridViewState(product: product, index: index, isSearch: isSearch, isFavorite: isFavorite);
 }
 
 class _ItemGridViewState extends State<ItemGridView> {
-  _ItemGridViewState(
-      {Key? key,
-      required this.product,
-      required this.index,
-      required this.isSearch,
-      required this.isFavorite});
+  _ItemGridViewState({Key? key, required this.product, required this.index, required this.isSearch, required this.isFavorite});
   Product product;
   int index;
   bool isSearch;
   bool isFavorite;
+
   @override
   Widget build(BuildContext context) {
     return Column(

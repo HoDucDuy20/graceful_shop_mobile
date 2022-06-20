@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:graceful_shop/controllers/address_controller.dart';
 import 'package:graceful_shop/controllers/category_controller.dart';
 import 'package:graceful_shop/controllers/product_controller.dart';
 import 'package:graceful_shop/controllers/slide_ads_controller.dart';
@@ -8,6 +9,8 @@ import 'package:graceful_shop/resources/multiple_language/localization_service.d
 import 'package:graceful_shop/screens/welcome/welcome.dart';
 import 'package:graceful_shop/resources/utils/colors.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'controllers/invoice_controller.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,6 +21,9 @@ Future<void> main() async {
   Get.put(ProductController());
   Get.put(CategoryController());
   Get.put(SlideAdsController());
+  Get.put(InvoiceController());
+  Get.put(AddressController());
+
   runApp(const MyApp());
 }
 

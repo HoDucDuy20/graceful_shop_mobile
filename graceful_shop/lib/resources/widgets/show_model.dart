@@ -11,7 +11,7 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 ProductController productController = Get.find<ProductController>();
 CartController cartController = Get.find<CartController>();
 
-void showSizeColor(BuildContext context, int product_id) async {
+void showSizeColor(BuildContext context, int productId) async {
   showMaterialModalBottomSheet(
     context: context,
     shape: const RoundedRectangleBorder(
@@ -78,13 +78,9 @@ void showSizeColor(BuildContext context, int product_id) async {
                       ),
                     ),
                     GridViewSize(context),
-                    Divider(
-                      color: AppColors.grayColor,
-                    ),
+                    Divider(color: AppColors.grayColor),
                     Padding(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: Dimensions.w5,
-                      ),
+                      padding: EdgeInsets.symmetric(horizontal: Dimensions.w5),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         mainAxisSize: MainAxisSize.max,
@@ -161,9 +157,7 @@ void showSizeColor(BuildContext context, int product_id) async {
                         ],
                       ),
                     ),
-                    SizedBox(
-                      height: Dimensions.h65,
-                    ),
+                    SizedBox(height: Dimensions.h65),
                   ],
                 ),
               ),
@@ -171,9 +165,7 @@ void showSizeColor(BuildContext context, int product_id) async {
             Container(
               alignment: Alignment.bottomCenter,
               child: Container(
-                padding: EdgeInsets.symmetric(
-                  vertical: Dimensions.h10,
-                ),
+                padding: EdgeInsets.symmetric(vertical: Dimensions.h10),
                 decoration: BoxDecoration(
                   color: AppColors.whiteColor,
                   boxShadow: [
@@ -193,11 +185,9 @@ void showSizeColor(BuildContext context, int product_id) async {
                       title: 'AddCart'.tr,
                       onPressed: () {
                         cartController.addCart(
-                          product_id,
-                          productController
-                              .colorList[productController.indexColor.value].id,
-                          productController
-                              .sizeList[productController.indexSize.value].id,
+                          productId,
+                          productController.colorList[productController.indexColor.value].id,
+                          productController.sizeList[productController.indexSize.value].id,
                           productController.quantity.value,
                         );
                       },

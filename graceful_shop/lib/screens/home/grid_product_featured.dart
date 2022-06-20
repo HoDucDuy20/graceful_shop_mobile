@@ -4,14 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:graceful_shop/controllers/product_controller.dart';
 import 'package:graceful_shop/controllers/user_controller.dart';
-import 'package:graceful_shop/resources/utils/colors.dart';
 import 'package:graceful_shop/resources/utils/dimensions.dart';
-import 'package:graceful_shop/resources/utils/format.dart';
 import 'package:graceful_shop/resources/widgets/button.dart';
 import 'package:graceful_shop/resources/widgets/grid_view.dart';
-import 'package:graceful_shop/resources/widgets/show_dialog.dart';
-import 'package:graceful_shop/screens/product_detail/product_detail.dart';
-import 'package:graceful_shop/services/url.dart';
 
 class GridProductFeatured extends StatefulWidget {
   const GridProductFeatured({Key? key}) : super(key: key);
@@ -25,8 +20,6 @@ class _GridProductFeaturedState extends State<GridProductFeatured> {
 
   @override
   Widget build(BuildContext context) {
-    final orientation = MediaQuery.of(context).orientation;
-
     return Obx(() {
       return Column(
         children: [

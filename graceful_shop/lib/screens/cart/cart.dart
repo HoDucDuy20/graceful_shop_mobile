@@ -112,8 +112,7 @@ class _CartScreenState extends State<CartScreen> {
                   contentPadding: EdgeInsets.only(top: Dimensions.h7),
                   actionsPadding: EdgeInsets.zero,
                   content: Padding(
-                    padding: EdgeInsets.symmetric(
-                        vertical: Dimensions.h10, horizontal: Dimensions.w25),
+                    padding: EdgeInsets.symmetric(vertical: Dimensions.h10, horizontal: Dimensions.w25),
                     child: Text(
                       'AreYouSureQuitProduct'.tr,
                       style: TextStyle(
@@ -314,7 +313,9 @@ class _CartScreenState extends State<CartScreen> {
                                           InkWell(
                                             onTap: () {
                                               setState(() {});
-                                              totalPrice -= cartController.productCartList[index].product.price;
+                                              if (cartController.productCartList[index].check) {
+                                                totalPrice -= cartController.productCartList[index].product.price;
+                                              }
                                               cartController.reduceTheNumber(index);
                                             },
                                             child: Container(
@@ -346,7 +347,9 @@ class _CartScreenState extends State<CartScreen> {
                                           InkWell(
                                             onTap: () {
                                               setState(() {});
-                                              totalPrice += cartController.productCartList[index].product.price;
+                                              if (cartController.productCartList[index].check) {
+                                                totalPrice += cartController.productCartList[index].product.price;
+                                              }
                                               cartController.increasingTheNumber(index);
                                             },
                                             child: Container(
@@ -459,8 +462,9 @@ class _CartScreenState extends State<CartScreen> {
                       MaterialButton(
                         onPressed: (){
                           updateListCartPay();
-                          if(listCartId.isNotEmpty)
+                          if(listCartId.isNotEmpty) {
                             Get.to(() => PayScreen(listCartPay: listCartPay));
+                          }
                         },
                         color: AppColors.redColor,
                         height: Dimensions.h65,

@@ -49,9 +49,9 @@ class ProductController extends GetxController {
     if (productTotal != null) {
       total.value = productTotal.total;
       page.value++;
-      productTotal.products.forEach((value) {
+      for (var value in productTotal.products) {
          value.isLike = value.likes.firstWhere((x) => x.userId == userController.user.value.id , orElse: () => Like(productId: -1, userId: -1)).productId != -1;
-      });
+      }
       productList.addAll(productTotal.products); 
       total.value == productList.length ? checkFull.value = true : checkFull.value = false;
       loading.value = false;
@@ -63,9 +63,9 @@ class ProductController extends GetxController {
     if (productTotal != null) {
       total.value = productTotal.total;
       page.value++;
-      productTotal.products.forEach((value) {
+      for (var value in productTotal.products) {
          value.isLike = value.likes.firstWhere((x) => x.userId == userController.user.value.id , orElse: () => Like(productId: -1, userId: -1)).productId != -1;
-      });
+      }
       productList.addAll(productTotal.products);
       total.value == productList.length ? checkFull.value = true : checkFull.value = false;
       loading.value = false;
@@ -105,9 +105,9 @@ class ProductController extends GetxController {
     if (productTotal != null) {
       totalSearch.value = productTotal.total;
       pageSearch.value++;
-      productTotal.products.forEach((value) {
+      for (var value in productTotal.products) {
          value.isLike = value.likes.firstWhere((x) => x.userId == userController.user.value.id , orElse: () => Like(productId: -1, userId: -1)).productId != -1;
-      });
+      }
       productListSearch.addAll(productTotal.products);
       totalSearch.value == productListSearch.length ? checkFullSearch.value = true : checkFullSearch.value = false;
       loading.value = false;
@@ -120,9 +120,9 @@ class ProductController extends GetxController {
     if (productTotal != null) {
       totalSearch.value = productTotal.total;
       pageSearch.value++;
-      productTotal.products.forEach((value) {
+      for (var value in productTotal.products) {
          value.isLike = value.likes.firstWhere((x) => x.userId == userController.user.value.id , orElse: () => Like(productId: -1, userId: -1)).productId != -1;
-      });
+      }
       productListSearch.addAll(productTotal.products);
       totalSearch.value == productListSearch.length ? checkFullSearch.value = true : checkFullSearch.value = false;
       loading.value = false;
@@ -130,14 +130,13 @@ class ProductController extends GetxController {
   }
 
   void getProductsOfAllType(int typeId) async {
-    var productTotal =
-        await RemoteService.getProductsOfAllType(typeId, pageSearch.value);
+    var productTotal = await RemoteService.getProductsOfAllType(typeId, pageSearch.value);
     if (productTotal != null) {
       totalSearch.value = productTotal.total;
       pageSearch.value++;
-      productTotal.products.forEach((value) {
+      for (var value in productTotal.products) {
          value.isLike = value.likes.firstWhere((x) => x.userId == userController.user.value.id , orElse: () => Like(productId: -1, userId: -1)).productId != -1;
-      });
+      }
       productListSearch.addAll(productTotal.products);
       totalSearch.value == productListSearch.length ? checkFullSearch.value = true : checkFullSearch.value = false;
       loading.value = false;

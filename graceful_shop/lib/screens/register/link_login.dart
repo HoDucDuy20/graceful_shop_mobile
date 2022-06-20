@@ -14,20 +14,19 @@ class LinkLogin extends StatelessWidget {
       padding: EdgeInsets.symmetric(vertical: Dimensions.h12),
       child: Text.rich(
         TextSpan(
-          text: 'IfAccount'.tr + '\n',
+          text: '${'IfAccount'.tr}\n',
           style: TextStyle(
             fontSize: Dimensions.font16,
             color: AppColors.black2Color,
           ),
           children: <TextSpan>[
             TextSpan(
-              text: 'Here'.tr + ' ',
+              text: '${'Here'.tr} ',
               style: TextStyle(
                 fontSize: Dimensions.font16,
                 color: AppColors.mainColor,
               ),
-              recognizer: TapGestureRecognizer()
-                ..onTap = () {
+              recognizer: TapGestureRecognizer()..onTap = () {
                   Get.off(() => const Login());
                 },
             ),

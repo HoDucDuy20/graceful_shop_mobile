@@ -3,17 +3,13 @@ import 'dart:convert';
 import 'package:graceful_shop/models/like.dart';
 import 'package:graceful_shop/models/picture.dart';
 
-ProductTotal productTotalFromJson(String str) =>
-    ProductTotal.fromJson(jsonDecode(str)['data']);
+ProductTotal productTotalFromJson(String str) => ProductTotal.fromJson(jsonDecode(str)['data']);
 
-List<Product> productFromJson(String str) => List<Product>.from(
-    json.decode(str)['data'].map((x) => Product.fromJson(x)));
+List<Product> productFromJson(String str) => List<Product>.from(json.decode(str)['data'].map((x) => Product.fromJson(x)));
 
-List<Product> productForUserFromJson(String str) => List<Product>.from(
-    json.decode(str)['data'].map((x) => Product.fromJson(x['product'])));
+List<Product> productForUserFromJson(String str) => List<Product>.from(json.decode(str)['data'].map((x) => Product.fromJson(x['product'])));
 
-String productToJson(List<Product> data) =>
-    json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+String productToJson(List<Product> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class Product {
   Product({
@@ -69,8 +65,7 @@ class Product {
         numLike: json["num_like"],
         numRate: json["num_rate"].toDouble(),
         description: json["description"],
-        pictures: List<Picture>.from(
-            json["pictures"].map((x) => Picture.fromJson(x))),
+        pictures: List<Picture>.from(json["pictures"].map((x) => Picture.fromJson(x))),
         likes: List<Like>.from(json["likes"].map((x) => Like.fromJson(x))),
       );
 
@@ -103,11 +98,7 @@ class ProductTotal {
   int total;
   List<Product> products;
 
-  factory ProductTotal.fromJson(Map<String, dynamic> json) => ProductTotal(
-        total: json["total"],
-        products:
-            List<Product>.from(json["data"].map((x) => Product.fromJson(x))),
-      );
+  factory ProductTotal.fromJson(Map<String, dynamic> json) => ProductTotal(total: json["total"], products: List<Product>.from(json["data"].map((x) => Product.fromJson(x))));
 
   Map<String, dynamic> toJson() => {
         "status": total,

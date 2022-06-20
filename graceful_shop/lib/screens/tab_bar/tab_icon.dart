@@ -9,12 +9,7 @@ class TabIcon extends StatelessWidget {
   String assetIcon;
   TabController tabController;
   int index;
-  TabIcon(
-      {Key? key,
-      required this.assetIcon,
-      required this.tabController,
-      required this.index})
-      : super(key: key);
+  TabIcon({Key? key, required this.assetIcon, required this.tabController, required this.index}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

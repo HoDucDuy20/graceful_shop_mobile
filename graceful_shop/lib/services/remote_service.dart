@@ -1,13 +1,17 @@
 import 'dart:convert';
 
+import 'package:graceful_shop/models/address.dart';
 import 'package:graceful_shop/models/cart.dart';
 import 'package:graceful_shop/models/category.dart';
 import 'package:graceful_shop/models/color_size.dart';
+import 'package:graceful_shop/models/invoice.dart';
+import 'package:graceful_shop/models/invoice_detail.dart';
 import 'package:graceful_shop/models/product.dart';
 import 'package:graceful_shop/models/rate.dart';
 import 'package:graceful_shop/models/response_data.dart';
 import 'package:graceful_shop/models/slide_ads.dart';
 import 'package:graceful_shop/models/user.dart';
+import 'package:graceful_shop/models/voucher.dart';
 import 'package:graceful_shop/services/url.dart';
 import 'package:http/http.dart' as http;
 
@@ -361,8 +365,7 @@ class RemoteService {
   //   }
   // }
 
-  static Future<ResponseData?> changeInfo(
-      String token, User user, String? profileImg) async {
+  static Future<ResponseData?> changeInfo(String token, User user, String? profileImg) async {
     var request = http.MultipartRequest('POST', uriChangeInfo());
     request.headers['Authorization'] = 'Bearer $token';
     request.headers['Content-Type'] = 'multipart/form-data';
@@ -371,10 +374,7 @@ class RemoteService {
     request.fields['sex'] = user.sex.toString();
     request.fields['email'] = user.email;
     request.fields['address'] = user.address;
-    profileImg != null
-        ? request.files
-            .add(await http.MultipartFile.fromPath('avatar', profileImg))
-        : null;
+    profileImg != null ? request.files.add(await http.MultipartFile.fromPath('avatar', profileImg)) : null;
 
     var streamedResponse = await request.send();
     var response = await http.Response.fromStream(streamedResponse);
@@ -408,6 +408,65 @@ class RemoteService {
     }
   }
 
+  static Future<ResponseData?> rateProduct(String token, int productId, int numRate, String description, List<String> images) async {
+    var request = http.MultipartRequest('POST', uriRateProduct());
+    request.headers['Authorization'] = 'Bearer $token';
+    request.headers['Content-Type'] = 'multipart/form-data';
+    request.fields['product_id'] = productId.toString();
+    request.fields['num_rate'] = numRate.toString();
+    request.fields['description'] = description;
+
+    List<http.MultipartFile> listImage = [];
+
+    for (var img in images) {
+      if (img != "") {
+        var multipartFile = await http.MultipartFile.fromPath('images[]', img);
+        listImage.add(multipartFile);
+      }
+    }
+    request.files.addAll(listImage);
+
+    var streamedResponse = await request.send();
+    var response = await http.Response.fromStream(streamedResponse);
+    if (response.statusCode == 200) {
+      var jsonString = response.body;
+      return responseDataFromJson(jsonString);
+    } else {
+      print('rateProduct error: ' + response.statusCode.toString());
+      return null;
+    }
+  }
+
+   static Future<ResponseData?> editRateProduct(String token, int id, int productId, int numRate, String description, List<String> images) async {
+    var request = http.MultipartRequest('POST', uriEditRateProduct());
+    request.headers['Authorization'] = 'Bearer $token';
+    request.headers['Content-Type'] = 'multipart/form-data';
+    request.fields['id'] = id.toString();
+    request.fields['product_id'] = productId.toString();
+    request.fields['num_rate'] = numRate.toString();
+    request.fields['description'] = description;
+
+    List<http.MultipartFile> listImage = [];
+
+    for (var img in images) {
+      if (img != "") {
+        var multipartFile = await http.MultipartFile.fromPath('images[]', img);
+        listImage.add(multipartFile);
+      }
+    }
+    request.files.addAll(listImage);
+
+    var streamedResponse = await request.send();
+    var response = await http.Response.fromStream(streamedResponse);
+    if (response.statusCode == 200) {
+      var jsonString = response.body;
+      return responseDataFromJson(jsonString);
+    } else {
+      print('editRateProduct error: ' + response.statusCode.toString());
+      return null;
+    }
+  }
+
   static Future<List<Cart>?> getProductCart(String token) async {
     var response = await client.get(
       uriProductCart(),
@@ -426,15 +485,14 @@ class RemoteService {
     }
   }
 
-  static Future<ResponseData?> addCart(String token, int product_id,
-      int color_id, int size_id, int quantity) async {
+  static Future<ResponseData?> addCart(String token, int productId, int colorId, int sizeId, int quantity) async {
     // print(token);
     var response = await client.post(
       uriAddCart(),
       body: jsonEncode({
-        "product_id": product_id,
-        "color_id": color_id,
-        "size_id": size_id,
+        "product_id": productId,
+        "color_id": colorId,
+        "size_id": sizeId,
         "quantity": quantity,
       }),
       headers: {
@@ -452,15 +510,14 @@ class RemoteService {
     }
   }
 
-  static Future<ResponseData?> updateCart(String token, int product_id,
-      int color_id, int size_id, int quantity) async {
+  static Future<ResponseData?> updateCart(String token, int productId, int colorId, int sizeId, int quantity) async {
     // print(token);
     var response = await client.post(
       uriUpdateCart(),
       body: jsonEncode({
-        "product_id": product_id,
-        "color_id": color_id,
-        "size_id": size_id,
+        "product_id": productId,
+        "color_id": colorId,
+        "size_id": sizeId,
         "quantity": quantity,
       }),
       headers: {
@@ -496,6 +553,219 @@ class RemoteService {
       return responseDataFromJson(jsonString);
     } else {
       print('deleteCart error: ' + response.statusCode.toString());
+      return null;
+    }
+  }
+
+  static Future<ResponseData?> addInvoice(String token, List<int> lstCartId, int? voucherId, int shipPrice) async {
+    // print(token);
+    var response = await client.post(
+      uriAddInvoice(),
+      body: jsonEncode({
+        "cart_id": lstCartId,
+        "voucher_id": voucherId,
+        "ship_price": shipPrice,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    if (response.statusCode == 200) {
+      var jsonString = response.body;
+      return responseDataFromJson(jsonString);
+    } else {
+      print('addInvoice error: ' + response.statusCode.toString());
+      return null;
+    }
+  }
+
+  static Future<List<Invoice>?> listInvoice(String token) async {
+    var response = await client.get(
+      uriInvoiceList(),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    if (response.statusCode == 200) {
+      var jsonString = response.body;
+      return invoiceFromJson(jsonString);
+    } else {
+      print('listInvoice error: ' + response.statusCode.toString());
+      return null;
+    }
+  }
+
+  static Future<List<InvoiceDetail>?> invoiceDetail(String token, int invoiceId) async {
+    var response = await client.get(
+      uriInvoiceDetail(invoiceId),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    if (response.statusCode == 200) {
+      var jsonString = response.body;
+      return invoiceDetailFromJson(jsonString);
+    } else {
+      print('invoiceDetail error: ' + response.statusCode.toString());
+      return null;
+    }
+  }
+
+  static Future<ResponseData?> cancelInvoice(String token, int invoiceId) async {
+    // print(token);
+    var response = await client.delete(
+      uriCancelInvoice(),
+      body: jsonEncode({
+        "id": invoiceId,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    if (response.statusCode == 200) {
+      var jsonString = response.body;
+      return responseDataFromJson(jsonString);
+    } else {
+      print('cancelInvoice error: ' + response.statusCode.toString());
+      return null;
+    }
+  }
+
+  static Future<List<Voucher>?> listVoucher(String token) async {
+    var response = await client.get(
+      uriVoucherList(),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    if (response.statusCode == 200) {
+      var jsonString = response.body;
+      return voucherFromJson(jsonString);
+    } else {
+      print('listVoucher error: ' + response.statusCode.toString());
+      return null;
+    }
+  }
+
+  static Future<List<Address>?> listAddress(String token) async {
+    var response = await client.get(
+      uriAddressList(),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    if (response.statusCode == 200) {
+      var jsonString = response.body;
+      return addressFromJson(jsonString);
+    } else {
+      print('listAddress error: ' + response.statusCode.toString());
+      return null;
+    }
+  }
+
+  static Future<ResponseData?> addAddress(String token, Address address) async {
+    // print(token);
+    var response = await client.post(
+      uriAddAddress(),
+      body: jsonEncode({
+        "name": address.name,
+        "address": address.address,
+        "phone_number": address.phoneNumber,
+        "is_default": address.isDefault
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    if (response.statusCode == 200) {
+      var jsonString = response.body;
+      return responseDataFromJson(jsonString);
+    } else {
+      print('addInvoice error: ' + response.statusCode.toString());
+      return null;
+    }
+  }
+
+  static Future<ResponseData?> editAddress(String token, Address address) async {
+    // print(token);
+    var response = await client.post(
+      uriEditAddress(),
+      body: jsonEncode({
+        "id": address.id,
+        "name": address.name,
+        "address": address.address,
+        "phone_number": address.phoneNumber,
+        "is_default": address.isDefault
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    if (response.statusCode == 200) {
+      var jsonString = response.body;
+      return responseDataFromJson(jsonString);
+    } else {
+      print('addInvoice error: ' + response.statusCode.toString());
+      return null;
+    }
+  }
+
+  static Future<ResponseData?> deleteAddress(String token, int idAddress) async {
+    // print(token);
+    var response = await client.delete(
+      uriDeleteAddress(),
+      body: jsonEncode({
+        "id": idAddress,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    if (response.statusCode == 200) {
+      var jsonString = response.body;
+      return responseDataFromJson(jsonString);
+    } else {
+      print('addInvoice error: ' + response.statusCode.toString());
+      return null;
+    }
+  }
+
+  static Future<ResponseData?> sendFeedback(String token, String description) async {
+    // print(token);
+    var response = await client.post(
+      uriSendFeedback(),
+      body: jsonEncode({
+        "description": description,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    if (response.statusCode == 200) {
+      var jsonString = response.body;
+      return responseDataFromJson(jsonString);
+    } else {
+      print('addInvoice error: ' + response.statusCode.toString());
       return null;
     }
   }

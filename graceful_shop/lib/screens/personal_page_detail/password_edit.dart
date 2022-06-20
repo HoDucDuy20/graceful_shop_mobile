@@ -45,7 +45,11 @@ class _PasswordEditState extends State<PasswordEdit> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return GestureDetector(
+      onTap: () {
+        FocusScope.of(context).requestFocus(FocusNode());
+      },
+      child: Scaffold(
       appBar: AppBar(
         titleSpacing: 0,
         automaticallyImplyLeading: false,
@@ -79,11 +83,7 @@ class _PasswordEditState extends State<PasswordEdit> {
           ],
         ),
       ),
-      body: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).requestFocus(FocusNode());
-        },
-        child: SingleChildScrollView(
+      body: SingleChildScrollView(
           child: Obx(() {
             return Container(
                 padding: EdgeInsets.all(Dimensions.w15),
@@ -141,9 +141,7 @@ class _PasswordEditState extends State<PasswordEdit> {
                           } else {
                             errorNewPass2 = '';
                           }
-                          if (errorOldPass == '' &&
-                              errorNewPass1 == '' &&
-                              errorNewPass2 == '') {
+                          if (errorOldPass == '' && errorNewPass1 == '' && errorNewPass2 == '') {
                             userController.changePass(oldPass, newPass1);
                           }
                         },

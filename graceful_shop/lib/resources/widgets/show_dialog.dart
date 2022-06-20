@@ -14,8 +14,7 @@ void showLogIn() async {
       contentPadding: EdgeInsets.zero,
       actionsPadding: EdgeInsets.zero,
       title: Padding(
-        padding: EdgeInsets.symmetric(
-            vertical: Dimensions.h12, horizontal: Dimensions.w15),
+        padding: EdgeInsets.symmetric(vertical: Dimensions.h12, horizontal: Dimensions.w15),
         child: Text(
           'Login'.tr,
           style: TextStyle(
@@ -136,8 +135,7 @@ void showLogOut(VoidCallback f) async {
       contentPadding: EdgeInsets.zero,
       actionsPadding: EdgeInsets.zero,
       title: Padding(
-        padding: EdgeInsets.symmetric(
-            vertical: Dimensions.h12, horizontal: Dimensions.w15),
+        padding: EdgeInsets.symmetric(vertical: Dimensions.h12, horizontal: Dimensions.w15),
         child: Text(
           'LogOut'.tr,
           style: TextStyle(
@@ -196,7 +194,7 @@ void showLogOut(VoidCallback f) async {
   );
 }
 
-void showSuccess() async {
+void showSuccess(String title) async {
   await Get.dialog(
     AlertDialog(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
@@ -214,11 +212,14 @@ void showSuccess() async {
               size: 30,
               color: AppColors.greenColor,
             ),
-            const SizedBox(
-              height: 10,
-            ),
+            const SizedBox(height: 10),
             Text(
-              'AddedToCart'.tr,
+              title,
+              style: TextStyle(
+                color: AppColors.mainColor,
+                fontSize: Dimensions.font14,
+                fontWeight: FontWeight.w400,
+              ),
             ),
           ],
         ),
@@ -236,8 +237,7 @@ void confirmDelete(int index) async {
       contentPadding: EdgeInsets.only(top: Dimensions.h7),
       actionsPadding: EdgeInsets.zero,
       content: Padding(
-        padding: EdgeInsets.symmetric(
-            vertical: Dimensions.h10, horizontal: Dimensions.w25),
+        padding: EdgeInsets.symmetric(vertical: Dimensions.h10, horizontal: Dimensions.w25),
         child: Text(
           'AreYouSureQuitProduct'.tr,
           style: TextStyle(

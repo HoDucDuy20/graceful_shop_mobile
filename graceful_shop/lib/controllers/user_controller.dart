@@ -21,10 +21,10 @@ class UserController extends GetxController {
     getToken();
   }
 
-  void setToken(String _token) async {
-    token.value = _token;
+  void setToken(String token) async {
+    this.token.value = token;
     final prefs = await SharedPreferences.getInstance();
-    await prefs.setString('token', _token);
+    await prefs.setString('token', token);
   }
 
   void getToken() async {
@@ -36,12 +36,13 @@ class UserController extends GetxController {
   }
 
   void getSex() async {
-    if (user.value.sex == 0)
+    if (user.value.sex == 0) {
       user.value.sexName = 'Male'.tr;
-    else if (user.value.sex == 1)
+    } else if (user.value.sex == 1) {
       user.value.sexName = 'Female'.tr;
-    else
+    } else {
       user.value.sexName = '';
+    }
   }
 
   void logIn(String phone, String pass) async {
@@ -136,8 +137,7 @@ class UserController extends GetxController {
   void updateProfile(File? image) async {
     isLoading.value = true;
     if (token.value != '') {
-      var responseDataInfo =
-          await RemoteService.changeInfo(token.value, user.value, image?.path);
+      var responseDataInfo = await RemoteService.changeInfo(token.value, user.value, image?.path);
       if (responseDataInfo != null) {
         if (responseDataInfo.status != 0) {
           isLoading.value = false;
@@ -165,8 +165,7 @@ class UserController extends GetxController {
 
   void changePass(String oldPass, String newPass) async {
     isLoading.value = true;
-    var responseData =
-        await RemoteService.changePass(token.value, oldPass, newPass);
+    var responseData = await RemoteService.changePass(token.value, oldPass, newPass);
     if (responseData != null) {
       int status = responseData.status;
       if (status == 0) {

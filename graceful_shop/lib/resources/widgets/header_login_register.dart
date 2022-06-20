@@ -7,19 +7,14 @@ import 'package:graceful_shop/resources/utils/colors.dart';
 import 'package:graceful_shop/resources/utils/dimensions.dart';
 
 class HeaderLoginRegister extends StatelessWidget {
+  HeaderLoginRegister({Key? key, required this.title, required this.subTitle}) : super(key: key);
   String title;
   String subTitle;
-  HeaderLoginRegister({
-    Key? key,
-    required this.title,
-    required this.subTitle,
-  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(
-          top: Dimensions.h40, left: Dimensions.w35, bottom: Dimensions.h10),
+      padding: EdgeInsets.only(top: Dimensions.h40, left: Dimensions.w35, bottom: Dimensions.h10),
       margin: EdgeInsets.only(bottom: Dimensions.h40),
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.only(bottomLeft: Radius.circular(70)),

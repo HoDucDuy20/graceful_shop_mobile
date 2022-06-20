@@ -5,15 +5,11 @@ import 'package:graceful_shop/resources/utils/colors.dart';
 import 'package:graceful_shop/resources/utils/dimensions.dart';
 
 class ListTileOnTap extends StatelessWidget {
+  ListTileOnTap({Key? key, required this.onPressed, required this.icon, required this.title}) : super(key: key);
   VoidCallback onPressed;
   IconData icon;
   String title;
-  ListTileOnTap({
-    Key? key,
-    required this.onPressed,
-    required this.icon,
-    required this.title,
-  }) : super(key: key);
+  
   @override
   Widget build(BuildContext context) {
     return InkWell(

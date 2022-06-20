@@ -86,17 +86,13 @@ List<Widget> lstAction1 = [
   Action_Search(),
   Action_Cart(false),
   Action_Message(false),
-  SizedBox(
-    width: Dimensions.w15,
-  )
+  SizedBox(width: Dimensions.w15),
 ];
 
 List<Widget> lstAction2 = [
   Action_Notification(),
   Action_Home(),
-  SizedBox(
-    width: Dimensions.w15,
-  )
+  SizedBox(width: Dimensions.w15),
 ];
 
 List<Widget> lstAction3 = [

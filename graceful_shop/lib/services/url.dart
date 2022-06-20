@@ -1,6 +1,6 @@
 //baseUrl
 // String baseUrl = 'http://10.0.2.2:8000/';
-String baseUrl = 'http://192.168.1.6:8000/';
+String baseUrl = 'http://192.168.1.3:8000/';
 // String baseUrl = 'http://172.20.2.162:8000/';
 
 //parse uri
@@ -30,9 +30,9 @@ Uri uriSlideShow() => formaterApi('slide-show');
 
 Uri uriSlideShowDetail(int id) => formaterApi('slide-show-detail/$id');
 
-Uri uriLogIn() => formaterApi('login');
-
 Uri uriRegister() => formaterApi('register');
+
+Uri uriLogIn() => formaterApi('login');
 
 Uri uriLogOut() => formaterApi('logout');
 
@@ -44,16 +44,40 @@ Uri uriChangeAvatar() => formaterApi('change-avatar');
 
 Uri uriChangeInfo() => formaterApi('change-info');
 
-Uri uriFavorite() => formaterApi('like');
-
 Uri uriProductFavorite() => formaterApi('product-like');
 
+Uri uriFavorite() => formaterApi('like');
+
 Uri uriRateOfProduct() => formaterApi('rate-of-product');
+
+Uri uriRateProduct() => formaterApi('rate-product'); 
+
+Uri uriEditRateProduct() => formaterApi('edit-rate-product'); 
+
+Uri uriProductCart() => formaterApi('product-cart');
 
 Uri uriAddCart() => formaterApi('add-cart');
 
 Uri uriUpdateCart() => formaterApi('update-cart');
 
-Uri uriProductCart() => formaterApi('product-cart');
-
 Uri uriDeleteCart() => formaterApi('delete-cart');
+
+Uri uriAddInvoice() => formaterApi('add-invoice');
+
+Uri uriInvoiceList() => formaterApi('invoice-list');
+
+Uri uriInvoiceDetail(int id) => formaterApi('invoice-detail/$id');
+
+Uri uriCancelInvoice() => formaterApi('cancel-invoice');
+
+Uri uriVoucherList() => formaterApi('voucher-list');
+
+Uri uriAddressList() => formaterApi('address-list');
+
+Uri uriAddAddress() => formaterApi('add-address');
+
+Uri uriEditAddress() => formaterApi('edit-address');
+
+Uri uriDeleteAddress() => formaterApi('delete-address');
+
+Uri uriSendFeedback() => formaterApi('send-feedback');

@@ -176,19 +176,15 @@ class _PersonalEditState extends State<PersonalEdit> {
                     readOnly: true,
                     decoration: InputDecoration(
                       filled: true,
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(color: AppColors.grayColor),
-                      ),
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(color: AppColors.mainColor),
-                      ),
+                      focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.grayColor)),
+                      border: OutlineInputBorder(borderSide: BorderSide(color: AppColors.mainColor)),
                       hintText: userController.user.value.phone,
                     ),
                   ),
                   info('Email'.tr),
                   textField(txtEmail, ''),
-                  info('Address'.tr),
-                  textField(txtAddress, ''),
+                  // info('Address'.tr),
+                  // textField(txtAddress, ''),
                   Container(
                     margin: EdgeInsets.all(Dimensions.w20),
                     alignment: Alignment.center,

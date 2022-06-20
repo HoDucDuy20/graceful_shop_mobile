@@ -183,11 +183,8 @@ class _SearchDetailState extends State<SearchDetail> {
                     true,
                     false,
                   ),
-                  (productController.checkFullSearch.value == true ||
-                          productController.productListSearch.value.length == 0)
-                      ? SizedBox(
-                          height: Dimensions.h40,
-                        )
+                  (productController.checkFullSearch.value == true || productController.productListSearch.isEmpty)
+                      ? SizedBox(height: Dimensions.h40)
                       : productController.loading.value
                           ? Center(
                               child: Image.asset(
