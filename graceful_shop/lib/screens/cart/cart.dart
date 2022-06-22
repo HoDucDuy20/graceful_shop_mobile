@@ -397,7 +397,7 @@ class _CartScreenState extends State<CartScreen> {
           Align(
             alignment: Alignment.bottomCenter,
             child: Container(
-              height: 65,
+              height: Dimensions.h65,
               // padding: EdgeInsets.all(Dimensions.w10),
               decoration: BoxDecoration(
                 border: Border(

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:graceful_shop/controllers/product_controller.dart';
 import 'package:graceful_shop/resources/utils/colors.dart';
 import 'package:graceful_shop/resources/utils/dimensions.dart';
+import 'package:graceful_shop/resources/utils/format.dart';
 import 'package:graceful_shop/resources/widgets/button.dart';
 import 'package:graceful_shop/resources/widgets/grid_view.dart';
 import 'package:graceful_shop/resources/widgets/icon_onTap.dart';
@@ -16,42 +17,22 @@ class SearchDetail extends StatefulWidget {
 }
 
 class _SearchDetailState extends State<SearchDetail> {
-  ProductController productController = Get.find<ProductController>();
-
-  String value;
   _SearchDetailState({Key? key, required this.value});
+  String value;
+
+  ProductController productController = Get.find<ProductController>();
 
   TextEditingController txtSearch = TextEditingController();
 
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
+  
+  double minValue = 0;
+  double maxValue = 2000000;
+  int divisionsValue = 20;
 
-  Widget _buildRow(List<Widget> widgets) {
-    return Padding(
-      padding: const EdgeInsets.only(bottom: 24.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceAround,
-        children: widgets,
-      ),
-    );
-  }
+  int proType = -1;
 
-  final _totalDots = 1000000;
-  int _currentPosition = 500000;
-  int _min = 50000;
-
-  double _validPosition(double position) {
-    if (position >= _totalDots) return 0;
-    if (position < 0) return _totalDots - 1;
-    return position;
-  }
-
-  void _updatePosition(double position) {
-    setState(() => _currentPosition = _validPosition(position).toInt());
-  }
-
-  String getPrettyCurrPosition() {
-    return (_currentPosition + 1).toString();
-  }
+  RangeValues _currentRangeValues = RangeValues(0, 0);
 
   @override
   Widget build(BuildContext context) {
@@ -59,150 +40,431 @@ class _SearchDetailState extends State<SearchDetail> {
       onTap: () {
         FocusScope.of(context).requestFocus(FocusNode());
       },
-      child: Scaffold(
-        key: _scaffoldKey,
-        appBar: AppBar(
-          automaticallyImplyLeading: false,
-          backgroundColor: AppColors.white3Color,
-          shadowColor: AppColors.whiteColor,
-          foregroundColor: AppColors.grayColor,
-          elevation: 5,
-          titleSpacing: 0,
-          leading: InkWell(
-            onTap: () {
-              Get.back();
-              Get.back();
-            },
-            child: Container(
-              padding: EdgeInsets.symmetric(horizontal: Dimensions.w5),
-              child: Icon(
-                Icons.chevron_left,
-                size: Dimensions.font30,
-                color: AppColors.black2Color,
-              ),
-            ),
-          ),
-          title: SizedBox(
-            height: Dimensions.hSearch2,
-            child: TextField(
-              onTap: () {
-                FocusScope.of(context).requestFocus(FocusNode());
-                Get.back();
-              },
-              autofocus: false,
-              readOnly: true,
-              textAlignVertical: TextAlignVertical.bottom,
-              controller: txtSearch,
-              textInputAction: TextInputAction.search,
-              decoration: InputDecoration(
-                filled: true,
-                fillColor: AppColors.gray2Color,
-                prefixIcon: Icon(
-                  Icons.search,
-                  color: AppColors.grayColor,
-                ),
-                hintText: value,
-                enabledBorder: UnderlineInputBorder(
-                  borderSide: BorderSide.none,
-                  borderRadius: BorderRadius.circular(25.0),
-                ),
-              ),
-            ),
-          ),
-          actions: [
-            Padding(
-              padding: EdgeInsets.only(right: Dimensions.w10),
-              child: IconOnTap1(
-                onPressed: () {
-                  _scaffoldKey.currentState?.openEndDrawer();
+      child: Obx(() {
+          return Scaffold(
+            key: _scaffoldKey,
+            appBar: AppBar(
+              automaticallyImplyLeading: false,
+              backgroundColor: AppColors.white3Color,
+              shadowColor: AppColors.whiteColor,
+              foregroundColor: AppColors.grayColor,
+              elevation: 5,
+              titleSpacing: 0,
+              leading: InkWell(
+                onTap: () {
+                  Get.back();
+                  Get.back();
                 },
-                icon: Icons.filter_alt_outlined,
-                size: Dimensions.font30,
-                color: AppColors.mainColor,
-                border: false,
-              ),
-            ),
-          ],
-        ),
-        endDrawer: Drawer(
-          child: ListView(
-            // Important: Remove any padding from the ListView.
-            padding: EdgeInsets.zero,
-            children: [
-              const DrawerHeader(
-                decoration: BoxDecoration(
-                  color: Colors.blue,
-                ),
-                child: Text('Drawer Header'),
-              ),
-              _buildRow([
-                Text(
-                  'Current position ${getPrettyCurrPosition()} / $_totalDots',
-                ),
-              ]),
-              _buildRow([
-                SizedBox(
-                  width: 300.0,
-                  child: Slider(
-                    value: _currentPosition.toDouble(),
-                    max: (_totalDots - 1).toDouble(),
-                    min: (_min - 1).toDouble(),
-                    onChanged: _updatePosition,
-                    label: 'getPrettyCurrPosition()',
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: Dimensions.w5),
+                  child: Icon(
+                    Icons.chevron_left,
+                    size: Dimensions.font30,
+                    color: AppColors.black2Color,
                   ),
                 ),
-              ]),
-              ListTile(
-                title: const Text('Item 1'),
-                onTap: () {
-                  // Update the state of the app.
-                  // ...
-                },
               ),
-              ListTile(
-                title: const Text('Item 2'),
-                onTap: () {
-                  // Update the state of the app.
-                  // ...
-                },
+              title: SizedBox(
+                height: Dimensions.hSearch2,
+                child: TextField(
+                  onTap: () {
+                    FocusScope.of(context).requestFocus(FocusNode());
+                    Get.back();
+                  },
+                  autofocus: false,
+                  readOnly: true,
+                  textAlignVertical: TextAlignVertical.bottom,
+                  controller: txtSearch,
+                  textInputAction: TextInputAction.search,
+                  decoration: InputDecoration(
+                    filled: true,
+                    fillColor: AppColors.gray2Color,
+                    prefixIcon: Icon(
+                      Icons.search,
+                      color: AppColors.grayColor,
+                    ),
+                    hintText: value,
+                    enabledBorder: UnderlineInputBorder(
+                      borderSide: BorderSide.none,
+                      borderRadius: BorderRadius.circular(25.0),
+                    ),
+                  ),
+                ),
               ),
-            ],
-          ),
-        ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.symmetric(vertical: Dimensions.w10),
-            child: Obx(() {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+              actions: [
+                Padding(
+                  padding: EdgeInsets.only(right: Dimensions.w10),
+                  child: IconOnTap1(
+                    onPressed: () {
+                      _scaffoldKey.currentState?.openEndDrawer();
+                    },
+                    icon: Icons.filter_alt_outlined,
+                    size: Dimensions.font30,
+                    color: AppColors.mainColor,
+                    border: false,
+                  ),
+                ),
+              ],
+            ),
+            endDrawer: Drawer(
+              child: Stack(
                 children: [
-                  GridViewProduct(
-                    context,
-                    productController.productListSearch,
-                    productController.totalSearch.value,
-                    true,
-                    false,
-                  ),
-                  (productController.checkFullSearch.value == true || productController.productListSearch.isEmpty)
-                      ? SizedBox(height: Dimensions.h40)
-                      : productController.loading.value
-                          ? Center(
-                              child: Image.asset(
-                                'assets/gif/loading_2_2.gif',
-                                height: Dimensions.h50,
+                  Padding(
+                    padding: EdgeInsets.only(bottom: Dimensions.h65),
+                    child: ListView(
+                      // Important: Remove any padding from the ListView.
+                      padding: EdgeInsets.zero,
+                      children: [
+                        DrawerHeader(
+                          decoration: BoxDecoration(
+                            color: AppColors.mainColor,
+                          ),
+                          child: Center(
+                            child: Text(
+                              'SearchFilters'.tr,
+                              maxLines: 3,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                fontSize: Dimensions.font17,
+                                fontWeight: FontWeight.w500,
+                                color: AppColors.whiteColor,
+                                letterSpacing: 0.7,
                               ),
-                            )
-                          : ButtonShowMore(
-                              onPressed: () {
-                                productController.loading.value = true;
-                                productController.searchProducts(value);
-                              },
                             ),
+                          ),
+                        ),
+                        Container(
+                          color: AppColors.gray2Color,
+                          padding: EdgeInsets.all(Dimensions.w10),
+                          child: Text(
+                            'Price'.tr,
+                            maxLines: 1,
+                            overflow: TextOverflow.visible,
+                            style: TextStyle(
+                              fontSize: Dimensions.font16,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.black2Color,
+                              // letterSpacing: 0.7,
+                            ),
+                          ),
+                        ), 
+                        Padding(
+                          padding: EdgeInsets.symmetric(horizontal: Dimensions.w10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                Format.numPrice(_currentRangeValues.start.round()),
+                                maxLines: 1,
+                                overflow: TextOverflow.visible,
+                                style: TextStyle(
+                                  fontSize: Dimensions.font12,
+                                  fontWeight: FontWeight.w400,
+                                  color: AppColors.red3Color,
+                                  // letterSpacing: 0.7,
+                                ),
+                              ), 
+                              Text(
+                                'To'.tr,
+                                maxLines: 1,
+                                overflow: TextOverflow.visible,
+                                style: TextStyle(
+                                  fontSize: Dimensions.font12,
+                                  fontWeight: FontWeight.w400,
+                                  color: AppColors.blackColor,
+                                  // letterSpacing: 0.7,
+                                ),
+                              ), 
+                              Text(
+                                Format.numPrice(_currentRangeValues.end.round()),
+                                maxLines: 1,
+                                overflow: TextOverflow.visible,
+                                style: TextStyle(
+                                  fontSize: Dimensions.font12,
+                                  fontWeight: FontWeight.w400,
+                                  color: AppColors.red3Color,
+                                  // letterSpacing: 0.7,
+                                ),
+                              ), 
+                            ],
+                          ),
+                        ),
+                        RangeSlider(
+                          values: _currentRangeValues,
+                          min: minValue,
+                          max: maxValue,
+                          activeColor: AppColors.yellowColor,
+                          divisions: divisionsValue,
+                          labels: RangeLabels(
+                            _currentRangeValues.start.round().toString(),
+                            _currentRangeValues.end.round().toString(),
+                          ),
+                          onChanged: (RangeValues values) {
+                            setState(() {
+                              _currentRangeValues = values;
+                            });
+                          },
+                        ),
+                        Padding(
+                          padding: EdgeInsets.all(Dimensions.w10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  InkWell(
+                                    onTap: () {
+                                      setState(() {});
+                                       _currentRangeValues = RangeValues(_currentRangeValues.start.round() - (maxValue / divisionsValue) < minValue 
+                                       ? minValue : _currentRangeValues.start.round() - (maxValue / divisionsValue), _currentRangeValues.end.round().toDouble());
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: AppColors.gray2Color,
+                                          width: 0.5,
+                                        ),
+                                      ),
+                                      child: const Icon(
+                                        Icons.remove_outlined,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(width: Dimensions.w10),
+                                  InkWell(
+                                    onTap: () {
+                                      setState(() {});
+                                      _currentRangeValues = RangeValues(_currentRangeValues.start.round() + (maxValue / divisionsValue) > _currentRangeValues.end.round().toDouble() 
+                                      ? _currentRangeValues.end.round().toDouble() : _currentRangeValues.start.round() + (maxValue / divisionsValue) > maxValue 
+                                      ? maxValue : _currentRangeValues.start.round() + (maxValue / divisionsValue),  _currentRangeValues.end.round().toDouble());
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: AppColors.gray2Color,
+                                          width: 0.5,
+                                        ),
+                                      ),
+                                      child: const Icon(
+                                        Icons.add_outlined,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              TextButton(
+                                onPressed: (){
+                                  setState(() {});
+                                  _currentRangeValues = const RangeValues(0, 0);
+                                }, 
+                                child: Text(
+                                  'Reset'.tr,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.visible,
+                                  style: TextStyle(
+                                    fontSize: Dimensions.font12,
+                                    fontWeight: FontWeight.w600,
+                                    color: AppColors.mainColor,
+                                    // letterSpacing: 0.7,
+                                  ),
+                                ), 
+                              ),
+                              Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  InkWell(
+                                    onTap: () {
+                                      setState(() {});
+                                       _currentRangeValues = RangeValues(_currentRangeValues.start.round().toDouble(), 
+                                       _currentRangeValues.end.round() - (maxValue / divisionsValue) < _currentRangeValues.start.round().toDouble() 
+                                       ? _currentRangeValues.start.round().toDouble() : _currentRangeValues.end.round() - (maxValue / divisionsValue) < minValue 
+                                       ? minValue : _currentRangeValues.end.round() - (maxValue / divisionsValue));
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: AppColors.gray2Color,
+                                          width: 0.5,
+                                        ),
+                                      ),
+                                      child: const Icon(
+                                        Icons.remove_outlined,
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(width: Dimensions.w10),
+                                  InkWell(
+                                    onTap: () {
+                                      setState(() {});
+                                      _currentRangeValues = RangeValues(_currentRangeValues.start.round().toDouble(), _currentRangeValues.end.round() + (maxValue / divisionsValue) > maxValue 
+                                      ? maxValue : _currentRangeValues.end.round() + (maxValue / divisionsValue));
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          color: AppColors.gray2Color,
+                                          width: 0.5,
+                                        ),
+                                      ),
+                                      child: const Icon(
+                                        Icons.add_outlined,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                        Container(
+                          color: AppColors.gray2Color,
+                          padding: EdgeInsets.all(Dimensions.w10),
+                          child: Text(
+                            'ProductType'.tr,
+                            maxLines: 1,
+                            overflow: TextOverflow.visible,
+                            style: TextStyle(
+                              fontSize: Dimensions.font16,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.black2Color,
+                              // letterSpacing: 0.7,
+                            ),
+                          ),
+                        ), 
+                        Container(
+                          width: Dimensions.w10,
+                          margin: EdgeInsets.only(top: Dimensions.h10),
+                          color: AppColors.whiteColor,
+                          child: ListTile(
+                            title: Text(
+                              'All'.tr,
+                              maxLines: 3,
+                              overflow: TextOverflow.visible,
+                              style: TextStyle(
+                                fontSize: Dimensions.font17,
+                                fontWeight: FontWeight.w500,
+                                color: AppColors.blackColor,
+                                letterSpacing: 0.7,
+                              ),
+                            ),  
+                            trailing: InkWell(
+                              onTap: (){
+                                setState(() {});
+                                proType = -1;
+                              },
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Icon(
+                                  proType == -1
+                                    ? Icons.check_circle
+                                    : Icons.circle_outlined,
+                                  size: Dimensions.font20,  
+                                  color: AppColors.greenColor,                                  
+                                ),
+                              ),
+                            ),                       
+                          ),       
+                        ),
+                        ListView.builder(
+                          physics: const NeverScrollableScrollPhysics(),
+                          padding: EdgeInsets.only(top: Dimensions.h10),
+                          shrinkWrap: true,
+                          itemCount: productController.productTypeListSearch.length,
+                          itemBuilder: (context, index) {
+                            return Container(
+                              width: Dimensions.w10,
+                              margin: EdgeInsets.only(bottom: Dimensions.h10),
+                              color: AppColors.whiteColor,
+                              child: ListTile(
+                                title: Text(
+                                  productController.productTypeListSearch[index].productTypeName,
+                                  maxLines: 3,
+                                  overflow: TextOverflow.visible,
+                                  style: TextStyle(
+                                    fontSize: Dimensions.font17,
+                                    fontWeight: FontWeight.w500,
+                                    color: AppColors.blackColor,
+                                    letterSpacing: 0.7,
+                                  ),
+                                ),  
+                                trailing: InkWell(
+                                  onTap: (){
+                                    setState(() {});
+                                    proType = productController.productTypeListSearch[index].id;
+                                  },
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Icon(
+                                      proType == productController.productTypeListSearch[index].id
+                                        ? Icons.check_circle
+                                        : Icons.circle_outlined,
+                                      size: Dimensions.font20,  
+                                      color: AppColors.greenColor,                                  
+                                    ),
+                                  ),
+                                ),                       
+                              ),       
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.all(Dimensions.h10),
+                    child: Align(
+                      alignment: Alignment.bottomCenter,
+                      child: ButtonAddCart(
+                        title: 'Apply'.tr, 
+                        onPressed: (){
+                          Get.back();
+                          productController.resetSearch();
+                          productController.searchProducts(value, proType == -1 ? null: proType, _currentRangeValues.start.round(), _currentRangeValues.end.round());
+                        }, 
+                        color: AppColors.orangeColor,
+                      ),
+                    ),
+                  ),
                 ],
-              );
-            }),
-          ),
-        ),
+              ),
+            ),
+            body: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.symmetric(vertical: Dimensions.w10),
+                child: Obx(() {
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      GridViewProduct(
+                        context,
+                        productController.productListSearch,
+                        productController.totalSearch.value,
+                        true,
+                        false,
+                      ),
+                      (productController.checkFullSearch.value == true || productController.productListSearch.isEmpty)
+                          ? SizedBox(height: Dimensions.h40)
+                          : productController.loading.value
+                              ? Center(
+                                  child: Image.asset(
+                                    'assets/gif/loading_2_2.gif',
+                                    height: Dimensions.h50,
+                                  ),
+                                )
+                              : ButtonShowMore(
+                                  onPressed: () {
+                                    productController.loading.value = true;
+                                    productController.searchProducts(value, proType == -1 ? null: proType, _currentRangeValues.start.round(), _currentRangeValues.end.round());
+                                  },
+                                ),
+                    ],
+                  );
+                }),
+              ),
+            ),
+          );
+        }
       ),
     );
   }

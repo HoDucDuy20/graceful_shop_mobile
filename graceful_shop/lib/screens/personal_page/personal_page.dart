@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
+import 'package:graceful_shop/controllers/voucher_controller.dart';
 import 'package:graceful_shop/controllers/address_controller.dart';
 import 'package:graceful_shop/controllers/user_controller.dart';
 import 'package:graceful_shop/resources/utils/colors.dart';
@@ -9,7 +10,6 @@ import 'package:graceful_shop/resources/widgets/actions.dart';
 import 'package:graceful_shop/resources/widgets/button.dart';
 import 'package:graceful_shop/resources/widgets/list_tile_ontap.dart';
 import 'package:graceful_shop/resources/widgets/show_dialog.dart';
-import 'package:graceful_shop/screens/address/address.dart';
 import 'package:graceful_shop/screens/login/login.dart';
 import 'package:graceful_shop/screens/personal_page/activity_diary.dart';
 import 'package:graceful_shop/screens/personal_page/service.dart';
@@ -27,6 +27,7 @@ class PersonalPage extends StatefulWidget {
 class _PersonalPageState extends State<PersonalPage> {
   UserController userController = Get.find<UserController>();
   AddressController addressController = Get.find<AddressController>();
+  VoucherController voucherController = Get.find<VoucherController>();
 
   @override
   void initState() {
@@ -105,8 +106,8 @@ class _PersonalPageState extends State<PersonalPage> {
         text: '${'Hello'.tr}\n',
         style: TextStyle(
           wordSpacing: 1.5,
-          fontSize: Dimensions.font16,
-          fontWeight: FontWeight.w600,
+          fontSize: Dimensions.font17,
+          fontWeight: FontWeight.w500,
           color: AppColors.mainColor,
         ),
         children: <TextSpan>[
@@ -115,6 +116,7 @@ class _PersonalPageState extends State<PersonalPage> {
             style: TextStyle(
               height: 1.5,
               fontSize: Dimensions.font25,
+              fontWeight: FontWeight.w600,
               color: AppColors.black2Color,
             ),
           ),
@@ -191,7 +193,7 @@ class _PersonalPageState extends State<PersonalPage> {
           ),
         ),
         Name(name),
-        const ActivityDiary(),
+        ActivityDiary(),
         const Service(),
         ListTileOnTap(
           onPressed: () {
@@ -201,7 +203,9 @@ class _PersonalPageState extends State<PersonalPage> {
           title: 'AddressBook'.tr,
         ),
         ListTileOnTap(
-          onPressed: () {},
+          onPressed: () {
+            voucherController.showVoucher();
+          },
           icon: Icons.percent_outlined,
           title: 'Voucher'.tr,
         ),

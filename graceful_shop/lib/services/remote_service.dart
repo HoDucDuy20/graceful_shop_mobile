@@ -7,6 +7,7 @@ import 'package:graceful_shop/models/color_size.dart';
 import 'package:graceful_shop/models/invoice.dart';
 import 'package:graceful_shop/models/invoice_detail.dart';
 import 'package:graceful_shop/models/product.dart';
+import 'package:graceful_shop/models/product_type.dart';
 import 'package:graceful_shop/models/rate.dart';
 import 'package:graceful_shop/models/response_data.dart';
 import 'package:graceful_shop/models/slide_ads.dart';
@@ -116,7 +117,7 @@ class RemoteService {
   static Future<ProductTotal?> getProductsOfAllType(
       int categoryId, int page) async {
     var response = await client.post(
-      uriProductTypeById(categoryId, page),
+      uriProductCategoryById(categoryId, page),
       body: jsonEncode({
         "num": total,
       }),
@@ -244,11 +245,14 @@ class RemoteService {
     }
   }
 
-  static Future<ProductTotal?> searchProducts(String value, int page) async {
+  static Future<ProductTotal?> searchProducts(String value, int page, int? productTypeId, int? fromPrice, int? toPrice) async {
     var response = await client.post(
       uriProductSearch(value, page),
       body: jsonEncode({
         "num": total,
+        "product_type_id": productTypeId,
+        "from_price": fromPrice,
+        "to_price": toPrice
       }),
       headers: {
         'Content-Type': 'application/json',
@@ -259,7 +263,24 @@ class RemoteService {
       var jsonString = response.body;
       return productTotalFromJson(jsonString);
     } else {
-      print('getPopularProducts error: ' + response.statusCode.toString());
+      print('searchProducts error: ' + response.statusCode.toString());
+      return null;
+    }
+  }
+
+  static Future<List<ProductType>?> searchProductType(String value) async {
+    var response = await client.get(
+      uriProductTypeSearch(value),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+    );
+    if (response.statusCode == 200) {
+      var jsonString = response.body;
+      return productTypeFromJson(jsonString);
+    } else {
+      print('searchProductType error: ' + response.statusCode.toString());
       return null;
     }
   }
@@ -557,7 +578,7 @@ class RemoteService {
     }
   }
 
-  static Future<ResponseData?> addInvoice(String token, List<int> lstCartId, int? voucherId, int shipPrice) async {
+  static Future<ResponseData?> addInvoice(String token, List<int> lstCartId, int? voucherId, int shipPrice, Address address) async {
     // print(token);
     var response = await client.post(
       uriAddInvoice(),
@@ -565,6 +586,9 @@ class RemoteService {
         "cart_id": lstCartId,
         "voucher_id": voucherId,
         "ship_price": shipPrice,
+        "name": address.name, 
+        "phone": address.phoneNumber, 
+        "address": address.address
       }),
       headers: {
         'Content-Type': 'application/json',
@@ -766,6 +790,43 @@ class RemoteService {
       return responseDataFromJson(jsonString);
     } else {
       print('addInvoice error: ' + response.statusCode.toString());
+      return null;
+    }
+  }
+
+  
+  static Future<List<Product>?> productNotYedRated(String token) async {
+    var response = await client.get(
+      uriProductNotYedRated(),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    if (response.statusCode == 200) {
+      var jsonString = response.body;
+      return productFromJson(jsonString);
+    } else {
+      print('productNotYedRated error: ' + response.statusCode.toString());
+      return null;
+    }
+  }
+
+  static Future<List<Product>?> productRated(String token) async {
+    var response = await client.get(
+      uriProductRated(),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    if (response.statusCode == 200) {
+      var jsonString = response.body;
+      return productFromJson(jsonString);
+    } else {
+      print('productRated error: ' + response.statusCode.toString());
       return null;
     }
   }

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:graceful_shop/resources/utils/colors.dart';
 import 'package:graceful_shop/resources/utils/dimensions.dart';
 import 'package:graceful_shop/resources/widgets/icon_ontap.dart';
+import 'package:graceful_shop/screens/feedback/feedback.dart';
 
 class Service extends StatelessWidget {
   const Service({Key? key}) : super(key: key);
@@ -33,7 +34,7 @@ class Service extends StatelessWidget {
               'Service'.tr,
               style: TextStyle(
                 fontSize: Dimensions.font16,
-                fontWeight: FontWeight.w400,
+                fontWeight: FontWeight.w500,
                 color: AppColors.black2Color,
               ),
             ),
@@ -42,7 +43,9 @@ class Service extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               IconOnTap2(
-                onPressed: () {},
+                onPressed: () {
+                  Get.to(() => const FeedbackScreen());
+                },
                 icon: Icons.feedback_outlined,
                 title: 'Feedback'.tr,
               ),

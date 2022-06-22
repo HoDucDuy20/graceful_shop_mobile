@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:graceful_shop/controllers/invoice_controller.dart';
+import 'package:graceful_shop/controllers/rate_controller.dart';
 import 'package:graceful_shop/resources/utils/colors.dart';
 import 'package:graceful_shop/resources/utils/dimensions.dart';
 import 'package:graceful_shop/resources/widgets/icon_ontap.dart';
 
 class ActivityDiary extends StatelessWidget {
-  const ActivityDiary({Key? key}) : super(key: key);
+  ActivityDiary({Key? key}) : super(key: key);
+  InvoiceController invoiceController = Get.find<InvoiceController>();
+  RateController rateController = Get.find<RateController>();
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +37,7 @@ class ActivityDiary extends StatelessWidget {
               'ActivityDiary'.tr,
               style: TextStyle(
                 fontSize: Dimensions.font16,
-                fontWeight: FontWeight.w400,
+                fontWeight: FontWeight.w500,
                 color: AppColors.black2Color,
               ),
             ),
@@ -42,14 +46,18 @@ class ActivityDiary extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               IconOnTap2(
-                onPressed: () {},
+                onPressed: () {
+                  invoiceController.showInvoice();
+                },
                 icon: Icons.history_edu_outlined,
                 title: 'OrderHistory'.tr,
               ),
               IconOnTap2(
-                onPressed: () {},
-                icon: Icons.event_note_outlined,
-                title: 'OrderStatus'.tr,
+                onPressed: () {
+                  rateController.showRate();
+                },
+                icon: Icons.rate_review_outlined,
+                title: 'MyRate'.tr,
               ),
             ],
           )

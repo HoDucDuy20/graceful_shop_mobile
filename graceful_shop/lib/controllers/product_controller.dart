@@ -3,6 +3,7 @@ import 'package:graceful_shop/controllers/user_controller.dart';
 import 'package:graceful_shop/models/color_size.dart';
 import 'package:graceful_shop/models/like.dart';
 import 'package:graceful_shop/models/product.dart';
+import 'package:graceful_shop/models/product_type.dart';
 import 'package:graceful_shop/models/rate.dart';
 import 'package:graceful_shop/services/remote_service.dart';
 
@@ -10,6 +11,7 @@ class ProductController extends GetxController {
   UserController userController = Get.find<UserController>();
   var productList = <Product>[].obs;
   var productListSearch = <Product>[].obs;
+  var productTypeListSearch = <ProductType>[].obs;
   var colorList = <ProductColor>[].obs;
   var sizeList = <ProductSize>[].obs;
   var rateList = <Rate>[].obs;
@@ -99,9 +101,17 @@ class ProductController extends GetxController {
     }
   }
 
-  void searchProducts(String value) async {
-    var productTotal =
-        await RemoteService.searchProducts(value, pageSearch.value);
+  void searchProductType(String value) async {
+    productTypeListSearch.value = [];
+    var productTypes = await RemoteService.searchProductType(value);
+    if (productTypes != null) {
+      productTypeListSearch.value = productTypes;
+    }
+  }
+
+  void searchProducts(String value, int? productTypeId, int? fromPrice, int? toPrice) async {
+    loading.value = true;
+    var productTotal = await RemoteService.searchProducts(value, pageSearch.value, productTypeId, fromPrice, toPrice);
     if (productTotal != null) {
       totalSearch.value = productTotal.total;
       pageSearch.value++;

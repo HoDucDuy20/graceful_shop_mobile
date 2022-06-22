@@ -89,7 +89,8 @@ class _SearchState extends State<Search> {
                   if (value != '') {
                     _addItem(value);
                     productController.resetSearch();
-                    productController.searchProducts(value);
+                     productController.searchProductType(value);
+                    productController.searchProducts(value, null, null, null);
                     Get.to(() => SearchDetail(value: value));
                   }
                 },
@@ -195,7 +196,8 @@ class _SearchState extends State<Search> {
                             onTap: () {
                               txtSearch.text = searchHistory![i];
                               productController.resetSearch();
-                              productController.searchProducts(txtSearch.text);
+                              productController.searchProductType(txtSearch.text);
+                              productController.searchProducts(txtSearch.text, null, 0, 0);
                               Get.to(() => SearchDetail(value: txtSearch.text));
                             },
                             child: Padding(

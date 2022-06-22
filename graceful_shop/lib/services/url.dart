@@ -1,6 +1,6 @@
 //baseUrl
 // String baseUrl = 'http://10.0.2.2:8000/';
-String baseUrl = 'http://192.168.1.3:8000/';
+String baseUrl = 'http://192.168.1.5:8000/';
 // String baseUrl = 'http://172.20.2.162:8000/';
 
 //parse uri
@@ -23,6 +23,8 @@ Uri uriProductTypeById(int id, int page) => formaterApi('product-type-byid/$id?p
 Uri uriProductCategoryById(int id, int page) => formaterApi('product-category-byid/$id?page=$page');
 
 Uri uriProductSearch(String value, int page) => formaterApi('product-search/$value?page=$page');
+
+Uri uriProductTypeSearch(String value) => formaterApi('product-type-search/$value');
 
 Uri uriCategory() => formaterApi('category');
 
@@ -81,3 +83,7 @@ Uri uriEditAddress() => formaterApi('edit-address');
 Uri uriDeleteAddress() => formaterApi('delete-address');
 
 Uri uriSendFeedback() => formaterApi('send-feedback');
+
+Uri uriProductNotYedRated() => formaterApi('product-not-yed-rated');
+
+Uri uriProductRated() => formaterApi('product-rated');

@@ -10,7 +10,7 @@ class FavoriteController extends GetxController {
   UserController userController = Get.find<UserController>();
   ProductController productController = Get.find<ProductController>();
   var producFavoritetList = <Product>[].obs;
-  var loading = false.obs;
+  var isLoading = false.obs;
   Product p = Product(
       id: -1,
       productName: '',
@@ -38,14 +38,15 @@ class FavoriteController extends GetxController {
   }
 
   void getProductLike() async {
+    isLoading.value = true;
     var products = await RemoteService.getProductFavorite(userController.token.value);
     if (products != null) {
       for (var value in products) {
         value.isLike = value.likes.firstWhere((x) => x.userId == userController.user.value.id, orElse: () => Like(productId: -1, userId: -1)).productId != -1;
       }
       producFavoritetList.value = products;
-      loading.value = false;
     }
+    isLoading.value = false;
   }
 
   void like(int index) async {

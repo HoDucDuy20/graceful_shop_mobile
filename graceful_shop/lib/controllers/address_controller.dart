@@ -1,6 +1,3 @@
-import 'dart:io';
-
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:graceful_shop/controllers/user_controller.dart';
 import 'package:graceful_shop/models/address.dart';
@@ -10,6 +7,7 @@ import 'package:graceful_shop/services/remote_service.dart';
 
 class AddressController extends GetxController {
   UserController userController = Get.find<UserController>();
+  var addressPay = Address(id: -1, name: '', address: '', phoneNumber: '', isDefault: false).obs;
   var addressList = <Address>[].obs;
   var isLoading = false.obs;
 
@@ -61,28 +59,32 @@ class AddressController extends GetxController {
     }
   }
 
+  void checkAddressPay(){
+    bool check = false;
+    for(var value in addressList){
+      if(value.isDefault){
+        addressPay.value = value;
+        check = true;
+        break;
+      }
+    }
+
+    if(!check){
+      addressPay.value = Address(id: -1, name: '', address: '', phoneNumber: '', isDefault: false);
+    }
+  }
+
   void getAddress() async {
     var addresses = await RemoteService.listAddress(userController.token.value);
     if (addresses != null) {
-      // Address address = Address(
-      //   id: -1, 
-      //   name: userController.user.value.fullName, 
-      //   address: userController.user.value.address, 
-      //   phoneNumber: userController.user.value.phone, 
-      //   isDefault: true,
-      // );
-      addressList.value = [];
-      // for (var value in addresses) {
-      //   if(value.isDefault){
-      //     address.isDefault = false;
-      //     break;
-      //   }
-      // }
-      // if(address.address.isNotEmpty){
-      //    addressList.add(address);
-      // }     
-      addressList.addAll(addresses);
+      addressList.value = addresses;
+      checkAddressPay();
     }
+  }
+  
+  void addAddressPay(Address address) {
+    addressPay.value = address;
+    Get.back();
   }
 
   void editAddress(Address address) async {

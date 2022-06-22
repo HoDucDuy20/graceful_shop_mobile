@@ -41,6 +41,11 @@ const Map<String, String> en = {
   'SearchHistory': 'Search history',
   'DeleteAll': 'Delete all',
   'NoHistory': 'No recent search history',
+  'Price': 'Price',
+  'Reset': 'Reset',
+  'To': 'To',
+  'ProductType': 'Product type',
+  'Apply': 'Apply',
   //Category
   'Category': 'Category',
   //Category Detail
@@ -107,7 +112,7 @@ const Map<String, String> en = {
   'CustomerRatings': 'Customer ratings',
   'Rating': 'rating',
   'AddedToCart': 'Added to cart',
-   //Cart
+  //Cart
   'Cart': 'Cart',
   'Classify': 'Classify',
   'AreYouSureQuitProduct': 'Are you sure you want to quit this product?',
@@ -119,6 +124,13 @@ const Map<String, String> en = {
   'Order': 'Order',
   'TotalPayment': 'Total payment',
   'OrderSuccess': 'Order success',
+  'ChooseAddress': 'Choose address',
+  'ChooseVoucher': 'Choose voucher',
+  'PleaseSelectAddress': 'Please select a shipping address',
+  'DeliveryAddress': 'Delivery address',
+  'TheTotalAmount': 'The total amount',
+  'Product': 'product',
+   'TransportFee': 'Transport fee',
   //Address
   'AddressSuccess': 'Successfully added new address',
   'EditAddressSuccess': 'Successfully edited address',
@@ -131,4 +143,30 @@ const Map<String, String> en = {
   'RequiredAddress': 'Address not be vacant',
   'EditAddress': 'Edit address',
   'AreYouSureDeleteAddress': 'Do you want to delete the address?',
+  //Feedback
+  'FeedbackSuccessfully': 'send feedback successfully',
+  'ThanksFeedback': 'We will take your feedback to make it better, thank you!',
+  //Voucher
+  'OrdersFrom': 'Orders from',
+  'Reduce': 'Reduce',
+  'Agree': 'Agree',
+  'NotEligible': 'You are not eligible to use this discount code',
+  //Invoice
+  'Invoice': 'Invoice',
+  'MyRate': 'My rate',
+  'WaitForConfirmation': 'Wait for confirmation',
+  'Confirmed': 'Confirmed',
+  'Delivering': 'Delivering',
+  'Delivered': 'Delivered',
+  'Canceled': 'Canceled',
+  'InvoiceCode': 'Invoice code',
+  'DateFounded': 'Date founded',
+  //Rate
+  'Rate': 'Rate',
+  'NotYetRated': 'Not yet rated',
+  'Rated': 'Rated',
+  'MoreContent': 'More content',
+  'Send': 'Send',
+  'ContentNotEmpty': 'The content must not be empty',
+  'SearchFilters': 'Search filters',
 };

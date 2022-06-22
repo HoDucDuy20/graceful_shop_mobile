@@ -1,3 +1,9 @@
+import 'dart:convert';
+
+List<ProductType> productTypeFromJson(String str) => List<ProductType>.from(json.decode(str)['data'].map((x) => ProductType.fromJson(x)));
+
+String productTypeToJson(List<ProductType> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
+
 class ProductType {
     ProductType({
         required this.id,

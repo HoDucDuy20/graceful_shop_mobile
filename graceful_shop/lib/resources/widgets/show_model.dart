@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:graceful_shop/controllers/cart_controller.dart';
 import 'package:graceful_shop/controllers/product_controller.dart';
+import 'package:graceful_shop/models/product_type.dart';
 import 'package:graceful_shop/resources/utils/colors.dart';
 import 'package:graceful_shop/resources/utils/dimensions.dart';
 import 'package:graceful_shop/resources/widgets/button.dart';
@@ -196,7 +197,15 @@ void showSizeColor(BuildContext context, int productId) async {
                     SizedBox(width: Dimensions.w25),
                     ButtonAddCart(
                       title: 'BuyNow'.tr,
-                      onPressed: () {},
+                      onPressed: () {
+                        cartController.addCart(
+                          productId,
+                          productController.colorList[productController.indexColor.value].id,
+                          productController.sizeList[productController.indexSize.value].id,
+                          productController.quantity.value,
+                        );
+                        cartController.showCart();
+                      },
                       color: AppColors.redColor,
                     ),
                   ],

@@ -228,6 +228,70 @@ void showSuccess(String title) async {
   );
 }
 
+void showSuccess2(String title, String subtitle) async {
+  await Get.dialog(
+    AlertDialog(
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+      backgroundColor: Colors.white,
+      titlePadding: EdgeInsets.zero,
+      contentPadding: EdgeInsets.zero,
+      actionsPadding: EdgeInsets.zero,
+      content: Container(
+        margin: EdgeInsets.symmetric(horizontal: Dimensions.w30),
+        padding: EdgeInsets.only(top: Dimensions.w30),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Icon(
+              Icons.done,
+              size: 30,
+              color: AppColors.greenColor,
+            ),
+            const SizedBox(height: 10),
+            Text(
+              title,
+              style: TextStyle(
+                color: AppColors.blackColor,
+                fontSize: Dimensions.font16,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              subtitle,
+              style: TextStyle(
+                color: AppColors.black2Color,
+                fontSize: Dimensions.font14,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+          ],
+        ),
+      ),
+      actions: [
+        Center(
+          child: Padding(
+            padding: EdgeInsets.all(Dimensions.w5),
+            child: InkWell(
+              onTap: () {
+                Get.back();
+              },
+              child: Text(
+                'Ok'.tr,
+                style: TextStyle(
+                  color: AppColors.mainColor,
+                  fontSize: Dimensions.font17,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    ),
+  );
+}
+
 void confirmDelete(int index) async {
   await Get.dialog(
     AlertDialog(

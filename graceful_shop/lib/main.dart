@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:graceful_shop/controllers/address_controller.dart';
+import 'package:graceful_shop/controllers/cart_controller.dart';
 import 'package:graceful_shop/controllers/category_controller.dart';
 import 'package:graceful_shop/controllers/product_controller.dart';
+import 'package:graceful_shop/controllers/rate_controller.dart';
 import 'package:graceful_shop/controllers/slide_ads_controller.dart';
 import 'package:graceful_shop/controllers/user_controller.dart';
+import 'package:graceful_shop/controllers/voucher_controller.dart';
 import 'package:graceful_shop/resources/multiple_language/localization_service.dart';
 import 'package:graceful_shop/screens/welcome/welcome.dart';
 import 'package:graceful_shop/resources/utils/colors.dart';
@@ -21,8 +24,11 @@ Future<void> main() async {
   Get.put(ProductController());
   Get.put(CategoryController());
   Get.put(SlideAdsController());
+  Get.put(CartController());
   Get.put(InvoiceController());
   Get.put(AddressController());
+  Get.put(VoucherController());
+  Get.put(RateController());
 
   runApp(const MyApp());
 }

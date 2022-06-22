@@ -62,7 +62,7 @@ class IconOnTap2 extends StatelessWidget {
             style: TextStyle(
               height: 1.3,
               fontSize: Dimensions.font16,
-              fontWeight: FontWeight.w400,
+              fontWeight: FontWeight.w500,
               color: AppColors.black2Color,
             ),
           ),

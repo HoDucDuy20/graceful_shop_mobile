@@ -36,7 +36,7 @@ class ListTileOnTap extends StatelessWidget {
             title,
             style: TextStyle(
               fontSize: Dimensions.font16,
-              fontWeight: FontWeight.w400,
+              fontWeight: FontWeight.w500,
               color: AppColors.black2Color,
             ),
           ),

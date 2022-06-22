@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:graceful_shop/models/color_size.dart';
 import 'package:graceful_shop/models/product.dart';
 
-List<InvoiceDetail> invoiceDetailFromJson(String str) => List<InvoiceDetail>.from(json.decode(str).map((x) => InvoiceDetail.fromJson(x)));
+List<InvoiceDetail> invoiceDetailFromJson(String str) => List<InvoiceDetail>.from(json.decode(str)['data'].map((x) => InvoiceDetail.fromJson(x)));
 
 String invoiceDetailToJson(List<InvoiceDetail> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 

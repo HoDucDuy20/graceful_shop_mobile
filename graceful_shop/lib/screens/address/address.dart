@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:graceful_shop/controllers/address_controller.dart';
-import 'package:graceful_shop/models/address.dart';
 import 'package:graceful_shop/resources/utils/colors.dart';
 import 'package:graceful_shop/resources/utils/dimensions.dart';
 import 'package:graceful_shop/screens/address/add_address.dart';
@@ -80,7 +79,7 @@ class _AddressScreenState extends State<AddressScreen> {
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   style: TextStyle(
-                                    fontSize: Dimensions.font16,
+                                    fontSize: Dimensions.font17,
                                     fontWeight: FontWeight.w500,
                                     color: AppColors.blackColor,
                                     letterSpacing: 0.5,
@@ -92,8 +91,9 @@ class _AddressScreenState extends State<AddressScreen> {
                                     style: TextStyle(
                                       height: 1.7,
                                       fontSize: Dimensions.font14,
-                                      fontWeight: FontWeight.w500,
+                                      fontWeight: FontWeight.w400,
                                       color: AppColors.black2Color,
+                                      letterSpacing: 0.5,
                                     ),
                                     children: <TextSpan>[
                                       TextSpan(
@@ -101,7 +101,7 @@ class _AddressScreenState extends State<AddressScreen> {
                                         style:  TextStyle(
                                         // height: 1.7,
                                         fontSize: Dimensions.font14,
-                                        fontWeight: FontWeight.w500,
+                                        fontWeight: FontWeight.w400,
                                         color: AppColors.black2Color,
                                       ),
                                       ),
@@ -120,7 +120,7 @@ class _AddressScreenState extends State<AddressScreen> {
                                         padding: const EdgeInsets.only(top: 5.0),
                                         child: Icon(
                                             Icons.check,
-                                            color: AppColors.mainColor,
+                                            color: AppColors.greenColor,
                                         ),
                                       ),                                
                                   ],
@@ -145,12 +145,14 @@ class _AddressScreenState extends State<AddressScreen> {
                               style: TextStyle(
                                 wordSpacing: 1.5,
                                 fontSize: Dimensions.font14,
-                                fontWeight: FontWeight.w400,
+                                fontWeight: FontWeight.w500,
                                 color: AppColors.black2Color,
                               ),
                             ),
-                            trailing: const Icon(
+                            trailing: Icon(
                               Icons.add,
+                              size: Dimensions.w25,
+                              color: AppColors.grayColor,
                             ),
                           ),
                         ),

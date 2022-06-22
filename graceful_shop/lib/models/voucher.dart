@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-List<Voucher> voucherFromJson(String str) => List<Voucher>.from(json.decode(str).map((x) => Voucher.fromJson(x)));
+List<Voucher> voucherFromJson(String str) => List<Voucher>.from(json.decode(str)['data'].map((x) => Voucher.fromJson(x)));
 
 String voucherToJson(List<Voucher> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 

@@ -302,6 +302,7 @@ class _ProductDetailState extends State<ProductDetail> {
                                       children: [
                                         ListTile(
                                           leading: CircleAvatar(
+                                            backgroundColor: AppColors.blueAccentColor,
                                             child: FadeInImage.assetNetwork(
                                               placeholder:'assets/gif/loading_2.gif',
                                               image: formaterImg(productController.rateList[index].user.avatar),

@@ -1,13 +1,27 @@
 import 'package:get/get.dart';
+import 'package:graceful_shop/controllers/cart_controller.dart';
 import 'package:graceful_shop/controllers/user_controller.dart';
-import 'package:graceful_shop/models/like.dart';
+import 'package:graceful_shop/models/address.dart';
+import 'package:graceful_shop/models/invoice.dart';
+import 'package:graceful_shop/models/invoice_detail.dart';
 import 'package:graceful_shop/resources/widgets/show_dialog.dart';
-import 'package:graceful_shop/models/cart.dart';
+import 'package:graceful_shop/screens/invoice/invoice_tab.dart';
+import 'package:graceful_shop/screens/invoice_detail/invoice_detail.dart';
 import 'package:graceful_shop/services/remote_service.dart';
 
 class InvoiceController extends GetxController {
   UserController userController = Get.find<UserController>();
-  var productCartList = <Cart>[].obs;
+  CartController cartController = Get.find<CartController>();
+  var cancelList = <Invoice>[].obs;
+  var waitForConfirmationList = <Invoice>[].obs;
+  var confirmedList = <Invoice>[].obs;
+  var deliveringList = <Invoice>[].obs;
+  var deliveredList = <Invoice>[].obs;
+  var invoiceDetailList = <InvoiceDetail>[].obs;
+  var totalProduct = 0.obs;
+  var totalPrice = 0.obs;
+  var isVoucher = false.obs;
+  var isLoading = false.obs;
 
   @override
   void onInit() {
@@ -23,18 +37,26 @@ class InvoiceController extends GetxController {
       showLogIn();
       return;
     }
-    // getProductCart();
-    // Get.to(() => const CartScreen());
+    getInvoice();
+    Get.to(() => const InvoiceTab());
   }
 
-  void addInvoice(List<int> lstCartId, int? voucherId, int shipPrice) async {
+  
+  void showInvoiceDetail(Invoice invoice) {
+    getInvoiceDetail(invoice);
+    Get.to(() => InvoiceDetailScreen(invoice: invoice));
+  }
+
+  void addInvoice(List<int> lstCartId, int? voucherId, int shipPrice, Address address) async {
     if (userController.token.value == '') {
       showLogIn();
       return;
     }
-    back();
-    var responseData = await RemoteService.addInvoice(userController.token.value, lstCartId, voucherId, shipPrice);
+    isLoading.value = true;
+    var responseData = await RemoteService.addInvoice(userController.token.value, lstCartId, voucherId, shipPrice, address);
+    isLoading.value = false;
     if (responseData != null) {
+      cartController.getProductCart();
       if (responseData.status == 0) {
         back();
         showSuccess('OrderSuccess'.tr);
@@ -55,34 +77,65 @@ class InvoiceController extends GetxController {
     }
   }
 
-  void getProductCart() async {
-    var products = await RemoteService.getProductCart(userController.token.value);
-    if (products != null) {
-      for (var value in products) {
-        value.product.isLike = value.product.likes.firstWhere((x) => x.userId == userController.user.value.id, orElse: () => Like(productId: -1, userId: -1)).productId != -1;
-      }
-      productCartList.value = products;
-    }
+  void setDefault(){
+      cancelList.value = [];
+      waitForConfirmationList.value = [];
+      confirmedList.value = [];
+      deliveringList.value = [];
+      deliveredList.value = [];
   }
 
-  void cancelInvoice(List<int> lstCartId) async {
+  void getInvoice() async {
+    isLoading.value = true;
+    setDefault();
+    var invoices = await RemoteService.listInvoice(userController.token.value);
+    if (invoices != null) {
+      for (var value in invoices) {
+        switch (value.status) {
+          case 0:
+            cancelList.add(value);
+            break;
+          case 1:
+            waitForConfirmationList.add(value);
+            break;
+          case 2:
+            confirmedList.add(value);
+            break;
+          case 3:
+            deliveringList.add(value);
+            break;
+          case 4:
+            deliveredList.add(value);
+            break;
+        }
+      }
+    }else{
+      Get.snackbar(
+        'FailedAction'.tr,
+        'AnErrorOccurred'.tr,
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    }
+    isLoading.value = false;
+  }
+
+  void cancelInvoice(Invoice invoice) async {
     if (userController.token.value == '') {
       showLogIn();
       return;
     }
 
-    var responseData = await RemoteService.deleteCart(userController.token.value, lstCartId);
+    var responseData = await RemoteService.cancelInvoice(userController.token.value, invoice.id);
 
     if (responseData != null) {
       if (responseData.status != 0) {
-        getProductCart();
         Get.snackbar(
           'FailedAction'.tr,
           responseData.message,
           snackPosition: SnackPosition.BOTTOM,
         );
       }else{
-        getProductCart();
+        showInvoice();
       }
     } else {
       Get.snackbar(
@@ -91,5 +144,24 @@ class InvoiceController extends GetxController {
         snackPosition: SnackPosition.BOTTOM,
       );
     }
+  }
+
+  void getInvoiceDetail(Invoice invoice) async {
+    isLoading.value = true;
+    var invoiceDetail = await RemoteService.invoiceDetail(userController.token.value, invoice.id);
+    if (invoiceDetail != null) {
+      for (var value in invoiceDetail) {
+        totalProduct.value = value.quantity;
+        totalPrice.value = value.totalPrice;
+      }
+      invoiceDetailList.value = invoiceDetail;
+    }else{
+      Get.snackbar(
+        'FailedAction'.tr,
+        'AnErrorOccurred'.tr,
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    }
+    isLoading.value = false;
   }
 }

@@ -65,7 +65,7 @@ class _TitleCategoryDetailState extends State<TitleCategoryDetail> {
                 onTap: () {
                   setState(() {
                     productController.resetSearch();
-                    productController.getProductsOfType(categoryId);
+                    productController.getProductsOfType(lstProductType[index].id);
                     categoryIndex = index;
                   });
                 },

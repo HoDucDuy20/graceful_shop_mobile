@@ -143,9 +143,9 @@ class _EditAddressState extends State<EditAddress> {
               child: Padding(
                 padding: EdgeInsets.symmetric(horizontal: Dimensions.w10),
                 child: Icon(
-                  Icons.delete_outlined, 
-                  color: AppColors.mainColor,
-                  size: Dimensions.font30,
+                  Icons.delete, 
+                  color: AppColors.orangeColor,
+                  size: Dimensions.font25,
                 ),
               ),
             ),

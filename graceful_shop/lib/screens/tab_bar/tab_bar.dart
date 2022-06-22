@@ -17,8 +17,7 @@ class TabBarBottom extends StatefulWidget {
   State<TabBarBottom> createState() => _TabBarBottomState(index: index);
 }
 
-class _TabBarBottomState extends State<TabBarBottom>
-    with SingleTickerProviderStateMixin {
+class _TabBarBottomState extends State<TabBarBottom> with SingleTickerProviderStateMixin {
   int index;
   TabController? tabController;
   _TabBarBottomState({this.tabController, required this.index});
