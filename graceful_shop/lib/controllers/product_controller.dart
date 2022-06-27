@@ -12,6 +12,7 @@ class ProductController extends GetxController {
   var productList = <Product>[].obs;
   var productListSearch = <Product>[].obs;
   var productTypeListSearch = <ProductType>[].obs;
+  var productAllType = <Product>[].obs;
   var colorList = <ProductColor>[].obs;
   var sizeList = <ProductSize>[].obs;
   var rateList = <Rate>[].obs;
@@ -23,6 +24,7 @@ class ProductController extends GetxController {
   var loading = false.obs;
   var total = (-1).obs;
   var totalSearch = 0.obs;
+  var totalProductAllType = 0.obs;
   var checkFull = false.obs;
   var checkFullSearch = false.obs;
   var indexColor = 0.obs;
@@ -149,6 +151,19 @@ class ProductController extends GetxController {
       }
       productListSearch.addAll(productTotal.products);
       totalSearch.value == productListSearch.length ? checkFullSearch.value = true : checkFullSearch.value = false;
+      loading.value = false;
+    }
+  }
+
+   void getProductsOfAllType2(int typeId) async {
+    totalProductAllType.value = -1;
+    var productTotal = await RemoteService.getProductsOfAllType(typeId, 1);
+    if (productTotal != null) {
+      totalProductAllType.value = productTotal.total;
+      for (var value in productTotal.products) {
+         value.isLike = value.likes.firstWhere((x) => x.userId == userController.user.value.id , orElse: () => Like(productId: -1, userId: -1)).productId != -1;
+      }
+      productAllType.value = productTotal.products;
       loading.value = false;
     }
   }

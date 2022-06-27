@@ -5,6 +5,7 @@ import 'package:graceful_shop/resources/utils/colors.dart';
 import 'package:graceful_shop/resources/utils/dimensions.dart';
 import 'package:graceful_shop/screens/invoice/tab_text.dart';
 import 'package:graceful_shop/screens/rate/rate_screen.dart';
+import 'package:graceful_shop/screens/rate/rated_screen.dart';
 
 class RateTab extends StatefulWidget {
   const RateTab({Key? key}) : super(key: key);
@@ -102,7 +103,7 @@ class _RateTabState extends State<RateTab> with SingleTickerProviderStateMixin {
           controller: tabController,
           children: [
             RateScreen(listProductRate: rateController.productNotYedRatedList),
-            RateScreen(listProductRate: rateController.productRatedList),
+            RatedScreen(listProductRate: rateController.productRatedList),
           ],
         ),
       ),

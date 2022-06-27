@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:graceful_shop/controllers/invoice_controller.dart';
+import 'package:graceful_shop/controllers/user_controller.dart';
 import 'package:graceful_shop/models/invoice.dart';
 import 'package:graceful_shop/resources/utils/colors.dart';
 import 'package:graceful_shop/resources/utils/dimensions.dart';
 import 'package:graceful_shop/resources/utils/format.dart';
-import 'package:graceful_shop/screens/pay/choose_voucher.dart';
+import 'package:graceful_shop/screens/invoice_detail/cancel_invoice.dart';
 import 'package:graceful_shop/services/url.dart';
 
 class InvoiceDetailScreen extends StatefulWidget {
@@ -18,6 +19,7 @@ class InvoiceDetailScreen extends StatefulWidget {
 
 class _InvoiceDetailScreenState extends State<InvoiceDetailScreen> {
   _InvoiceDetailScreenState({Key? key, required this.invoice});
+  UserController userController = Get.find<UserController>();
   InvoiceController invoiceController = Get.find<InvoiceController>();
   Invoice invoice;
 
@@ -57,6 +59,31 @@ class _InvoiceDetailScreenState extends State<InvoiceDetailScreen> {
                 ),
               ],
             ),
+            actions: [
+              if(invoice.status == 1)
+                InkWell(
+                  onTap: (){
+                    Get.to(() => CancelInvoice(invoiceId: invoice.id));
+                  },
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(vertical: Dimensions.h10, horizontal: Dimensions.w10),
+                    // child: Icon(
+                    //   Icons.cancel_outlined, 
+                    //   color: AppColors.orangeColor,
+                    //   size: Dimensions.font25,
+                    // ),
+                    child: Text(
+                      'Cancel'.tr,
+                      style: TextStyle(
+                        fontSize: Dimensions.font17,
+                        fontWeight: FontWeight.w600,
+                        color: AppColors.orangeColor,
+                        // letterSpacing: 0.5,
+                      ),
+                    ),
+                  ),
+                ),
+            ],
           ),
           body: Stack(
             children: [
@@ -344,6 +371,51 @@ class _InvoiceDetailScreenState extends State<InvoiceDetailScreen> {
                         ],
                       ),
                     ),
+                    Container(
+                      alignment: Alignment.centerLeft,
+                      padding: EdgeInsets.symmetric(horizontal: Dimensions.w10),
+                      child: Text(
+                        '${'DateFounded'.tr}: ${Format.dateTime(invoice.createdAt.toString())}',
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: Dimensions.font14,
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.orangeColor,
+                          letterSpacing: 0.7,
+                        ),
+                      ),
+                    ),
+                    if(invoice.status == 0)
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        padding: EdgeInsets.symmetric(horizontal: Dimensions.w10),
+                        child: ListTile(
+                          title: Text(
+                            '${'OrderCanceledBy'.tr} : ${userController.user.value.id == invoice.cancelerId ? 'Me'.tr : 'Shop'.tr}',
+                            maxLines: 3,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontSize: Dimensions.font15,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.black2Color,
+                              letterSpacing: 0.7,
+                            ),
+                          ),
+                          subtitle: Text(
+                            '${'Reason'.tr}: ${invoice.reason}',
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              height: 1.4,
+                              fontSize: Dimensions.font14,
+                              fontWeight: FontWeight.w500,
+                              color: AppColors.blackColor,
+                              letterSpacing: 0.7,
+                            ),
+                          ),
+                        ),
+                      ),
+                    SizedBox(height: Dimensions.h65),
                   ],
                 ),
               ),
@@ -364,38 +436,32 @@ class _InvoiceDetailScreenState extends State<InvoiceDetailScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(right: 10),
-                            child: Text.rich(
-                              TextSpan(
-                                text: '${'TotalPayment'.tr}\n',
-                                style: TextStyle(
-                                  // height: 1.7,
-                                  fontSize: Dimensions.font15,
-                                  fontWeight: FontWeight.w500,
-                                  color: AppColors.black2Color,
-                                ),
-                                children: <TextSpan>[
-                                  TextSpan(
-                                    text: Format.numPrice(invoice.untilPrice),
-                                    style:  TextStyle(
-                                    // height: 1.7,
-                                    fontSize: Dimensions.font16,
-                                    fontWeight: FontWeight.w600,
-                                    color: AppColors.mainColor,
-                                  ),
-                                  ),
-                                ],
-                              ),
-                              textAlign: TextAlign.end,
+                      Padding(
+                        padding: const EdgeInsets.only(right: 10),
+                        child: Text.rich(
+                          TextSpan(
+                            text: '${'TotalPayment'.tr}\n',
+                            style: TextStyle(
+                              // height: 1.7,
+                              fontSize: Dimensions.font15,
+                              fontWeight: FontWeight.w500,
+                              color: AppColors.black2Color,
                             ),
-                          ),    
-                        ],
-                      ),
+                            children: <TextSpan>[
+                              TextSpan(
+                                text: Format.numPrice(invoice.untilPrice),
+                                style:  TextStyle(
+                                // height: 1.7,
+                                fontSize: Dimensions.font16,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.mainColor,
+                              ),
+                              ),
+                            ],
+                          ),
+                          textAlign: TextAlign.end,
+                        ),
+                      ),    
                     ],
                   ), 
                 ),

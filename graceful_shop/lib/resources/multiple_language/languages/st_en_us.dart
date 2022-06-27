@@ -95,6 +95,7 @@ const Map<String, String> en = {
   'PleaseLogInAgain': 'Please log in again',
   'ChangePasswordSuccessfully': 'Change password successfully!',
   'ChangePasswordFailed': 'Change password failed!',
+   'SuccessfullyUpdated': 'Successfully updated!',
   //Setting
   'Infor': 'Personal information',
   'Version': 'Version',
@@ -130,7 +131,7 @@ const Map<String, String> en = {
   'DeliveryAddress': 'Delivery address',
   'TheTotalAmount': 'The total amount',
   'Product': 'product',
-   'TransportFee': 'Transport fee',
+  'TransportFee': 'Transport fee',
   //Address
   'AddressSuccess': 'Successfully added new address',
   'EditAddressSuccess': 'Successfully edited address',
@@ -161,6 +162,12 @@ const Map<String, String> en = {
   'Canceled': 'Canceled',
   'InvoiceCode': 'Invoice code',
   'DateFounded': 'Date founded',
+  'ReasonForCancellation': 'Reason for cancellation',
+  'CancelOrderSuccess': 'Cancel order successfully',
+  'OrderCanceledBy': 'Order canceled by',
+  'Me': 'Me',
+  'Shop': 'Shop',
+  'Reason': 'Reason',
   //Rate
   'Rate': 'Rate',
   'NotYetRated': 'Not yet rated',
@@ -169,4 +176,8 @@ const Map<String, String> en = {
   'Send': 'Send',
   'ContentNotEmpty': 'The content must not be empty',
   'SearchFilters': 'Search filters',
+  'MaxPhotos': 'Can be up to 6 photos',
+  'YouHaveNotStars': 'You have not rated the number of stars',
+  'PleaseVote': 'Please vote for the product',
+  'SuccessfulEvaluation': 'Successful evaluation!',
 };

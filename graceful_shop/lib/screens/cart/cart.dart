@@ -176,316 +176,344 @@ class _CartScreenState extends State<CartScreen> {
           ),
         ],
       ),
-      body: Stack(
-        children: [
-          SingleChildScrollView(
-            child: Obx(() {
-              return Column(
-                children: [
-                  ListView.builder(
-                    physics: const NeverScrollableScrollPhysics(),
-                    padding: EdgeInsets.symmetric(vertical: Dimensions.h7),
-                    shrinkWrap: true,
-                    itemCount: cartController.productCartList.length,
-                    itemBuilder: (context, index) {
-                      return Container(
-                        padding: EdgeInsets.symmetric(vertical: Dimensions.h7,horizontal: Dimensions.w10),
-                        decoration: BoxDecoration(
-                          border: Border(
-                            top: BorderSide(
-                              color: AppColors.gray2Color,
-                              width: 0.5,
-                            ),
+      body: Obx(() {
+          return Stack(
+            children: [
+              SingleChildScrollView(
+                child: Obx(() {
+                  return cartController.isLoading.value
+                      ? Center(
+                          child: SizedBox(
+                            // height: Dimensions.h100,
+                            width: Dimensions.w210,
+                            child: Image.asset(
+                                'assets/gif/loading_4.gif',
+                              ),
                           ),
-                        ),
-                        child: Row(
-                          children: [
-                            SizedBox(
-                              width: Dimensions.w30,
-                              child: Checkbox(
-                                checkColor: AppColors.whiteColor,
-                                activeColor: AppColors.orangeColor,
-                                value: cartController.productCartList[index].check,
-                                onChanged: (value) {
-                                  setState(() {});
-                                  cartController.productCartList[index].check = value ?? false;
-                                  if (cartController.productCartList[index].check) {
-                                    updateListCartId();
-                                    totalPrice += cartController.productCartList[index].quantity * cartController.productCartList[index].product.price;
-                                    isCheckAll = listCartId.length == cartController.productCartList.length;
-                                  } else {
-                                    listCartId = [];
-                                    updateListCartId();
-                                    totalPrice -= cartController.productCartList[index].quantity * cartController.productCartList[index].product.price;
-                                    isCheckAll = listCartId.length == cartController.productCartList.length;
-                                  }
-                                },
+                        )
+                      : cartController.productCartList.isEmpty
+                        ? Padding(
+                          padding: EdgeInsets.only(top: Dimensions.h65),
+                          child: Align(
+                              alignment: Alignment.topCenter,
+                              child: SizedBox(
+                                height: Dimensions.h200,
+                                width: Dimensions.w210,
+                                child: const Image(
+                                  image: AssetImage('assets/images/no-product-found.png'),
+                                ),
                               ),
                             ),
-                            Expanded(
-                              child: ListTile(
-                                leading: SizedBox(
-                                  child: FadeInImage.assetNetwork(
-                                    width: Dimensions.w65,
-                                    height: Dimensions.w100,
-                                    placeholder: 'assets/gif/loading_2.gif',
-                                    image: formaterImg(
-                                      cartController.productCartList[index].color.picture,
-                                    ),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                title: Text(
-                                  cartController.productCartList[index].product.productName,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: TextStyle(
-                                    height: 1.7,
-                                    fontSize: Dimensions.font17,
-                                    fontWeight: FontWeight.w500,
-                                    color: AppColors.black2Color,
-                                  ),
-                                ),
-                                subtitle: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Container(
-                                      padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 10),
+                        )
+                        : Column(
+                        children: [
+                          ListView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            padding: EdgeInsets.symmetric(vertical: Dimensions.h7),
+                            shrinkWrap: true,
+                            itemCount: cartController.productCartList.length,
+                            itemBuilder: (context, index) {
+                              return Container(
+                                padding: EdgeInsets.symmetric(vertical: Dimensions.h7,horizontal: Dimensions.w10),
+                                decoration: BoxDecoration(
+                                  border: Border(
+                                    top: BorderSide(
                                       color: AppColors.gray2Color,
-                                      child: Text(
-                                        '${'Classify'.tr}: ${cartController.productCartList[index].color.colorName} / ${cartController.productCartList[index].size.sizeName}',
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                          fontSize: Dimensions.font14,
-                                          fontWeight: FontWeight.w300,
-                                          color: AppColors.grayColor,
-                                          letterSpacing: 0.5,
-                                        ),
+                                      width: 0.5,
+                                    ),
+                                  ),
+                                ),
+                                child: Row(
+                                  children: [
+                                    SizedBox(
+                                      width: Dimensions.w30,
+                                      child: Checkbox(
+                                        checkColor: AppColors.whiteColor,
+                                        activeColor: AppColors.orangeColor,
+                                        value: cartController.productCartList[index].check,
+                                        onChanged: (value) {
+                                          setState(() {});
+                                          cartController.productCartList[index].check = value ?? false;
+                                          if (cartController.productCartList[index].check) {
+                                            updateListCartId();
+                                            totalPrice += cartController.productCartList[index].quantity * cartController.productCartList[index].product.price;
+                                            isCheckAll = listCartId.length == cartController.productCartList.length;
+                                          } else {
+                                            listCartId = [];
+                                            updateListCartId();
+                                            totalPrice -= cartController.productCartList[index].quantity * cartController.productCartList[index].product.price;
+                                            isCheckAll = listCartId.length == cartController.productCartList.length;
+                                          }
+                                        },
                                       ),
                                     ),
-                                    Padding(
-                                      padding: EdgeInsets.symmetric(vertical: Dimensions.h7),
-                                      child: Row(
-                                        children: [
-                                          if (cartController.productCartList[index].product.discountPrice != 0)
-                                            Padding(
-                                              padding: EdgeInsets.only(right: Dimensions.w7),
+                                    Expanded(
+                                      child: ListTile(
+                                        leading: SizedBox(
+                                          child: FadeInImage.assetNetwork(
+                                            width: Dimensions.w65,
+                                            height: Dimensions.w100,
+                                            placeholder: 'assets/gif/loading_2.gif',
+                                            image: formaterImg(
+                                              cartController.productCartList[index].color.picture,
+                                            ),
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                        title: Text(
+                                          cartController.productCartList[index].product.productName,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                            height: 1.7,
+                                            fontSize: Dimensions.font17,
+                                            fontWeight: FontWeight.w500,
+                                            color: AppColors.black2Color,
+                                          ),
+                                        ),
+                                        subtitle: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            Container(
+                                              padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 10),
+                                              color: AppColors.gray2Color,
                                               child: Text(
-                                                Format.numPrice(cartController.productCartList[index].product.discountPrice + cartController.productCartList[index].product.price),
+                                                '${'Classify'.tr}: ${cartController.productCartList[index].color.colorName} / ${cartController.productCartList[index].size.sizeName}',
                                                 maxLines: 1,
                                                 overflow: TextOverflow.ellipsis,
                                                 style: TextStyle(
-                                                  decoration: TextDecoration.lineThrough,
                                                   fontSize: Dimensions.font14,
                                                   fontWeight: FontWeight.w300,
-                                                  fontStyle: FontStyle.italic,
                                                   color: AppColors.grayColor,
                                                   letterSpacing: 0.5,
                                                 ),
                                               ),
                                             ),
-                                          Text(
-                                            Format.numPrice(cartController.productCartList[index].product.price),
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                              fontSize: Dimensions.font15,
-                                              fontWeight: FontWeight.w500,
-                                              color: AppColors.redColor,
-                                              letterSpacing: 0.5,
+                                            Padding(
+                                              padding: EdgeInsets.symmetric(vertical: Dimensions.h7),
+                                              child: Row(
+                                                children: [
+                                                  if (cartController.productCartList[index].product.discountPrice != 0)
+                                                    Padding(
+                                                      padding: EdgeInsets.only(right: Dimensions.w7),
+                                                      child: Text(
+                                                        Format.numPrice(cartController.productCartList[index].product.discountPrice + cartController.productCartList[index].product.price),
+                                                        maxLines: 1,
+                                                        overflow: TextOverflow.ellipsis,
+                                                        style: TextStyle(
+                                                          decoration: TextDecoration.lineThrough,
+                                                          fontSize: Dimensions.font14,
+                                                          fontWeight: FontWeight.w300,
+                                                          fontStyle: FontStyle.italic,
+                                                          color: AppColors.grayColor,
+                                                          letterSpacing: 0.5,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  Text(
+                                                    Format.numPrice(cartController.productCartList[index].product.price),
+                                                    maxLines: 1,
+                                                    overflow: TextOverflow.ellipsis,
+                                                    style: TextStyle(
+                                                      fontSize: Dimensions.font15,
+                                                      fontWeight: FontWeight.w500,
+                                                      color: AppColors.redColor,
+                                                      letterSpacing: 0.5,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                    Container(
-                                      margin: EdgeInsets.only(top: Dimensions.h5),
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                          color: AppColors.gray2Color,
-                                          width: 0.5,
+                                            Container(
+                                              margin: EdgeInsets.only(top: Dimensions.h5),
+                                              decoration: BoxDecoration(
+                                                border: Border.all(
+                                                  color: AppColors.gray2Color,
+                                                  width: 0.5,
+                                                ),
+                                              ),
+                                              child: Row(
+                                                mainAxisSize: MainAxisSize.min,
+                                                children: [
+                                                  InkWell(
+                                                    onTap: () {
+                                                      setState(() {});
+                                                      if (cartController.productCartList[index].check) {
+                                                        totalPrice -= cartController.productCartList[index].product.price;
+                                                      }
+                                                      cartController.reduceTheNumber(index);
+                                                    },
+                                                    child: Container(
+                                                      decoration: BoxDecoration(
+                                                        border: Border.all(
+                                                          color: AppColors.gray2Color,
+                                                          width: 0.5,
+                                                        ),
+                                                      ),
+                                                      child: const Icon(
+                                                        Icons.remove_outlined,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    width: Dimensions.w35,
+                                                    child: Text(
+                                                      cartController.productCartList[index].quantity.toString(),
+                                                      maxLines: 1,
+                                                      overflow: TextOverflow.ellipsis,
+                                                      textAlign: TextAlign.center,
+                                                      style: TextStyle(
+                                                        fontWeight: FontWeight.w600,
+                                                        color: AppColors.orangeColor,
+                                                        letterSpacing: 0.5,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  InkWell(
+                                                    onTap: () {
+                                                      setState(() {});
+                                                      if (cartController.productCartList[index].check) {
+                                                        totalPrice += cartController.productCartList[index].product.price;
+                                                      }
+                                                      cartController.increasingTheNumber(index);
+                                                    },
+                                                    child: Container(
+                                                      decoration: BoxDecoration(
+                                                        border: Border.all(
+                                                          color: AppColors.gray2Color,
+                                                          width: 0.5,
+                                                        ),
+                                                      ),
+                                                      child: const Icon(
+                                                        Icons.add_outlined,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
                                         ),
-                                      ),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.min,
-                                        children: [
-                                          InkWell(
-                                            onTap: () {
-                                              setState(() {});
-                                              if (cartController.productCartList[index].check) {
-                                                totalPrice -= cartController.productCartList[index].product.price;
-                                              }
-                                              cartController.reduceTheNumber(index);
-                                            },
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                border: Border.all(
-                                                  color: AppColors.gray2Color,
-                                                  width: 0.5,
-                                                ),
-                                              ),
-                                              child: const Icon(
-                                                Icons.remove_outlined,
-                                              ),
-                                            ),
-                                          ),
-                                          SizedBox(
-                                            width: Dimensions.w35,
-                                            child: Text(
-                                              cartController.productCartList[index].quantity.toString(),
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(
-                                                fontWeight: FontWeight.w600,
-                                                color: AppColors.orangeColor,
-                                                letterSpacing: 0.5,
-                                              ),
-                                            ),
-                                          ),
-                                          InkWell(
-                                            onTap: () {
-                                              setState(() {});
-                                              if (cartController.productCartList[index].check) {
-                                                totalPrice += cartController.productCartList[index].product.price;
-                                              }
-                                              cartController.increasingTheNumber(index);
-                                            },
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                border: Border.all(
-                                                  color: AppColors.gray2Color,
-                                                  width: 0.5,
-                                                ),
-                                              ),
-                                              child: const Icon(
-                                                Icons.add_outlined,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
                                       ),
                                     ),
                                   ],
+                                ),
+                              );
+                            },
+                          ),
+                          Container(
+                            padding: EdgeInsets.symmetric(vertical: Dimensions.h7, horizontal: Dimensions.w15),
+                            decoration: BoxDecoration(
+                              border: Border(
+                                top: BorderSide(
+                                  color: AppColors.gray2Color,
+                                  width: 0.5,
+                                ),
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: Dimensions.h80,
+                          ),
+                        ],
+                      );
+                }),
+              ),
+              if(cartController.productCartList.isNotEmpty)
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Container(
+                    height: Dimensions.h65,
+                    // padding: EdgeInsets.all(Dimensions.w10),
+                    decoration: BoxDecoration(
+                      border: Border(
+                        top: BorderSide(
+                          color: AppColors.black2Color,
+                          width: 0.5,
+                        ),
+                      ),
+                      color: AppColors.whiteColor,
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.only(left: Dimensions.w10, top: 6),
+                              child: SizedBox(
+                                width: Dimensions.w30,
+                                child: Checkbox(
+                                  checkColor: AppColors.whiteColor,
+                                  activeColor: AppColors.orangeColor,
+                                  value: isCheckAll,
+                                  onChanged: (value) {
+                                    checkAll();
+                                  },
+                                ),
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 10),
+                              child: Text(
+                                'All'.tr,
+                                style: TextStyle(
+                                  height: 1.7,
+                                  fontSize: Dimensions.font14,
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColors.black2Color,
                                 ),
                               ),
                             ),
                           ],
                         ),
-                      );
-                    },
-                  ),
-                  Container(
-                    padding: EdgeInsets.symmetric(vertical: Dimensions.h7, horizontal: Dimensions.w15),
-                    decoration: BoxDecoration(
-                      border: Border(
-                        top: BorderSide(
-                          color: AppColors.gray2Color,
-                          width: 0.5,
+                        Row(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Padding(
+                              padding: const EdgeInsets.only(right: 10),
+                              child: Text(
+                                Format.numPrice(totalPrice),
+                                style: TextStyle(
+                                  height: 1.7,
+                                  fontSize: Dimensions.font16,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.mainColor,
+                                ),
+                              ),
+                            ),
+                            MaterialButton(
+                              onPressed: (){
+                                updateListCartPay();
+                                if(listCartId.isNotEmpty) {
+                                  Get.to(() => PayScreen(listCartPay: listCartPay));
+                                }
+                              },
+                              color: AppColors.redColor,
+                              height: Dimensions.h65,
+                              child: Text(
+                                '${'BuyProduct'.tr} ( ${listCartId.length} )',
+                                maxLines: 1,
+                                overflow: TextOverflow.visible,
+                                style: TextStyle(
+                                  fontSize: Dimensions.font14,
+                                  fontWeight: FontWeight.w600,
+                                  color: AppColors.whiteColor,
+                                ),
+                              ),
+                            )
+                          ],
                         ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: Dimensions.h80,
-                  ),
-                ],
-              );
-            }),
-          ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Container(
-              height: Dimensions.h65,
-              // padding: EdgeInsets.all(Dimensions.w10),
-              decoration: BoxDecoration(
-                border: Border(
-                  top: BorderSide(
-                    color: AppColors.black2Color,
-                    width: 0.5,
+                      ],
+                    ), 
                   ),
                 ),
-                color: AppColors.whiteColor,
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: Dimensions.w10, top: 6),
-                        child: SizedBox(
-                          width: Dimensions.w30,
-                          child: Checkbox(
-                            checkColor: AppColors.whiteColor,
-                            activeColor: AppColors.orangeColor,
-                            value: isCheckAll,
-                            onChanged: (value) {
-                              checkAll();
-                            },
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 10),
-                        child: Text(
-                          'All'.tr,
-                          style: TextStyle(
-                            height: 1.7,
-                            fontSize: Dimensions.font14,
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.black2Color,
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                  Row(
-                    mainAxisSize: MainAxisSize.min,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(right: 10),
-                        child: Text(
-                          Format.numPrice(totalPrice),
-                          style: TextStyle(
-                            height: 1.7,
-                            fontSize: Dimensions.font16,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.mainColor,
-                          ),
-                        ),
-                      ),
-                      MaterialButton(
-                        onPressed: (){
-                          updateListCartPay();
-                          if(listCartId.isNotEmpty) {
-                            Get.to(() => PayScreen(listCartPay: listCartPay));
-                          }
-                        },
-                        color: AppColors.redColor,
-                        height: Dimensions.h65,
-                        child: Text(
-                          '${'BuyProduct'.tr} ( ${listCartId.length} )',
-                          maxLines: 1,
-                          overflow: TextOverflow.visible,
-                          style: TextStyle(
-                            fontSize: Dimensions.font14,
-                            fontWeight: FontWeight.w600,
-                            color: AppColors.whiteColor,
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ],
-              ), 
-            ),
-          ),
-        ],
+            ],
+          );
+        }
       ),
     );
   }

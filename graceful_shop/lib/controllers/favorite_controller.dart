@@ -112,6 +112,40 @@ class FavoriteController extends GetxController {
     }
   }
 
+  void likeCategory(int index) async {
+    if (userController.token.value == '') {
+      showLogIn();
+    } else {
+      var responseData = await RemoteService.favorite(userController.token.value, productController.productAllType[index].id);
+      if (responseData != null) {
+        // productController.productAllType[index].isLike =
+        //     !productController.productAllType[index].isLike;
+        if (responseData.status == 0) {
+          if (!productController.productAllType[index].isLike) {            
+            var product = producFavoritetList.firstWhere((x) => x.id == productController.productAllType[index].id, orElse: () => p);
+            if (product.id != -1) {
+              producFavoritetList.remove(product);
+            }
+          } else {
+            producFavoritetList.add(productController.productAllType[index]);
+          }
+          for (var value in productController.productList) {
+            if (value.id == productController.productAllType[index].id) {
+              value.isLike = productController.productAllType[index].isLike;
+            }
+          }
+          return;
+        }
+      }
+      productController.productAllType[index].isLike = !productController.productAllType[index].isLike;
+      Get.snackbar(
+        'FailedAction'.tr,
+        'AnErrorOccurred'.tr,
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    }
+  }
+
   void likeFavorite(int index) async {
     if (userController.token.value == '') {
       showLogIn();

@@ -9,6 +9,7 @@ import 'package:graceful_shop/models/invoice_detail.dart';
 import 'package:graceful_shop/models/product.dart';
 import 'package:graceful_shop/models/product_type.dart';
 import 'package:graceful_shop/models/rate.dart';
+import 'package:graceful_shop/models/rate_product.dart';
 import 'package:graceful_shop/models/response_data.dart';
 import 'package:graceful_shop/models/slide_ads.dart';
 import 'package:graceful_shop/models/user.dart';
@@ -343,8 +344,7 @@ class RemoteService {
     }
   }
 
-  static Future<ResponseData?> changeAvatar(
-      String token, String profileImg) async {
+  static Future<ResponseData?> changeAvatar(String token, String profileImg) async {
     var request = http.MultipartRequest('POST', uriChangeAvatar());
     request.headers['Authorization'] = 'Bearer $token';
     request.headers['Content-Type'] = 'multipart/form-data';
@@ -445,10 +445,12 @@ class RemoteService {
         listImage.add(multipartFile);
       }
     }
+
     request.files.addAll(listImage);
 
     var streamedResponse = await request.send();
     var response = await http.Response.fromStream(streamedResponse);
+
     if (response.statusCode == 200) {
       var jsonString = response.body;
       return responseDataFromJson(jsonString);
@@ -458,11 +460,11 @@ class RemoteService {
     }
   }
 
-   static Future<ResponseData?> editRateProduct(String token, int id, int productId, int numRate, String description, List<String> images) async {
+  static Future<ResponseData?> editRateProduct(String token, int rateId, int productId, int numRate, String description, List<String> images) async {
     var request = http.MultipartRequest('POST', uriEditRateProduct());
     request.headers['Authorization'] = 'Bearer $token';
     request.headers['Content-Type'] = 'multipart/form-data';
-    request.fields['id'] = id.toString();
+    request.fields['id'] = rateId.toString();
     request.fields['product_id'] = productId.toString();
     request.fields['num_rate'] = numRate.toString();
     request.fields['description'] = description;
@@ -470,7 +472,7 @@ class RemoteService {
     List<http.MultipartFile> listImage = [];
 
     for (var img in images) {
-      if (img != "") {
+      if (img != "" && img.contains('graceful_shop/cache/')) {
         var multipartFile = await http.MultipartFile.fromPath('images[]', img);
         listImage.add(multipartFile);
       }
@@ -641,12 +643,13 @@ class RemoteService {
     }
   }
 
-  static Future<ResponseData?> cancelInvoice(String token, int invoiceId) async {
+  static Future<ResponseData?> cancelInvoice(String token, int invoiceId, String reason) async {
     // print(token);
-    var response = await client.delete(
+    var response = await client.post(
       uriCancelInvoice(),
       body: jsonEncode({
         "id": invoiceId,
+        "reason": reason, 
       }),
       headers: {
         'Content-Type': 'application/json',
@@ -813,7 +816,7 @@ class RemoteService {
     }
   }
 
-  static Future<List<Product>?> productRated(String token) async {
+  static Future<List<RatedProduct>?> productRated(String token) async {
     var response = await client.get(
       uriProductRated(),
       headers: {
@@ -824,9 +827,27 @@ class RemoteService {
     );
     if (response.statusCode == 200) {
       var jsonString = response.body;
-      return productFromJson(jsonString);
+      return ratedProductFromJson(jsonString);
     } else {
       print('productRated error: ' + response.statusCode.toString());
+      return null;
+    }
+  }
+
+  static Future<Rate?> ratedDetail(String token, int rateId) async {
+    var response = await client.get(
+      uriRatedDetail(rateId),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+        'Authorization': 'Bearer $token',
+      },
+    );
+    if (response.statusCode == 200) {
+      var jsonString = response.body;
+      return rate2FromJson(jsonString);
+    } else {
+      print('ratedDetail error: ' + response.statusCode.toString());
       return null;
     }
   }

@@ -24,13 +24,16 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
     return Obx(() {
         return Scaffold(
           body: invoiceController.isLoading.value
-          ? SizedBox(
-            height: Dimensions.h20,
-            width: Dimensions.w20,
-            child: Image.asset(
-                'assets/gif/loading_5.gif',
+          ? Align(
+              alignment: Alignment.topCenter,
+              child: SizedBox(
+                // height: Dimensions.h20,
+                width: Dimensions.w210,
+                child: Image.asset(
+                    'assets/gif/loading_5.gif',
+                  ),
               ),
-          )
+            )
           : listInvoice.isEmpty
             ? Align(
                 alignment: Alignment.topCenter,

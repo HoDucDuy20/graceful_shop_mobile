@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:graceful_shop/controllers/cart_controller.dart';
 import 'package:graceful_shop/controllers/favorite_controller.dart';
 import 'package:graceful_shop/models/user.dart';
+import 'package:graceful_shop/resources/widgets/show_dialog.dart';
 import 'package:graceful_shop/screens/login/login.dart';
 import 'package:graceful_shop/screens/tab_bar/tab_bar.dart';
 import 'package:graceful_shop/services/remote_service.dart';
@@ -150,6 +151,7 @@ class UserController extends GetxController {
           getUserInfo();
           getSex();
           Get.back();
+          showSuccess2('SuccessfullyUpdated'.tr, ''.tr);
           isLoading.value = false;
         }
         return;

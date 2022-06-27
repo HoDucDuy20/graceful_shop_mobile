@@ -5,14 +5,16 @@ import 'package:graceful_shop/models/user.dart';
 
 List<Rate> rateFromJson(String str) => List<Rate>.from(json.decode(str)['data'].map((x) => Rate.fromJson(x)));
 
+Rate rate2FromJson(String str) => Rate.fromJson(json.decode(str)['data']);
+
 String rateToJson(List<Rate> data) => json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class Rate {
     Rate({
         required this.id,
-        required this.productId,
-        required this.user,
-        required this.userId,
+        this.productId,
+        this.user,
+        this.userId,
         required this.numRate,
         required this.description,
         required this.createdAt,
@@ -20,9 +22,9 @@ class Rate {
     });
 
     int id;
-    int productId;
-    User user;
-    int userId;
+    int? productId;
+    User? user;
+    int? userId;
     double numRate;
     String description;
     String createdAt;
@@ -37,6 +39,14 @@ class Rate {
         description: json["description"],
         createdAt: json["created_at"],
         picturesRate: List<PicturesRate>.from(json["pictures_rate"].map((x) => PicturesRate.fromJson(x))),
+    );
+
+    factory Rate.from2Json(Map<String, dynamic> json) => Rate(
+        id: json["rate_id"],
+        numRate: json["rate_num_rate"].toDouble(),
+        description: json["rate_description"],
+        createdAt: json["rate_created_at"],
+        picturesRate: [],
     );
 
     Map<String, dynamic> toJson() => {

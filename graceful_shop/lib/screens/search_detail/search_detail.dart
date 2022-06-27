@@ -342,7 +342,7 @@ class _SearchDetailState extends State<SearchDetail> {
                               maxLines: 3,
                               overflow: TextOverflow.visible,
                               style: TextStyle(
-                                fontSize: Dimensions.font17,
+                                fontSize: Dimensions.font15,
                                 fontWeight: FontWeight.w500,
                                 color: AppColors.blackColor,
                                 letterSpacing: 0.7,
@@ -382,7 +382,7 @@ class _SearchDetailState extends State<SearchDetail> {
                                   maxLines: 3,
                                   overflow: TextOverflow.visible,
                                   style: TextStyle(
-                                    fontSize: Dimensions.font17,
+                                    fontSize: Dimensions.font15,
                                     fontWeight: FontWeight.w500,
                                     color: AppColors.blackColor,
                                     letterSpacing: 0.7,

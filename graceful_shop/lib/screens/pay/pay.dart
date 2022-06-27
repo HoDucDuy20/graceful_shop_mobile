@@ -453,6 +453,7 @@ class _PayScreenState extends State<PayScreen> {
                           ),
                         ),
                       ),
+                    SizedBox(height: Dimensions.h65),
                   ],
                 ),
               ),
@@ -473,76 +474,70 @@ class _PayScreenState extends State<PayScreen> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Row(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.only(right: 10),
-                            child: Text.rich(
+                      Padding(
+                        padding: const EdgeInsets.only(right: 10),
+                        child: Text.rich(
+                          TextSpan(
+                            text: '${'TotalPayment'.tr}\n',
+                            style: TextStyle(
+                              // height: 1.7,
+                              fontSize: Dimensions.font15,
+                              fontWeight: FontWeight.w500,
+                              color: AppColors.black2Color,
+                            ),
+                            children: <TextSpan>[
                               TextSpan(
-                                text: '${'TotalPayment'.tr}\n',
-                                style: TextStyle(
-                                  // height: 1.7,
-                                  fontSize: Dimensions.font15,
-                                  fontWeight: FontWeight.w500,
-                                  color: AppColors.black2Color,
-                                ),
-                                children: <TextSpan>[
-                                  TextSpan(
-                                    text: voucherController.voucherPay.value.minTotalPrice <= untilPrice 
-                                      ? Format.numPrice(untilPrice - voucherController.voucherPay.value.discountPrice)
-                                      : Format.numPrice(untilPrice),
-                                    style:  TextStyle(
-                                    // height: 1.7,
-                                    fontSize: Dimensions.font16,
-                                    fontWeight: FontWeight.w600,
-                                    color: AppColors.mainColor,
-                                  ),
-                                  ),
-                                ],
+                                text: voucherController.voucherPay.value.minTotalPrice <= untilPrice 
+                                  ? Format.numPrice(untilPrice - voucherController.voucherPay.value.discountPrice)
+                                  : Format.numPrice(untilPrice),
+                                style:  TextStyle(
+                                // height: 1.7,
+                                fontSize: Dimensions.font16,
+                                fontWeight: FontWeight.w600,
+                                color: AppColors.mainColor,
                               ),
-                              textAlign: TextAlign.end,
-                            ),
-                          ),    
-                          invoiceController.isLoading.value
-                          ? Image.asset(
-                              'assets/gif/loading_3_2.gif',
-                              height: Dimensions.h50,
-                            )
-                          : MaterialButton(
-                              onPressed: (){
-                                if(addressController.addressPay.value.id == -1){
-                                  Get.snackbar(
-                                    'PleaseSelectAddress'.tr,
-                                    ''.tr,
-                                    snackPosition: SnackPosition.BOTTOM,
-                                  );
-                                  return;
-                                }
-                                if(voucherController.voucherPay.value.minTotalPrice <= untilPrice && voucherController.voucherPay.value.id != -1) {
-                                  invoiceController.addInvoice(listCartId, voucherController.voucherPay.value.id, transportFee, addressController.addressPay.value);
-                                }else{
-                                  invoiceController.addInvoice(listCartId, null, transportFee, addressController.addressPay.value);
-                                }
-                              },
-                              color: AppColors.redColor,
-                              height: Dimensions.h65,
-                              child: Text(
-                                'Order'.tr,
-                                maxLines: 1,
-                                overflow: TextOverflow.visible,
-                                style: TextStyle(
-                                  fontSize: Dimensions.font14,
-                                  fontWeight: FontWeight.w600,
-                                  color: AppColors.whiteColor,
-                                ),
                               ),
+                            ],
+                          ),
+                          textAlign: TextAlign.end,
+                        ),
+                      ),    
+                      invoiceController.isLoading.value
+                      ? Image.asset(
+                          'assets/gif/loading_3_2.gif',
+                          height: Dimensions.h50,
+                        )
+                      : MaterialButton(
+                          onPressed: (){
+                            if(addressController.addressPay.value.id == -1){
+                              Get.snackbar(
+                                'PleaseSelectAddress'.tr,
+                                ''.tr,
+                                snackPosition: SnackPosition.BOTTOM,
+                              );
+                              return;
+                            }
+                            if(voucherController.voucherPay.value.minTotalPrice <= untilPrice && voucherController.voucherPay.value.id != -1) {
+                              invoiceController.addInvoice(listCartId, voucherController.voucherPay.value.id, transportFee, addressController.addressPay.value);
+                            }else{
+                              invoiceController.addInvoice(listCartId, null, transportFee, addressController.addressPay.value);
+                            }
+                          },
+                          color: AppColors.redColor,
+                          height: Dimensions.h65,
+                          child: Text(
+                            'Order'.tr,
+                            maxLines: 1,
+                            overflow: TextOverflow.visible,
+                            style: TextStyle(
+                              fontSize: Dimensions.font14,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.whiteColor,
                             ),
-                        ],
-                      ),
+                          ),
+                        ),
                     ],
-                  ), 
+                  ),
                 ),
               ),
             ],

@@ -23,6 +23,12 @@ class _FavoriteState extends State<Favorite> {
   FavoriteController favoriteController = Get.find<FavoriteController>();
 
   @override
+  void initState() {
+    super.initState();
+    favoriteController.getProductLike();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final orientation = MediaQuery.of(context).orientation;
     return Scaffold(

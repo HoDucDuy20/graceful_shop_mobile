@@ -339,3 +339,70 @@ Widget GridViewImageRate(BuildContext context, List<PicturesRate> lstPictureRate
     ),
   );
 }
+
+Widget GridViewProduct2(BuildContext context, List<Product> lstProduct, int total) {
+  final orientation = MediaQuery.of(context).orientation;
+
+  return MediaQuery.removePadding(
+    context: context,
+    removeTop: true,
+    child: lstProduct.isEmpty
+        ? total == 0
+            ? Container(
+                alignment: Alignment.center,
+                padding: EdgeInsets.all(Dimensions.w40),
+                child: Text(
+                  'NoProducts'.tr,
+                  style: TextStyle(
+                    fontSize: Dimensions.font17,
+                    fontWeight: FontWeight.w400,
+                    color: AppColors.grayColor,
+                    letterSpacing: 0.5,
+                  ),
+                ),
+              )
+            : Center(
+                child: Image.asset(
+                  'assets/gif/loading_5.gif',
+                  height: Dimensions.w250,
+                  width: Dimensions.w250,
+                ),
+              )
+        : GridView.builder(
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: (orientation == Orientation.portrait) ? 2 : 3,
+              mainAxisExtent: Dimensions.hCard2,
+            ),
+            itemCount: lstProduct.length,
+            itemBuilder: (BuildContext context, int index) {
+              return InkWell(
+                highlightColor: AppColors.whiteColor,
+                onTap: () {
+                  Get.to(() => ProductDetail(product: lstProduct[index]));
+                },
+                child: Container(
+                  margin: EdgeInsets.all(Dimensions.w10),
+                  decoration: BoxDecoration(
+                    borderRadius: const BorderRadius.all(Radius.circular(20.0)),
+                    color: AppColors.whiteColor,
+                    boxShadow: [
+                      BoxShadow(
+                        color: AppColors.gray2Color,
+                        spreadRadius: 0.5,
+                        blurRadius: 2,
+                        offset: const Offset(1.5, 2.5),
+                      ),
+                    ],
+                  ),
+                  child: ItemGridView2(
+                    product: lstProduct[index],
+                    index: index,
+                  ),
+                ),
+              );
+            },
+          ),
+  );
+}

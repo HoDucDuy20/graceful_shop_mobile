@@ -2,16 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:graceful_shop/controllers/product_controller.dart';
+import 'package:graceful_shop/controllers/rate_controller.dart';
 import 'package:graceful_shop/models/product.dart';
 import 'package:graceful_shop/resources/utils/colors.dart';
 import 'package:graceful_shop/resources/utils/dimensions.dart';
 import 'package:graceful_shop/resources/utils/format.dart';
 import 'package:graceful_shop/resources/widgets/grid_view.dart';
+import 'package:graceful_shop/resources/widgets/item_grid_view.dart';
+import 'package:graceful_shop/screens/rate/edit_rate_product.dart';
 import 'package:graceful_shop/services/url.dart';
 
 class ViewRate extends StatelessWidget {
   ViewRate({Key? key, required this.product}) : super(key: key);
   ProductController productController = Get.find<ProductController>();
+  RateController rateController = Get.find<RateController>();
   Product product;
 
   @override
@@ -116,14 +120,15 @@ class ViewRate extends StatelessWidget {
                       children: [
                         ListTile(
                           leading: CircleAvatar(
-                            child: FadeInImage.assetNetwork(
+                            backgroundColor: AppColors.blueAccentColor,
+                            backgroundImage: FadeInImage.assetNetwork(
                               placeholder: 'assets/gif/loading_2.gif',
-                              image: formaterImg(productController.rateList[index].user.avatar),
+                              image: formaterImg(productController.rateList[index].user!.avatar),
                               fit: BoxFit.cover,
-                            ),
+                            ).image,
                           ),
                           title: Text(
-                            productController.rateList[index].user.fullName,
+                            productController.rateList[index].user!.fullName,
                             style: TextStyle(
                               height: 1.5,
                               fontSize: Dimensions.font14,
@@ -132,7 +137,7 @@ class ViewRate extends StatelessWidget {
                             ),
                           ),
                           subtitle: RatingBarIndicator(
-                            rating: productController.rateList[index].numRate,
+                            rating: productController.rateList[index].numRate.toDouble(),
                             itemBuilder: (context, index) => Icon(
                               Icons.star,
                               color: AppColors.yellowColor,
@@ -141,9 +146,31 @@ class ViewRate extends StatelessWidget {
                             itemSize: Dimensions.w15,
                             direction: Axis.horizontal,
                           ),
-                          trailing: Text(
-                            Format.dateTime(productController.rateList[index].createdAt),
-                          ),
+                          trailing: productController.rateList[index].user!.id == userController.user.value.id 
+                            ? Column(
+                                children: [
+                                  InkWell(
+                                    onTap: (){
+                                      rateController.ratedDetail(productController.rateList[index].id);
+                                      Get.to(() => EditRateProduct(product: product));
+                                    },
+                                    child: Icon(
+                                      Icons.edit_outlined,
+                                      size: Dimensions.font17,
+                                      color: AppColors.mainColor,
+                                    ),  
+                                  ),
+                                  SizedBox(
+                                    height: Dimensions.h5,
+                                  ),
+                                  Text(
+                                    Format.dateTime(productController.rateList[index].createdAt),
+                                  ),
+                                ],
+                              )
+                            : Text(
+                                Format.dateTime(productController.rateList[index].createdAt),
+                              )
                         ),
                         Padding(
                           padding: EdgeInsets.only(bottom: Dimensions.h7),

@@ -87,3 +87,5 @@ Uri uriSendFeedback() => formaterApi('send-feedback');
 Uri uriProductNotYedRated() => formaterApi('product-not-yed-rated');
 
 Uri uriProductRated() => formaterApi('product-rated');
+
+Uri uriRatedDetail(int id) => formaterApi('rated-detail/$id');

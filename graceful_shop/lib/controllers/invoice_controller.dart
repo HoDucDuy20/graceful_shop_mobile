@@ -59,8 +59,9 @@ class InvoiceController extends GetxController {
       cartController.getProductCart();
       if (responseData.status == 0) {
         back();
-        showSuccess('OrderSuccess'.tr);
-        Future.delayed(const Duration(milliseconds: 300), back);
+        // showSuccess('OrderSuccess'.tr);
+        // Future.delayed(const Duration(milliseconds: 300), back);
+        showSuccess2('OrderSuccess'.tr, ''.tr);
       } else {
         Get.snackbar(
           'FailedAction'.tr,
@@ -119,13 +120,13 @@ class InvoiceController extends GetxController {
     isLoading.value = false;
   }
 
-  void cancelInvoice(Invoice invoice) async {
+  void cancelInvoice(int invoiceId, String reason) async {
     if (userController.token.value == '') {
       showLogIn();
       return;
     }
 
-    var responseData = await RemoteService.cancelInvoice(userController.token.value, invoice.id);
+    var responseData = await RemoteService.cancelInvoice(userController.token.value, invoiceId, reason);
 
     if (responseData != null) {
       if (responseData.status != 0) {
@@ -135,7 +136,12 @@ class InvoiceController extends GetxController {
           snackPosition: SnackPosition.BOTTOM,
         );
       }else{
-        showInvoice();
+        getInvoice();
+        back();
+        back();
+        // showSuccess('CancelOrderSuccess'.tr);
+        // Future.delayed(const Duration(milliseconds: 300), back);
+        showSuccess2('CancelOrderSuccess'.tr, ''.tr);
       }
     } else {
       Get.snackbar(
@@ -148,11 +154,12 @@ class InvoiceController extends GetxController {
 
   void getInvoiceDetail(Invoice invoice) async {
     isLoading.value = true;
+    invoiceDetailList.value = [];
     var invoiceDetail = await RemoteService.invoiceDetail(userController.token.value, invoice.id);
     if (invoiceDetail != null) {
       for (var value in invoiceDetail) {
-        totalProduct.value = value.quantity;
-        totalPrice.value = value.totalPrice;
+        totalProduct.value += value.quantity;
+        totalPrice.value += value.totalPrice;
       }
       invoiceDetailList.value = invoiceDetail;
     }else{

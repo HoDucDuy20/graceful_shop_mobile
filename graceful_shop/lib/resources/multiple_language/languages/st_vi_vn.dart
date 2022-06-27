@@ -95,6 +95,7 @@ const Map<String, String> vi = {
   'PleaseLogInAgain': 'Xin vui lòng đăng nhập lại',
   'ChangePasswordSuccessfully': 'Đổi mật khẩu thành công!',
   'ChangePasswordFailed': 'Đổi mật khẩu thất bại!',
+  'SuccessfullyUpdated': 'Cập nhật thông tin thành công!',
   //Setting
   'Infor': 'Thông tin cá nhân',
   'Version': 'Phiên bản',
@@ -162,6 +163,12 @@ const Map<String, String> vi = {
   'InvoiceCode': 'Mã hoá đơn',
   'DateFounded': 'Ngày lập',
   'InvoiceDetails': 'Chi tiết hoá đơn',
+  'ReasonForCancellation': 'Lý do huỷ',
+  'CancelOrderSuccess': 'Huỷ đơn hàng thành công',
+  'OrderCanceledBy': 'Đơn hàng bị huỷ bởi',
+  'Me': 'Tôi',
+  'Shop': 'Cửa hàng',
+  'Reason': 'Lý do',
   //Rate
   'Rate': 'Đánh giá',
   'NotYetRated': 'Chưa đánh giá',
@@ -170,4 +177,8 @@ const Map<String, String> vi = {
   'Send': 'Gửi',
   'ContentNotEmpty': 'Nội dung không được bỏ trống',
   'SearchFilters': 'Bộ lọc tìm kiếm',
+  'MaxPhotos': 'Chỉ có thể tối đa 6 ảnh',
+  'YouHaveNotStars': 'Bạn chưa đánh giá số sao',
+  'PleaseVote': 'Vui lòng bình chọn cho sản phẩm',
+  'SuccessfulEvaluation': 'Đánh giá thành công!',
 };

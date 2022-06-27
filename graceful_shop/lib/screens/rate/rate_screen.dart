@@ -5,18 +5,19 @@ import 'package:graceful_shop/models/product.dart';
 import 'package:graceful_shop/resources/utils/colors.dart';
 import 'package:graceful_shop/resources/utils/dimensions.dart';
 import 'package:graceful_shop/resources/utils/format.dart';
+import 'package:graceful_shop/screens/rate/rate_product.dart';
 import 'package:graceful_shop/services/url.dart';
+import 'package:http/http.dart';
 
 class RateScreen extends StatefulWidget {
   RateScreen({Key? key, required this.listProductRate}) : super(key: key);
   List<Product> listProductRate;
-
   @override
   State<RateScreen> createState() => _RateScreenState(listProductRate: listProductRate);
 }
 
 class _RateScreenState extends State<RateScreen> {
-  _RateScreenState({Key? key, required this.listProductRate, });
+  _RateScreenState({Key? key, required this.listProductRate});
   RateController rateController = Get.find<RateController>();
   List<Product> listProductRate;
 
@@ -53,7 +54,7 @@ class _RateScreenState extends State<RateScreen> {
                 itemBuilder: (context, index) {
                   return InkWell(
                     onTap: (){
-                      // invoiceController.showInvoiceDetail(listInvoice[index]);
+                      Get.to(() => RateProduct(product: listProductRate[index]));
                     },
                     child: Container(
                       margin: EdgeInsets.only(bottom: Dimensions.h10),
@@ -96,7 +97,12 @@ class _RateScreenState extends State<RateScreen> {
                               ),
                             ),
                           ],
-                        ),                        
+                        ),  
+                        trailing: Icon(
+                          Icons.rate_review,
+                          size: Dimensions.font20,
+                          color: AppColors.mainColor,
+                        ),                      
                       ),
                     ),
                   );

@@ -9,6 +9,7 @@ import 'package:graceful_shop/services/remote_service.dart';
 class CartController extends GetxController {
   UserController userController = Get.find<UserController>();
   var productCartList = <Cart>[].obs;
+  var isLoading = false.obs;
 
   @override
   void onInit() {
@@ -93,6 +94,7 @@ class CartController extends GetxController {
   }
 
   void getProductCart() async {
+    isLoading.value = true;
     var products = await RemoteService.getProductCart(userController.token.value);
     if (products != null) {
       for (var value in products) {
@@ -100,6 +102,7 @@ class CartController extends GetxController {
       }
       productCartList.value = products;
     }
+    isLoading.value = false;
   }
 
   void reduceTheNumber(int index) {
