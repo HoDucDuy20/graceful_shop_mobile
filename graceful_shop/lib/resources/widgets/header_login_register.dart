@@ -24,43 +24,45 @@ class HeaderLoginRegister extends StatelessWidget {
         children: [
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.max,
             children: [
-              Column(
-                mainAxisSize: MainAxisSize.min,
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: Dimensions.h50,
-                    width: Dimensions.w50,
-                    child: SvgPicture.asset(
-                      'assets/svg/logo.svg',
-                      color: AppColors.whiteColor,
-                    ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: Dimensions.h7),
-                    child: Text(
-                      title,
-                      style: TextStyle(
-                        fontSize: Dimensions.font40,
-                        fontWeight: FontWeight.w600,
+              SizedBox(
+                width: Dimensions.width - Dimensions.w35,
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: Dimensions.h50,
+                      width: Dimensions.w50,
+                      child: SvgPicture.asset(
+                        'assets/svg/logo.svg',
                         color: AppColors.whiteColor,
                       ),
                     ),
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(vertical: Dimensions.h7),
-                    child: Text(
-                      subTitle,
-                      style: TextStyle(
-                        fontSize: Dimensions.font16,
-                        color: AppColors.whiteColor,
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: Dimensions.h7),
+                      child: Text(
+                        title,
+                        style: TextStyle(
+                          fontSize: Dimensions.font35,
+                          fontWeight: FontWeight.w600,
+                          color: AppColors.whiteColor,
+                        ),
                       ),
                     ),
-                  )
-                ],
+                    Padding(
+                      padding: EdgeInsets.symmetric(vertical: Dimensions.h7),
+                      child: Text(
+                        subTitle,
+                        style: TextStyle(
+                          fontSize: Dimensions.font16,
+                          color: AppColors.whiteColor,
+                        ),
+                      ),
+                    )
+                  ],
+                ),
               ),
             ],
           ),

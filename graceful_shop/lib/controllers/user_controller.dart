@@ -72,9 +72,9 @@ class UserController extends GetxController {
     isLoading.value = false;
   }
 
-  void register(String name, String phone, String pass) async {
+  void register(String name, String phone, String email, String pass) async {
     isLoading.value = true;
-    var responseData = await RemoteService.register(name, phone, pass);
+    var responseData = await RemoteService.register(name, phone, email, pass);
     if (responseData != null) {
       int status = responseData.status;
       if (status == 0) {
@@ -193,5 +193,55 @@ class UserController extends GetxController {
       );
     }
     isLoading.value = false;
+  }
+
+  void forgotPass(String phone, String otp, String newPass) async {
+    isLoading.value = true;
+    var responseData = await RemoteService.forgotPass(phone, otp, newPass);
+    if (responseData != null) {
+      int status = responseData.status;
+      if (status == 0) {
+        Get.back();
+        Get.snackbar(
+          'SuccessfullyRetrievedPassword'.tr,
+          'FillInInformation'.tr,
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      } else {
+        Get.snackbar(
+          'RetrievingPasswordFailed'.tr,
+          responseData.message,
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      }
+    } else {
+      Get.snackbar(
+        'FailedAction'.tr,
+        'AnErrorOccurred'.tr,
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    }
+    isLoading.value = false;
+  }
+
+  static void back() {
+    Get.back();
+  }
+
+  void requestOtp(String phone) async {
+    var responseData = await RemoteService.requestOtp(phone);
+    if (responseData != null) {
+      int status = responseData.status;
+      if (status == 0) {
+        // showSuccess('SendOtpSuccessfully'.tr);
+        // Future.delayed(const Duration(milliseconds: 300), back);
+      } 
+    } else {
+      Get.snackbar(
+        'FailedAction'.tr,
+        'AnErrorOccurred'.tr,
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    }
   }
 }

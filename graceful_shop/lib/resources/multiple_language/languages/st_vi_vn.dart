@@ -30,6 +30,8 @@ const Map<String, String> vi = {
   'RequiredNameMax': 'Họ tên tối đa 40 ký tự',
   'RegistrationFailed': 'Đăng ký thất bại',
   'SignUpSuccess': 'Đăng ký thành công',
+  'RequiredEmail': 'Email không được để trống',
+  'CorrectEmail': 'Vui lòng nhập đúng email',
   //Home
   'Search': 'Tìm kiếm',
   'SeeMore': 'Xem thêm',
@@ -181,4 +183,12 @@ const Map<String, String> vi = {
   'YouHaveNotStars': 'Bạn chưa đánh giá số sao',
   'PleaseVote': 'Vui lòng bình chọn cho sản phẩm',
   'SuccessfulEvaluation': 'Đánh giá thành công!',
+  //ForgotPass
+  'ForgotPassTitle': 'Vui lòng nhập đầy đủ thông tin để lấy lại mật khẩu mới',
+  'GetOtp': 'Lấy mã OTP',
+  'RequiredOtp': 'OTP không được bỏ trống',
+  'SuccessfullyRetrievedPassword': 'Lấy mật khẩu thành công',
+  'RetrievingPasswordFailed': 'Lấy mật khẩu thất bại',
+  'SendOtpSuccessfully': 'Gửi OTP thành công',
+  'Second': 'Giây',
 };

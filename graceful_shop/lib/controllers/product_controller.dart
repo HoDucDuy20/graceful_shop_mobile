@@ -175,4 +175,15 @@ class ProductController extends GetxController {
       rateList.value = rates;
     }
   }
+
+  void getSlideAdsDetail(int id) async {
+    productListSearch.value = [];
+    var products = await RemoteService.getSlideAdsDetail(id);
+    if (products != null) {
+      for (var value in products) {
+         value.isLike = value.likes.firstWhere((x) => x.userId == userController.user.value.id , orElse: () => Like(productId: -1, userId: -1)).productId != -1;
+      }
+      productListSearch.value = products;
+    }
+  }
 }

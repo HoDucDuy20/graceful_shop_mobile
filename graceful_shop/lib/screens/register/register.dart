@@ -24,11 +24,13 @@ class _RegisterState extends State<Register> {
   TextEditingController txtPass = TextEditingController();
   TextEditingController txtPassCompare = TextEditingController();
   TextEditingController txtFullName = TextEditingController();
+  TextEditingController txtEmail = TextEditingController();
 
   late String errorPhone = '';
   late String errorPass = '';
   late String errorPassCompare = '';
   late String errorFullName = '';
+  late String errorEmail = '';
 
   RxBool isHiden = true.obs;
 
@@ -92,6 +94,19 @@ class _RegisterState extends State<Register> {
                         inputFormatters: <TextInputFormatter>[
                           FilteringTextInputFormatter.digitsOnly
                         ], // Only numbers can be entered
+                      ),
+                      TextField(
+                        controller: txtEmail,
+                        decoration: InputDecoration(
+                          label: Text(
+                            'Email'.tr,
+                            style: TextStyle(
+                              fontSize: Dimensions.font16,
+                              color: AppColors.grayColor,
+                            ),
+                          ),
+                          errorText: errorEmail == '' ? null : errorEmail,
+                        ),
                       ),
                       TextField(
                         obscureText: isHiden.value,
@@ -184,11 +199,20 @@ class _RegisterState extends State<Register> {
                               } else {
                                 errorFullName = '';
                               }
+                              //validation email
+                              final email = txtEmail.value.text;
+                              if (email.isEmpty) {
+                                errorEmail = 'RequiredEmail'.tr;
+                              } else if (!email.contains("@")) {
+                                errorEmail = 'CorrectEmail'.tr;
+                              } else {
+                                errorEmail = '';
+                              }
                               //check error
                               if (errorPhone != '' || errorPass != '' || errorPassCompare != '' || errorFullName != '') {
                                 return;
                               } else {
-                                userController.register(fullName, phone, pass);
+                                userController.register(fullName, phone, email, pass);
                               }
                             }
                           },

@@ -89,3 +89,9 @@ Uri uriProductNotYedRated() => formaterApi('product-not-yed-rated');
 Uri uriProductRated() => formaterApi('product-rated');
 
 Uri uriRatedDetail(int id) => formaterApi('rated-detail/$id');
+
+Uri uriRequestOtp() => formaterApi('request-otp');
+
+// Uri uriVerifyOtp() => formaterApi('verify-otp');
+
+Uri uriForgotPass() => formaterApi('forgot-pass');

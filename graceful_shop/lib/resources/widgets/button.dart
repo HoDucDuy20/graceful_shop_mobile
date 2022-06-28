@@ -37,7 +37,7 @@ class ButtonSignInUp extends StatelessWidget {
             child: Text(
               title.toUpperCase(),
               style: TextStyle(
-                fontSize: Dimensions.font20,
+                fontSize: Dimensions.font17,
                 fontWeight: FontWeight.w500,
                 color: AppColors.whiteColor,
               ),

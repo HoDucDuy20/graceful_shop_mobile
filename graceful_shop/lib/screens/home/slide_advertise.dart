@@ -2,6 +2,7 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:graceful_shop/controllers/product_controller.dart';
 import 'package:graceful_shop/controllers/slide_ads_controller.dart';
 import 'package:graceful_shop/resources/utils/colors.dart';
 import 'package:graceful_shop/screens/advertise_detail/advertise_detail.dart';
@@ -12,6 +13,7 @@ class ImgSlide extends StatelessWidget {
   ImgSlide({Key? key}) : super(key: key);
   final CarouselController _controller = CarouselController();
   SlideAdsController slideAdsController = Get.find<SlideAdsController>();
+  ProductController productController = Get.find<ProductController>();
   RxInt i = 0.obs;
   
   @override
@@ -45,7 +47,7 @@ class ImgSlide extends StatelessWidget {
                   builder: (BuildContext context) {
                     return InkWell(
                       onTap: () {
-                        slideAdsController.getSlideAdsDetail(i.id);
+                        productController.getSlideAdsDetail(i.id);
                         Get.to(() => AdvertiseDetail(slideAdsDetail: i));
                       },
                       child: SizedBox(

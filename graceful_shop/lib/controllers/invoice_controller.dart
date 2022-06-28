@@ -126,6 +126,8 @@ class InvoiceController extends GetxController {
       return;
     }
 
+    isLoading.value = true;
+
     var responseData = await RemoteService.cancelInvoice(userController.token.value, invoiceId, reason);
 
     if (responseData != null) {
@@ -150,6 +152,8 @@ class InvoiceController extends GetxController {
         snackPosition: SnackPosition.BOTTOM,
       );
     }
+
+    isLoading.value = false;
   }
 
   void getInvoiceDetail(Invoice invoice) async {

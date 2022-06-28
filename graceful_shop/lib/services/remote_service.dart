@@ -188,11 +188,15 @@ class RemoteService {
     }
   }
 
-  static Future<ResponseData?> register(
-      String name, String phone, String pass) async {
+  static Future<ResponseData?> register(String name, String phone, String email, String pass) async {
     var response = await client.post(
       uriRegister(),
-      body: jsonEncode({"name": name, "phone": phone, "password": pass}),
+      body: jsonEncode({
+        "name": name, 
+        "phone": phone, 
+        "email": email, 
+        "password": pass
+      }),
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -796,7 +800,6 @@ class RemoteService {
       return null;
     }
   }
-
   
   static Future<List<Product>?> productNotYedRated(String token) async {
     var response = await client.get(
@@ -848,6 +851,48 @@ class RemoteService {
       return rate2FromJson(jsonString);
     } else {
       print('ratedDetail error: ' + response.statusCode.toString());
+      return null;
+    }
+  }
+
+  static Future<ResponseData?> requestOtp(String phone) async {
+    var response = await client.post(
+      uriRequestOtp(),
+      body: jsonEncode({
+        "phone": phone,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+    );
+    if (response.statusCode == 200) {
+      var jsonString = response.body;
+      return responseDataFromJson(jsonString);
+    } else {
+      print('requestOtp error: ' + response.statusCode.toString());
+      return null;
+    }
+  }
+
+  static Future<ResponseData?> forgotPass(String phone, String otp, String newPass) async {
+    var response = await client.post(
+      uriForgotPass(),
+      body: jsonEncode({
+        "phone": phone,
+        "otp": otp,
+        "new_pass": newPass,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+    );
+    if (response.statusCode == 200) {
+      var jsonString = response.body;
+      return responseDataFromJson(jsonString);
+    } else {
+      print('forgotPass error: ' + response.statusCode.toString());
       return null;
     }
   }

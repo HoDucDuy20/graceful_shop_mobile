@@ -28,6 +28,7 @@ class _PersonalEditState extends State<PersonalEdit> {
   TextEditingController txtEmail = TextEditingController();
   TextEditingController txtAddress = TextEditingController();
   String errorName = '';
+  String errorEmail = '';
   File? image;
 
   int sexVal = 0;
@@ -182,7 +183,7 @@ class _PersonalEditState extends State<PersonalEdit> {
                     ),
                   ),
                   info('Email'.tr),
-                  textField(txtEmail, ''),
+                  textField(txtEmail, errorEmail),
                   // info('Address'.tr),
                   // textField(txtAddress, ''),
                   Container(
@@ -202,6 +203,16 @@ class _PersonalEditState extends State<PersonalEdit> {
                           return;
                         } else {
                           errorName = '';
+                        }
+                        
+                        if (txtEmail.value.text.isEmpty) {
+                          errorEmail = 'RequiredEmail'.tr;
+                          return;
+                        } else if (!txtEmail.value.text.contains("@")) {
+                          errorEmail = 'CorrectEmail'.tr;
+                          return;
+                        } else {
+                          errorEmail = '';
                         }
                         saveChange();
                         userController.updateProfile(image);

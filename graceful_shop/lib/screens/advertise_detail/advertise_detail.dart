@@ -29,6 +29,19 @@ class _AdvertiseDetailState extends State<AdvertiseDetail> {
     if (!await launchUrl(_url)) throw 'Could not launch $_url';
   }
 
+  int total = 1;
+
+  void setTotal(){
+    setState(() {});
+    total = 0;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(const Duration(milliseconds: 900), setTotal);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,7 +106,7 @@ class _AdvertiseDetailState extends State<AdvertiseDetail> {
               ),
               Container(
                 padding: EdgeInsets.only(bottom: Dimensions.h10),
-                child: GridViewProduct( context, slideAdsController.productList, slideAdsController.productList.length, false, false),
+                child: GridViewProduct( context, productController.productListSearch, total, true, false),
               ),
             ],
           ),

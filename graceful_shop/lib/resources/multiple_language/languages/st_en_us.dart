@@ -30,6 +30,8 @@ const Map<String, String> en = {
   'RequiredNameMax': 'Name up to 40 characters',
   'RegistrationFailed': 'Registration failed',
   'SignUpSuccess': 'Sign up success',
+  'RequiredEmail': 'Email cannot be blank',
+  'CorrectEmail': 'Please enter the correct email',
   //Home
   'Search': 'Search',
   'SeeMore': 'See more',
@@ -162,6 +164,7 @@ const Map<String, String> en = {
   'Canceled': 'Canceled',
   'InvoiceCode': 'Invoice code',
   'DateFounded': 'Date founded',
+  'InvoiceDetails': 'Invoice details',
   'ReasonForCancellation': 'Reason for cancellation',
   'CancelOrderSuccess': 'Cancel order successfully',
   'OrderCanceledBy': 'Order canceled by',
@@ -180,4 +183,12 @@ const Map<String, String> en = {
   'YouHaveNotStars': 'You have not rated the number of stars',
   'PleaseVote': 'Please vote for the product',
   'SuccessfulEvaluation': 'Successful evaluation!',
+  //ForgotPass
+  'ForgotPassTitle': 'Please enter all information to get a new password',
+  'GetOtp': 'Get the OTP code',
+  'RequiredOtp': 'OTP cannot be left blank',
+  'SuccessfullyRetrievedPassword': 'Successfully retrieved password',
+  'RetrievingPasswordFailed': 'Retrieving password failed',
+  'SendOtpSuccessfully': 'Send otp successfully',
+  'Second': 'Second',
 };

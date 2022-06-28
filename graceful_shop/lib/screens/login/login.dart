@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:graceful_shop/controllers/user_controller.dart';
 import 'package:graceful_shop/resources/widgets/button.dart';
+import 'package:graceful_shop/screens/forgot_pass/forgot_pass.dart';
 import 'package:graceful_shop/screens/login/link_register.dart';
 import 'package:graceful_shop/screens/login/login_with_google.dart';
 import 'package:graceful_shop/resources/utils/colors.dart';
@@ -134,7 +135,9 @@ class _LoginState extends State<Login> {
                         ),
                       ),
                       TextButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Get.to(() => const ForgotPass());
+                        },
                         child: Text(
                           'ForgotPass'.tr,
                           style: TextStyle(
