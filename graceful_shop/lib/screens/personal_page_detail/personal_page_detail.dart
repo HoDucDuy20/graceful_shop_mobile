@@ -77,37 +77,38 @@ class _PersonalDetailState extends State<PersonalDetail> {
                 ),
                 title('PersonalPageInfo'.tr),
                 info('InputName'.tr, userController.user.value.fullName),
-                info('DateOfBirth'.tr, Format.dateTime(userController.user.value.dateOfBirth)),
+                info('DateOfBirth'.tr, Format.date(userController.user.value.dateOfBirth)),
                 info('Sex'.tr, userController.user.value.sexName),
                 title('AccountInformation'.tr),
                 info('Phone'.tr, userController.user.value.phone),
                 info('Email'.tr, userController.user.value.email),
                 // info('Address'.tr, userController.user.value.address),
-                InkWell(
-                  onTap: (){
-                    Get.to(() => const PasswordEdit());
-                  },
-                  child: Container(
-                    margin: EdgeInsets.symmetric(vertical: Dimensions.w10),
-                    padding: EdgeInsets.symmetric(horizontal: Dimensions.w10),
-                    color: AppColors.gray2Color,
-                    child: ListTile(
-                      contentPadding: EdgeInsets.zero,
-                      leading: Text(
-                        'InputPass'.tr,
-                        style: TextStyle(
-                          wordSpacing: 1.5,
-                          fontSize: Dimensions.font16,
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.black2Color,
+                if(userController.user.value.typeLogin == 0)
+                  InkWell(
+                    onTap: (){
+                      Get.to(() => const PasswordEdit());
+                    },
+                    child: Container(
+                      margin: EdgeInsets.symmetric(vertical: Dimensions.w10),
+                      padding: EdgeInsets.symmetric(horizontal: Dimensions.w10),
+                      color: AppColors.gray2Color,
+                      child: ListTile(
+                        contentPadding: EdgeInsets.zero,
+                        leading: Text(
+                          'InputPass'.tr,
+                          style: TextStyle(
+                            wordSpacing: 1.5,
+                            fontSize: Dimensions.font16,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.black2Color,
+                          ),
                         ),
-                      ),
-                      trailing: const Icon(
-                        Icons.arrow_right,
+                        trailing: const Icon(
+                          Icons.arrow_right,
+                        ),
                       ),
                     ),
                   ),
-                ),
                 Container(
                   margin: EdgeInsets.all(Dimensions.w20),
                   alignment: Alignment.center,

@@ -81,21 +81,21 @@ class _AdvertiseDetailState extends State<AdvertiseDetail> {
                       ),
                     ),
                   ),
-                  trailing: InkWell(
-                    onTap: () {},
-                    child: Container(
-                      padding: EdgeInsets.all(Dimensions.w5),
-                      decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.all(Radius.circular(100.0)),
-                        color: AppColors.whiteColor,
-                      ),
-                      child: Icon(
-                        Icons.share_rounded,
-                        size: Dimensions.font20,
-                        color: AppColors.black2Color,
-                      ),
-                    ),
-                  ),
+                  // trailing: InkWell(
+                  //   onTap: () {},
+                  //   child: Container(
+                  //     padding: EdgeInsets.all(Dimensions.w5),
+                  //     decoration: BoxDecoration(
+                  //       borderRadius: const BorderRadius.all(Radius.circular(100.0)),
+                  //       color: AppColors.whiteColor,
+                  //     ),
+                  //     child: Icon(
+                  //       Icons.share_rounded,
+                  //       size: Dimensions.font20,
+                  //       color: AppColors.black2Color,
+                  //     ),
+                  //   ),
+                  // ),
                 ),
               ),
               Html(

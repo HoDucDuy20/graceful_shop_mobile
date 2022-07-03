@@ -72,8 +72,8 @@ class RateController extends GetxController {
         productNotYedRated();
         productRated();
         Get.back();
-        showSuccess('SuccessfulEvaluation'.tr);
-        Future.delayed(const Duration(milliseconds: 300), Get.back);
+        toastSuccess('SuccessfulEvaluation'.tr);
+        // Future.delayed(const Duration(milliseconds: 300), Get.back);
         isLoading.value = false;
       }
       return;
@@ -102,8 +102,8 @@ class RateController extends GetxController {
         productNotYedRated();
         productRated();
         Get.back();
-        showSuccess('SuccessfulEvaluation'.tr);
-        Future.delayed(const Duration(milliseconds: 300), Get.back);
+        toastSuccess('SuccessfulEvaluation'.tr);
+        // Future.delayed(const Duration(milliseconds: 300), Get.back);
         isLoading.value = false;
       }
       return;

@@ -8,7 +8,7 @@ import 'package:graceful_shop/services/remote_service.dart';
 class VoucherController extends GetxController {
   UserController userController = Get.find<UserController>();
   var voucherList = <Voucher>[].obs;
-  var voucherPay = Voucher(id: -1, voucherCode: '', description: '', minTotalPrice: 0, discountPrice: 0, startDate: DateTime.now(), endDate: DateTime.now()).obs;
+  var voucherPay = Voucher(id: -1, voucherCode: '', description: '', minTotalPrice: 0, discountPrice: 0, startDate: '', endDate: '').obs;
 
   @override
   void onInit() {

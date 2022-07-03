@@ -262,7 +262,7 @@ class _ProductDetailState extends State<ProductDetail> {
                                 const SizedBox(width: 10),
                                 Text.rich(
                                   TextSpan(
-                                    text: '${product.numRate}/5.0  ',
+                                    text: '${Format.numRate(product.numRate)}/5.0  ',
                                     style: TextStyle(
                                       wordSpacing: 1.5,
                                       fontSize: Dimensions.font14,

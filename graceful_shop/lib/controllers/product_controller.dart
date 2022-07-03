@@ -127,6 +127,7 @@ class ProductController extends GetxController {
   }
 
   void getProductsOfType(int typeId) async {
+    loading.value = true;
     var productTotal =
         await RemoteService.getProductsOfType(typeId, pageSearch.value);
     if (productTotal != null) {
@@ -157,7 +158,8 @@ class ProductController extends GetxController {
 
    void getProductsOfAllType2(int typeId) async {
     totalProductAllType.value = -1;
-    var productTotal = await RemoteService.getProductsOfAllType(typeId, 1);
+    productAllType.value = [];
+    var productTotal = await RemoteService.getProductsOfAllType(typeId, 1);    
     if (productTotal != null) {
       totalProductAllType.value = productTotal.total;
       for (var value in productTotal.products) {

@@ -40,8 +40,8 @@ class CartController extends GetxController {
         userController.token.value, productId, colorId, sizeId, quantity);
     if (responseData != null) {
       if (responseData.status == 0) {
-        showSuccess('AddedToCart'.tr);
-        Future.delayed(const Duration(milliseconds: 300), back);
+        toastSuccess('AddedToCart'.tr);
+        // Future.delayed(const Duration(milliseconds: 300), back);
       } else {
         Get.snackbar(
           'FailedAction'.tr,

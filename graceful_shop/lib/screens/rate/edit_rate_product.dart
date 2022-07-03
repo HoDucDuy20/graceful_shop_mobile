@@ -238,7 +238,7 @@ class _EditRateProductState extends State<EditRateProduct> {
                       ),
                     ),
                     subtitle: Text(
-                      Format.dateTime(DateTime.now().toString()),
+                      Format.date(DateTime.now().toString()),
                       style: TextStyle(
                         height: 1.5,
                         fontSize: Dimensions.font14,

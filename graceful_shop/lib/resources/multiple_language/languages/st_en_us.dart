@@ -168,9 +168,16 @@ const Map<String, String> en = {
   'ReasonForCancellation': 'Reason for cancellation',
   'CancelOrderSuccess': 'Cancel order successfully',
   'OrderCanceledBy': 'Order canceled by',
-  'Me': 'Me',
+  'Me': 'Me', 
   'Shop': 'Shop',
   'Reason': 'Reason',
+  'Payments': 'Payments',
+  'PaymentOnDelivery': 'Payment on delivery',
+  'PaymentViaZaloPay': 'Payment via ZaloPay wallet',
+  'ChoosePayment': 'Choose payment method',
+  'Paid': 'Paid',
+  'WaitForPay': 'Wait for pay',
+  'DateUpdate': 'Date update',
   //Rate
   'Rate': 'Rate',
   'NotYetRated': 'Not yet rated',
@@ -191,4 +198,5 @@ const Map<String, String> en = {
   'RetrievingPasswordFailed': 'Retrieving password failed',
   'SendOtpSuccessfully': 'Send otp successfully',
   'Second': 'Second',
+  'InfoShop': 'Info shop',
 };

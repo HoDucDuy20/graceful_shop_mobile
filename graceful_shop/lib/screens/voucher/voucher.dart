@@ -82,7 +82,7 @@ class _VoucherScreenState extends State<VoucherScreen> {
                               ),
                               subtitle: Text.rich(
                                 TextSpan(
-                                  text: 'HSD: ${Format.dateTime(voucherController.voucherList[index].endDate.toString())}\n',
+                                  text: 'HSD: ${Format.date(voucherController.voucherList[index].endDate.toString())}\n',
                                   style: TextStyle(
                                     height: 1.7,
                                     fontSize: Dimensions.font14,

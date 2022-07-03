@@ -386,6 +386,23 @@ class _InvoiceDetailScreenState extends State<InvoiceDetailScreen> {
                         ),
                       ),
                     ),
+                    if(invoice.status != 1)
+                      Container(
+                        alignment: Alignment.centerLeft,
+                        margin: EdgeInsets.only(top: Dimensions.h10),
+                        padding: EdgeInsets.symmetric(horizontal: Dimensions.w10),
+                        child: Text(
+                          '${'DateUpdate'.tr}: ${Format.dateTime(invoice.updatedAt.toString())}',
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontSize: Dimensions.font14,
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.orangeColor,
+                            letterSpacing: 0.7,
+                          ),
+                        ),
+                      ),
                     if(invoice.status == 0)
                       Container(
                         alignment: Alignment.centerLeft,
@@ -423,7 +440,7 @@ class _InvoiceDetailScreenState extends State<InvoiceDetailScreen> {
                 alignment: Alignment.bottomCenter,
                 child: Container(
                   height: Dimensions.h65,
-                  // padding: EdgeInsets.all(Dimensions.w10),
+                  padding: EdgeInsets.symmetric(horizontal: Dimensions.w15),
                   decoration: BoxDecoration(
                     border: Border(
                       top: BorderSide(
@@ -434,34 +451,58 @@ class _InvoiceDetailScreenState extends State<InvoiceDetailScreen> {
                     color: AppColors.whiteColor,
                   ),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.only(right: 10),
-                        child: Text.rich(
+                      if((invoice.typePay != '' && invoice.typePay != 'tm' && invoice.status != 0) || invoice.status == 4)
+                        Text.rich(
                           TextSpan(
-                            text: '${'TotalPayment'.tr}\n',
+                            text: 'Paid'.tr,
                             style: TextStyle(
-                              // height: 1.7,
-                              fontSize: Dimensions.font15,
+                              height: 1.7,
+                              fontSize: Dimensions.font16,
                               fontWeight: FontWeight.w500,
-                              color: AppColors.black2Color,
+                              color: AppColors.greenColor,
                             ),
-                            children: <TextSpan>[
-                              TextSpan(
-                                text: Format.numPrice(invoice.untilPrice),
-                                style:  TextStyle(
-                                // height: 1.7,
-                                fontSize: Dimensions.font16,
-                                fontWeight: FontWeight.w600,
-                                color: AppColors.mainColor,
-                              ),
-                              ),
-                            ],
                           ),
-                          textAlign: TextAlign.end,
+                          textAlign: TextAlign.start,
                         ),
-                      ),    
+                      if(((invoice.typePay == '' || invoice.typePay == 'tm') && invoice.status != 4 && invoice.status != 0))
+                        Text.rich(
+                          TextSpan(
+                            text: 'WaitForPay'.tr,
+                            style: TextStyle(
+                              height: 1.7,
+                              fontSize: Dimensions.font16,
+                              fontWeight: FontWeight.w500,
+                              color: AppColors.greenColor,
+                            ),
+                          ),
+                          textAlign: TextAlign.start,
+                        ),
+                      const SizedBox(width: 1,),
+                      Text.rich(
+                        TextSpan(
+                          text: '${'TotalPayment'.tr}\n',
+                          style: TextStyle(
+                            // height: 1.7,
+                            fontSize: Dimensions.font15,
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.black2Color,
+                          ),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: Format.numPrice(invoice.untilPrice),
+                              style:  TextStyle(
+                              // height: 1.7,
+                              fontSize: Dimensions.font16,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.mainColor,
+                            ),
+                            ),
+                          ],
+                        ),
+                        textAlign: TextAlign.end,
+                      ),  
                     ],
                   ), 
                 ),

@@ -86,7 +86,7 @@ class _PersonalPageState extends State<PersonalPage> {
                       onPressed: () {
                         showLogOut(() {
                           Get.back();
-                          userController.logOut();
+                          userController.logOut(context);
                         });
                       },
                       title: 'LogOut'.tr.toUpperCase(),

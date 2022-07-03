@@ -1,6 +1,7 @@
 import 'package:get/get.dart';
 import 'package:graceful_shop/controllers/cart_controller.dart';
 import 'package:graceful_shop/controllers/user_controller.dart';
+import 'package:graceful_shop/models/Payment.dart';
 import 'package:graceful_shop/models/address.dart';
 import 'package:graceful_shop/models/invoice.dart';
 import 'package:graceful_shop/models/invoice_detail.dart';
@@ -22,6 +23,20 @@ class InvoiceController extends GetxController {
   var totalPrice = 0.obs;
   var isVoucher = false.obs;
   var isLoading = false.obs;
+  var paymentIndex = 0.obs;
+
+  List<Payment> payments = [
+    Payment(
+      icon: 'assets/images/pay-money.png', 
+      title: 'PaymentOnDelivery', 
+      key: 'tm',
+    ),
+    Payment(
+      icon: 'assets/images/zalo-pay.png', 
+      title: 'PaymentViaZaloPay', 
+      key: 'zp',
+    ),
+  ];
 
   @override
   void onInit() {
@@ -47,13 +62,13 @@ class InvoiceController extends GetxController {
     Get.to(() => InvoiceDetailScreen(invoice: invoice));
   }
 
-  void addInvoice(List<int> lstCartId, int? voucherId, int shipPrice, Address address) async {
+  void addInvoice(List<int> lstCartId, int? voucherId, int shipPrice, Address address, String? invoiceCode, String? typePay) async {
     if (userController.token.value == '') {
       showLogIn();
       return;
     }
     isLoading.value = true;
-    var responseData = await RemoteService.addInvoice(userController.token.value, lstCartId, voucherId, shipPrice, address);
+    var responseData = await RemoteService.addInvoice(userController.token.value, lstCartId, voucherId, shipPrice, address, invoiceCode, typePay);
     isLoading.value = false;
     if (responseData != null) {
       cartController.getProductCart();

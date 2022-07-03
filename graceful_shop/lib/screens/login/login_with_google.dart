@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:graceful_shop/controllers/login_with_google.dart';
 import 'package:graceful_shop/resources/utils/colors.dart';
 import 'package:graceful_shop/resources/utils/dimensions.dart';
+import 'package:provider/provider.dart';
 
 class LoginWithGoogle extends StatefulWidget {
   const LoginWithGoogle({Key? key}) : super(key: key);
@@ -25,7 +27,10 @@ class _LoginWithGoogleState extends State<LoginWithGoogle> {
           ),
         ),
         InkWell(
-          onTap: () {},
+          onTap: () {
+            final provider = Provider.of<GoogleSignInProvider>(context, listen: false);
+            provider.googleLogin();
+          },
           child: Container(
             margin: EdgeInsets.all(Dimensions.h12),
             padding: EdgeInsets.all(Dimensions.w7),

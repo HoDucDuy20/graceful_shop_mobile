@@ -2,15 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:graceful_shop/controllers/address_controller.dart';
 import 'package:graceful_shop/controllers/invoice_controller.dart';
+import 'package:graceful_shop/controllers/repo/payment.dart';
 import 'package:graceful_shop/controllers/voucher_controller.dart';
 import 'package:graceful_shop/models/cart.dart';
 import 'package:graceful_shop/models/voucher.dart';
 import 'package:graceful_shop/resources/utils/colors.dart';
 import 'package:graceful_shop/resources/utils/dimensions.dart';
 import 'package:graceful_shop/resources/utils/format.dart';
+import 'package:graceful_shop/resources/utils/util.dart';
+import 'package:graceful_shop/resources/widgets/show_dialog.dart';
 import 'package:graceful_shop/screens/pay/choose_address.dart';
+import 'package:graceful_shop/screens/pay/choose_payment.dart';
 import 'package:graceful_shop/screens/pay/choose_voucher.dart';
 import 'package:graceful_shop/services/url.dart';
+import 'package:graceful_shop/zalo_pay/flutter_zalopay_sdk.dart';
 
 class PayScreen extends StatefulWidget {
   PayScreen({Key? key, required this.listCartPay}) : super(key: key);
@@ -59,239 +64,331 @@ class _PayScreenState extends State<PayScreen> {
     updateListCartId();
     quantityOfProduct();
     totalUntilPrice();
-    voucherController.voucherPay.value = Voucher(id: -1, voucherCode: '', description: '', minTotalPrice: 0, discountPrice: 0, startDate: DateTime.now(), endDate: DateTime.now());
+    voucherController.voucherPay.value = Voucher(id: -1, voucherCode: '', description: '', minTotalPrice: 0, discountPrice: 0, startDate: '', endDate: '');
+    invoiceController.paymentIndex.value = 0;
   }
 
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-        return Scaffold(
-          appBar: AppBar(
-            titleSpacing: 0,
-            automaticallyImplyLeading: false,
-            backgroundColor: AppColors.white3Color,
-            foregroundColor: AppColors.mainColor,
-            shadowColor: AppColors.whiteColor,
-            elevation: 0.5,
-            title: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                InkWell(
-                  onTap: () {
-                    Get.back();
-                  },
-                  child: Container(
-                    padding: EdgeInsets.symmetric(horizontal: Dimensions.w5),
-                    child: Icon(
-                      Icons.chevron_left,
-                      size: Dimensions.font30,
-                      color: AppColors.black2Color,
-                    ),
-                  ),
-                ),
-                Text(
-                  'Pay'.tr,
-                  style: TextStyle(
-                    fontSize: Dimensions.font20,
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          body: Stack(
+      return Scaffold(
+        appBar: AppBar(
+          titleSpacing: 0,
+          automaticallyImplyLeading: false,
+          backgroundColor: AppColors.white3Color,
+          foregroundColor: AppColors.mainColor,
+          shadowColor: AppColors.whiteColor,
+          elevation: 0.5,
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              SingleChildScrollView(
-                child: Column(
-                  children: [
-                    if(addressController.addressPay.value.id == -1)
-                      InkWell(
-                        onTap: (){
-                          Get.to(() => const ChooseAddressScreen());
-                        },
-                        child: Container(
-                          margin: EdgeInsets.symmetric(vertical: Dimensions.h7),
-                          padding: EdgeInsets.symmetric(vertical: Dimensions.h7),
-                          color: AppColors.gray3Color,
-                          child: ListTile(
-                            leading: Icon(
-                              Icons.location_on_outlined,
-                              color: AppColors.blueAccentColor,
-                            ),
-                            title: Text(
-                              'PleaseSelectAddress'.tr,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontSize: Dimensions.font16,
-                                fontWeight: FontWeight.w500,
-                                color: AppColors.grayColor,
-                                // letterSpacing: 0.5,
-                              ),
-                            ),
-                            trailing: Icon(
-                              Icons.chevron_right,
-                              size: Dimensions.w25,
+              InkWell(
+                onTap: () {
+                  Get.back();
+                },
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: Dimensions.w5),
+                  child: Icon(
+                    Icons.chevron_left,
+                    size: Dimensions.font30,
+                    color: AppColors.black2Color,
+                  ),
+                ),
+              ),
+              Text(
+                'Pay'.tr,
+                style: TextStyle(
+                  fontSize: Dimensions.font20,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
+        ),
+        body: Stack(
+          children: [
+            SingleChildScrollView(
+              child: Column(
+                children: [
+                  if(addressController.addressPay.value.id == -1)
+                    InkWell(
+                      onTap: (){
+                        Get.to(() => const ChooseAddressScreen());
+                      },
+                      child: Container(
+                        margin: EdgeInsets.symmetric(vertical: Dimensions.h7),
+                        padding: EdgeInsets.symmetric(vertical: Dimensions.h7),
+                        color: AppColors.gray3Color,
+                        child: ListTile(
+                          leading: Icon(
+                            Icons.location_on_outlined,
+                            color: AppColors.blueAccentColor,
+                          ),
+                          title: Text(
+                            'PleaseSelectAddress'.tr,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontSize: Dimensions.font16,
+                              fontWeight: FontWeight.w500,
+                              color: AppColors.grayColor,
+                              // letterSpacing: 0.5,
                             ),
                           ),
-                        ),
-                      )
-                    else
-                      InkWell(
-                        onTap: (){
-                          Get.to(() => const ChooseAddressScreen());
-                        },
-                        child: Container(
-                          margin: EdgeInsets.symmetric(vertical: Dimensions.h7),
-                          padding: EdgeInsets.symmetric(vertical: Dimensions.h7),
-                          color: AppColors.gray3Color,
-                          child: ListTile(
-                            leading: Icon(
-                              Icons.location_on_outlined,
-                              color: AppColors.blueAccentColor,
-                            ),
-                            title: Text(
-                              'DeliveryAddress'.tr,
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                fontSize: Dimensions.font15,
-                                fontWeight: FontWeight.w500,
-                                color: AppColors.black2Color,
-                                // letterSpacing: 0.5,
-                              ),
-                            ),
-                            subtitle: Text.rich(
-                              TextSpan(
-                                text: '${addressController.addressPay.value.name} | ${addressController.addressPay.value.phoneNumber}\n',
-                                style: TextStyle(
-                                  height: 1.7,
-                                  fontSize: Dimensions.font14,
-                                  fontWeight: FontWeight.w400,
-                                  color: AppColors.black2Color,
-                                  letterSpacing: 0.5,
-                                ),
-                                children: <TextSpan>[
-                                  TextSpan(
-                                    text: addressController.addressPay.value.address,
-                                    style:  TextStyle(
-                                    // height: 1.7,
-                                    fontSize: Dimensions.font14,
-                                    fontWeight: FontWeight.w400,
-                                    color: AppColors.black2Color,
-                                  ),
-                                  ),
-                                ],
-                              ),
-                              textAlign: TextAlign.start,
-                            ),
-                            trailing: Icon(
-                              Icons.chevron_right,
-                              size: Dimensions.w25,
-                            ),
+                          trailing: Icon(
+                            Icons.chevron_right,
+                            size: Dimensions.w25,
                           ),
                         ),
                       ),
-                    ListView.builder(
-                      physics: const NeverScrollableScrollPhysics(),
-                      // padding: EdgeInsets.symmetric(vertical: Dimensions.h7),
-                      shrinkWrap: true,
-                      itemCount: listCartPay.length,
-                      itemBuilder: (context, index) {
-                        return Container(
-                          padding: EdgeInsets.symmetric(vertical: Dimensions.h7,horizontal: Dimensions.w10),
-                          decoration: BoxDecoration(
-                            border: Border(
-                              top: BorderSide(
-                                color: AppColors.gray2Color,
-                                width: 0.5,
-                              ),
-                              bottom: BorderSide(
-                                color: AppColors.gray2Color,
-                                width: 0.5,
-                              ),
+                    )
+                  else
+                    InkWell(
+                      onTap: (){
+                        Get.to(() => const ChooseAddressScreen());
+                      },
+                      child: Container(
+                        margin: EdgeInsets.symmetric(vertical: Dimensions.h7),
+                        padding: EdgeInsets.symmetric(vertical: Dimensions.h7),
+                        color: AppColors.gray3Color,
+                        child: ListTile(
+                          leading: Icon(
+                            Icons.location_on_outlined,
+                            color: AppColors.blueAccentColor,
+                          ),
+                          title: Text(
+                            'DeliveryAddress'.tr,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontSize: Dimensions.font15,
+                              fontWeight: FontWeight.w500,
+                              color: AppColors.black2Color,
+                              // letterSpacing: 0.5,
                             ),
                           ),
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: ListTile(
-                                  leading: SizedBox(
-                                    child: FadeInImage.assetNetwork(
-                                      width: Dimensions.w65,
-                                      height: Dimensions.w100,
-                                      placeholder: 'assets/gif/loading_2.gif',
-                                      image: formaterImg(
-                                        listCartPay[index].color.picture,
-                                      ),
-                                      fit: BoxFit.cover,
+                          subtitle: Text.rich(
+                            TextSpan(
+                              text: '${addressController.addressPay.value.name} | ${addressController.addressPay.value.phoneNumber}\n',
+                              style: TextStyle(
+                                height: 1.7,
+                                fontSize: Dimensions.font14,
+                                fontWeight: FontWeight.w400,
+                                color: AppColors.black2Color,
+                                letterSpacing: 0.5,
+                              ),
+                              children: <TextSpan>[
+                                TextSpan(
+                                  text: addressController.addressPay.value.address,
+                                  style:  TextStyle(
+                                  // height: 1.7,
+                                  fontSize: Dimensions.font14,
+                                  fontWeight: FontWeight.w400,
+                                  color: AppColors.black2Color,
+                                ),
+                                ),
+                              ],
+                            ),
+                            textAlign: TextAlign.start,
+                          ),
+                          trailing: Icon(
+                            Icons.chevron_right,
+                            size: Dimensions.w25,
+                          ),
+                        ),
+                      ),
+                    ),
+                  ListView.builder(
+                    physics: const NeverScrollableScrollPhysics(),
+                    // padding: EdgeInsets.symmetric(vertical: Dimensions.h7),
+                    shrinkWrap: true,
+                    itemCount: listCartPay.length,
+                    itemBuilder: (context, index) {
+                      return Container(
+                        padding: EdgeInsets.symmetric(vertical: Dimensions.h7,horizontal: Dimensions.w10),
+                        decoration: BoxDecoration(
+                          border: Border(
+                            top: BorderSide(
+                              color: AppColors.gray2Color,
+                              width: 0.5,
+                            ),
+                            bottom: BorderSide(
+                              color: AppColors.gray2Color,
+                              width: 0.5,
+                            ),
+                          ),
+                        ),
+                        child: Row(
+                          children: [
+                            Expanded(
+                              child: ListTile(
+                                leading: SizedBox(
+                                  child: FadeInImage.assetNetwork(
+                                    width: Dimensions.w65,
+                                    height: Dimensions.w100,
+                                    placeholder: 'assets/gif/loading_2.gif',
+                                    image: formaterImg(
+                                      listCartPay[index].color.picture,
                                     ),
-                                  ),
-                                  title: Text(
-                                    listCartPay[index].product.productName,
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                      height: 1.7,
-                                      fontSize: Dimensions.font16,
-                                      fontWeight: FontWeight.w500,
-                                      color: AppColors.black2Color,
-                                    ),
-                                  ),
-                                  subtitle: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        '${'Classify'.tr}: ${listCartPay[index].color.colorName} / ${listCartPay[index].size.sizeName}',
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                          fontSize: Dimensions.font12,
-                                          fontWeight: FontWeight.w400,
-                                          color: AppColors.blackColor,
-                                          letterSpacing: 0.5,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.only(top: 2),
-                                        child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              Format.numPrice(listCartPay[index].product.price),
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: TextStyle(
-                                                fontSize: Dimensions.font13,
-                                                fontWeight: FontWeight.w400,
-                                                color: AppColors.blackColor,
-                                                letterSpacing: 0.5,
-                                              ),
-                                            ),
-                                            Text(
-                                              'x${listCartPay[index].quantity}',
-                                              maxLines: 1,
-                                              overflow: TextOverflow.ellipsis,
-                                              style: TextStyle(
-                                                fontSize: Dimensions.font12,
-                                                fontWeight: FontWeight.w500,
-                                                color: AppColors.grayColor,
-                                                letterSpacing: 0.5,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    ],
+                                    fit: BoxFit.cover,
                                   ),
                                 ),
+                                title: Text(
+                                  listCartPay[index].product.productName,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    height: 1.7,
+                                    fontSize: Dimensions.font16,
+                                    fontWeight: FontWeight.w500,
+                                    color: AppColors.black2Color,
+                                  ),
+                                ),
+                                subtitle: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(
+                                      '${'Classify'.tr}: ${listCartPay[index].color.colorName} / ${listCartPay[index].size.sizeName}',
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                        fontSize: Dimensions.font12,
+                                        fontWeight: FontWeight.w400,
+                                        color: AppColors.blackColor,
+                                        letterSpacing: 0.5,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 2),
+                                      child: Row(
+                                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            Format.numPrice(listCartPay[index].product.price),
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                              fontSize: Dimensions.font13,
+                                              fontWeight: FontWeight.w400,
+                                              color: AppColors.blackColor,
+                                              letterSpacing: 0.5,
+                                            ),
+                                          ),
+                                          Text(
+                                            'x${listCartPay[index].quantity}',
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: TextStyle(
+                                              fontSize: Dimensions.font12,
+                                              fontWeight: FontWeight.w500,
+                                              color: AppColors.grayColor,
+                                              letterSpacing: 0.5,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ],
+                                ),
                               ),
-                            ],
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                  Container(
+                    margin: EdgeInsets.symmetric(vertical: Dimensions.h7),
+                    padding: EdgeInsets.symmetric(vertical: Dimensions.h20,horizontal: Dimensions.w10),
+                      decoration: BoxDecoration(
+                        color: AppColors.gray3Color,
+                        border: Border(
+                          top: BorderSide(
+                            color: AppColors.gray2Color,
+                            width: 0.5,
                           ),
-                        );
-                      },
+                          bottom: BorderSide(
+                            color: AppColors.gray2Color,
+                            width: 0.5,
+                          ),
+                        ),
+                      ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '${'TheTotalAmount'.tr} ($quantity ${'Product'.tr}):',
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontSize: Dimensions.font14,
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.blackColor,
+                            // letterSpacing: 0.5,
+                          ),
+                        ),
+                        Text(
+                          Format.numPrice(totalPrice),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontSize: Dimensions.font14,
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.mainColor,
+                            // letterSpacing: 0.5,
+                          ),
+                        ),
+                      ],
                     ),
-                    Container(
+                  ),
+                  Container(
+                    padding: EdgeInsets.symmetric(vertical: Dimensions.h20,horizontal: Dimensions.w10),
+                      decoration: BoxDecoration(
+                        color: AppColors.gray3Color,
+                        border: Border(
+                          top: BorderSide(
+                            color: AppColors.greenColor,
+                            width: 0.5,
+                          ),
+                          bottom: BorderSide(
+                            color: AppColors.greenColor,
+                            width: 0.5,
+                          ),
+                        ),
+                      ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'TransportFee'.tr,
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontSize: Dimensions.font14,
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.blackColor,
+                            // letterSpacing: 0.5,
+                          ),
+                        ),
+                        Text(
+                          Format.numPrice(transportFee),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: TextStyle(
+                            fontSize: Dimensions.font14,
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.greenColor,
+                            // letterSpacing: 0.5,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  InkWell(
+                    onTap: (){
+                      Get.to(() => const ChooseVoucherScreen());
+                    },
+                    child: Container(
                       margin: EdgeInsets.symmetric(vertical: Dimensions.h7),
                       padding: EdgeInsets.symmetric(vertical: Dimensions.h20,horizontal: Dimensions.w10),
                         decoration: BoxDecoration(
@@ -311,7 +408,7 @@ class _PayScreenState extends State<PayScreen> {
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Text(
-                            '${'TheTotalAmount'.tr} ($quantity ${'Product'.tr}):',
+                            'Voucher'.tr,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
@@ -321,40 +418,72 @@ class _PayScreenState extends State<PayScreen> {
                               // letterSpacing: 0.5,
                             ),
                           ),
-                          Text(
-                            Format.numPrice(totalPrice),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              fontSize: Dimensions.font14,
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.mainColor,
-                              // letterSpacing: 0.5,
-                            ),
+                          Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              if(voucherController.voucherPay.value.id != -1)
+                                Text(
+                                  '${'Reduce'.tr}: ${Format.numPrice(voucherController.voucherPay.value.discountPrice)}',
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: TextStyle(
+                                    fontSize: Dimensions.font14,
+                                    fontWeight: FontWeight.w500,
+                                    color: AppColors.black2Color,
+                                    // letterSpacing: 0.5,
+                                  ),
+                                ),
+                              Icon(
+                                Icons.chevron_right,
+                                size: Dimensions.w25,
+                                color: AppColors.grayColor,
+                              ),
+                            ],
                           ),
                         ],
                       ),
                     ),
-                    Container(
+                  ),
+                  if(voucherController.voucherPay.value.minTotalPrice > untilPrice )
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: Dimensions.w5),
+                      child: Align(
+                        alignment: Alignment.centerRight,
+                        child: Text(
+                          'NotEligible'.tr,
+                          style: TextStyle(
+                            fontSize: Dimensions.font12,
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.orangeColor,
+                          ),
+                        ),
+                      ),
+                    ),
+                  InkWell(
+                    onTap: (){
+                      Get.to(() => const ChoosePaymentScreen());
+                    },
+                    child: Container(
                       padding: EdgeInsets.symmetric(vertical: Dimensions.h20,horizontal: Dimensions.w10),
                         decoration: BoxDecoration(
                           color: AppColors.gray3Color,
                           border: Border(
                             top: BorderSide(
-                              color: AppColors.greenColor,
+                              color: AppColors.gray2Color,
                               width: 0.5,
                             ),
                             bottom: BorderSide(
-                              color: AppColors.greenColor,
+                              color: AppColors.gray2Color,
                               width: 0.5,
                             ),
                           ),
                         ),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        mainAxisSize: MainAxisSize.min,
                         children: [
                           Text(
-                            'TransportFee'.tr,
+                            'Payments'.tr,
                             maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
@@ -364,186 +493,174 @@ class _PayScreenState extends State<PayScreen> {
                               // letterSpacing: 0.5,
                             ),
                           ),
-                          Text(
-                            Format.numPrice(transportFee),
-                            maxLines: 1,
-                            overflow: TextOverflow.ellipsis,
-                            style: TextStyle(
-                              fontSize: Dimensions.font14,
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.greenColor,
-                              // letterSpacing: 0.5,
+                          const SizedBox(width: 30),                             
+                          SizedBox(  
+                            width: Dimensions.w65,
+                            height: Dimensions.w65,
+                            child: Image(
+                              image: AssetImage(invoiceController.payments[invoiceController.paymentIndex.value].icon),
+                              fit: BoxFit.cover,
                             ),
                           ),
-                        ],
-                      ),
-                    ),
-                    InkWell(
-                      onTap: (){
-                        Get.to(() => const ChooseVoucherScreen());
-                      },
-                      child: Container(
-                        margin: EdgeInsets.symmetric(vertical: Dimensions.h7),
-                        padding: EdgeInsets.symmetric(vertical: Dimensions.h20,horizontal: Dimensions.w10),
-                          decoration: BoxDecoration(
-                            color: AppColors.gray3Color,
-                            border: Border(
-                              top: BorderSide(
-                                color: AppColors.gray2Color,
-                                width: 0.5,
-                              ),
-                              bottom: BorderSide(
-                                color: AppColors.gray2Color,
-                                width: 0.5,
-                              ),
-                            ),
-                          ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'Voucher'.tr,
-                              maxLines: 1,
+                          const SizedBox(width: 10),
+                          Expanded(
+                            child: Text(
+                              invoiceController.payments[invoiceController.paymentIndex.value].title.tr,
+                              maxLines: 2,
                               overflow: TextOverflow.ellipsis,
                               style: TextStyle(
                                 fontSize: Dimensions.font14,
-                                fontWeight: FontWeight.w500,
+                                fontWeight: FontWeight.w600,
                                 color: AppColors.blackColor,
-                                // letterSpacing: 0.5,
+                                letterSpacing: 0.5,
                               ),
                             ),
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                if(voucherController.voucherPay.value.id != -1)
-                                  Text(
-                                    '${'Reduce'.tr}: ${Format.numPrice(voucherController.voucherPay.value.discountPrice)}',
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                      fontSize: Dimensions.font14,
-                                      fontWeight: FontWeight.w500,
-                                      color: AppColors.black2Color,
-                                      // letterSpacing: 0.5,
-                                    ),
-                                  ),
-                                Icon(
-                                  Icons.chevron_right,
-                                  size: Dimensions.w25,
-                                  color: AppColors.grayColor,
-                                ),
-                              ],
+                          ),  
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: Dimensions.h65),
+                ],
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                height: Dimensions.h65,
+                // padding: EdgeInsets.all(Dimensions.w10),
+                decoration: BoxDecoration(
+                  border: Border(
+                    top: BorderSide(
+                      color: AppColors.black2Color,
+                      width: 0.5,
+                    ),
+                  ),
+                  color: AppColors.whiteColor,
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(right: 10),
+                      child: Text.rich(
+                        TextSpan(
+                          text: '${'TotalPayment'.tr}\n',
+                          style: TextStyle(
+                            // height: 1.7,
+                            fontSize: Dimensions.font15,
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.black2Color,
+                          ),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: voucherController.voucherPay.value.minTotalPrice <= untilPrice 
+                                ? Format.numPrice(untilPrice - voucherController.voucherPay.value.discountPrice)
+                                : Format.numPrice(untilPrice),
+                              style:  TextStyle(
+                              // height: 1.7,
+                              fontSize: Dimensions.font16,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.mainColor,
+                            ),
                             ),
                           ],
                         ),
+                        textAlign: TextAlign.end,
                       ),
-                    ),
-                    if(voucherController.voucherPay.value.minTotalPrice > untilPrice )
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: Dimensions.w5),
-                        child: Align(
-                          alignment: Alignment.centerRight,
-                          child: Text(
-                            'NotEligible'.tr,
-                            style: TextStyle(
-                              fontSize: Dimensions.font12,
-                              fontWeight: FontWeight.w400,
-                              color: AppColors.orangeColor,
-                            ),
+                    ),    
+                    invoiceController.isLoading.value
+                    ? Image.asset(
+                        'assets/gif/loading_3_2.gif',
+                        height: Dimensions.h50,
+                      )
+                    : MaterialButton(
+                        onPressed: () async {
+                          if(addressController.addressPay.value.id == -1){
+                            Get.snackbar(
+                              'PleaseSelectAddress'.tr,
+                              ''.tr,
+                              snackPosition: SnackPosition.BOTTOM,
+                            );
+                            return;
+                          }
+                          if(invoiceController.payments[invoiceController.paymentIndex.value].key == 'tm'){
+                            if(voucherController.voucherPay.value.minTotalPrice <= untilPrice && voucherController.voucherPay.value.id != -1) {
+                              invoiceController.addInvoice(listCartId, voucherController.voucherPay.value.id, transportFee, addressController.addressPay.value, null, null);
+                            }else{
+                              invoiceController.addInvoice(listCartId, null, transportFee, addressController.addressPay.value, null, null);
+                            }
+                          }else if(invoiceController.payments[invoiceController.paymentIndex.value].key == 'zp'){
+                            print('zalopay...');
+                            int amount;
+                            voucherController.voucherPay.value.minTotalPrice <= untilPrice 
+                            ? amount = (untilPrice - voucherController.voucherPay.value.discountPrice)
+                            : amount = untilPrice;                           
+                            
+                            showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              });
+                            String invoiceCode = getAppTransId();
+                            var result = await createOrder(amount, invoiceCode);
+                            if (result != null) {
+                              Navigator.pop(context);
+                              String zpTransToken = result.zptranstoken;
+                              print("zpTransToken $zpTransToken'.");
+                              FlutterZaloPaySdk.payOrder(zpToken: zpTransToken).listen((event) {
+                              setState(() {
+                                switch (event) {
+                                  case FlutterZaloPayStatus.cancelled:
+                                    showSuccess2('User Huỷ Thanh Toán'.tr, ''.tr);
+                                    break;
+                                  case FlutterZaloPayStatus.success:
+
+                                    if(voucherController.voucherPay.value.minTotalPrice <= untilPrice && voucherController.voucherPay.value.id != -1) {
+                                      invoiceController.addInvoice(listCartId, voucherController.voucherPay.value.id, transportFee, addressController.addressPay.value, invoiceCode, 'ZaloPay');
+                                    }else{
+                                      invoiceController.addInvoice(listCartId, null, transportFee, addressController.addressPay.value, invoiceCode, 'ZaloPay');
+                                    }
+                                    break;
+                                  case FlutterZaloPayStatus.failed:
+                                    showSuccess2('Thanh toán thất bại'.tr, ''.tr);
+                                    break;
+                                  default:
+                                    showSuccess2('Thanh toán thất bại'.tr, ''.tr);
+                                    break;
+                                }
+                              });
+                            });
+                            }
+                          }
+                        },
+                        
+                        color: AppColors.redColor,
+                        height: Dimensions.h65,
+                        child: Text(
+                          'Order'.tr,
+                          maxLines: 1,
+                          overflow: TextOverflow.visible,
+                          style: TextStyle(
+                            fontSize: Dimensions.font14,
+                            fontWeight: FontWeight.w600,
+                            color: AppColors.whiteColor,
                           ),
                         ),
                       ),
-                    SizedBox(height: Dimensions.h65),
                   ],
                 ),
               ),
-              Align(
-                alignment: Alignment.bottomCenter,
-                child: Container(
-                  height: Dimensions.h65,
-                  // padding: EdgeInsets.all(Dimensions.w10),
-                  decoration: BoxDecoration(
-                    border: Border(
-                      top: BorderSide(
-                        color: AppColors.black2Color,
-                        width: 0.5,
-                      ),
-                    ),
-                    color: AppColors.whiteColor,
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.only(right: 10),
-                        child: Text.rich(
-                          TextSpan(
-                            text: '${'TotalPayment'.tr}\n',
-                            style: TextStyle(
-                              // height: 1.7,
-                              fontSize: Dimensions.font15,
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.black2Color,
-                            ),
-                            children: <TextSpan>[
-                              TextSpan(
-                                text: voucherController.voucherPay.value.minTotalPrice <= untilPrice 
-                                  ? Format.numPrice(untilPrice - voucherController.voucherPay.value.discountPrice)
-                                  : Format.numPrice(untilPrice),
-                                style:  TextStyle(
-                                // height: 1.7,
-                                fontSize: Dimensions.font16,
-                                fontWeight: FontWeight.w600,
-                                color: AppColors.mainColor,
-                              ),
-                              ),
-                            ],
-                          ),
-                          textAlign: TextAlign.end,
-                        ),
-                      ),    
-                      invoiceController.isLoading.value
-                      ? Image.asset(
-                          'assets/gif/loading_3_2.gif',
-                          height: Dimensions.h50,
-                        )
-                      : MaterialButton(
-                          onPressed: (){
-                            if(addressController.addressPay.value.id == -1){
-                              Get.snackbar(
-                                'PleaseSelectAddress'.tr,
-                                ''.tr,
-                                snackPosition: SnackPosition.BOTTOM,
-                              );
-                              return;
-                            }
-                            if(voucherController.voucherPay.value.minTotalPrice <= untilPrice && voucherController.voucherPay.value.id != -1) {
-                              invoiceController.addInvoice(listCartId, voucherController.voucherPay.value.id, transportFee, addressController.addressPay.value);
-                            }else{
-                              invoiceController.addInvoice(listCartId, null, transportFee, addressController.addressPay.value);
-                            }
-                          },
-                          color: AppColors.redColor,
-                          height: Dimensions.h65,
-                          child: Text(
-                            'Order'.tr,
-                            maxLines: 1,
-                            overflow: TextOverflow.visible,
-                            style: TextStyle(
-                              fontSize: Dimensions.font14,
-                              fontWeight: FontWeight.w600,
-                              color: AppColors.whiteColor,
-                            ),
-                          ),
-                        ),
-                    ],
-                  ),
-                ),
-              ),
-            ],
-          ),
-        );
-      }
-    );
+            ),
+            Container(
+              height: invoiceController.isLoading.value?Dimensions.height:0,
+              color: AppColors.gray2Color,
+            )
+          ],
+        ),
+      );
+    });
   }
 }

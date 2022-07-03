@@ -171,6 +171,13 @@ const Map<String, String> vi = {
   'Me': 'Tôi',
   'Shop': 'Cửa hàng',
   'Reason': 'Lý do',
+  'Payments': 'Hình thức thanh toán',
+  'PaymentOnDelivery': 'Thanh toán khi nhận hàng',
+  'PaymentViaZaloPay': 'Thanh toán qua ví ZaloPay',
+  'ChoosePayment': 'Chọn hình thức thanh toán',
+  'Paid': 'Đã thanh toán',
+  'WaitForPay': 'Chờ thanh toán',
+  'DateUpdate': 'Ngày cập nhật',
   //Rate
   'Rate': 'Đánh giá',
   'NotYetRated': 'Chưa đánh giá',
@@ -191,4 +198,5 @@ const Map<String, String> vi = {
   'RetrievingPasswordFailed': 'Lấy mật khẩu thất bại',
   'SendOtpSuccessfully': 'Gửi OTP thành công',
   'Second': 'Giây',
+  'InfoShop': 'Thông tin cửa hàng',
 };

@@ -16,7 +16,7 @@ class ChooseVoucherScreen extends StatefulWidget {
 class _ChooseVoucherScreenState extends State<ChooseVoucherScreen> {
   VoucherController voucherController = Get.find<VoucherController>();
   int voucherId = -1;
-  Voucher voucherPay = Voucher(id: -1, voucherCode: '', description: '', minTotalPrice: 0, discountPrice: 0, startDate: DateTime.now(), endDate: DateTime.now());
+  Voucher voucherPay = Voucher(id: -1, voucherCode: '', description: '', minTotalPrice: 0, discountPrice: 0, startDate: '', endDate: '');
 
   void getVoucherId(){
     voucherId = voucherController.voucherPay.value.id;
@@ -96,7 +96,7 @@ class _ChooseVoucherScreenState extends State<ChooseVoucherScreen> {
                               ),
                               subtitle: Text.rich(
                                 TextSpan(
-                                  text: 'HSD: ${Format.dateTime(voucherController.voucherList[index].endDate.toString())}\n',
+                                  text: 'HSD: ${Format.date(voucherController.voucherList[index].endDate.toString())}\n',
                                   style: TextStyle(
                                     height: 1.7,
                                     fontSize: Dimensions.font14,
@@ -122,7 +122,7 @@ class _ChooseVoucherScreenState extends State<ChooseVoucherScreen> {
                                   setState(() {});
                                   if(voucherId == voucherController.voucherList[index].id){
                                     voucherId = -1;
-                                    voucherPay = Voucher(id: -1, voucherCode: '', description: '', minTotalPrice: 0, discountPrice: 0, startDate: DateTime.now(), endDate: DateTime.now());
+                                    voucherPay = Voucher(id: -1, voucherCode: '', description: '', minTotalPrice: 0, discountPrice: 0, startDate: '', endDate: '');
                                   }else{
                                     voucherId = voucherController.voucherList[index].id;
                                     voucherPay = voucherController.voucherList[index];

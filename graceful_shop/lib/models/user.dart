@@ -15,6 +15,7 @@ class User {
        required this.phone,
        this.address = '',
        required this.avatar,
+       this.typeLogin = 0,
     });
 
     int id;
@@ -26,6 +27,7 @@ class User {
     String phone;
     String address;
     String avatar;
+    int typeLogin;
 
     factory User.fromJson(Map<String, dynamic> json) => User(
         id: json["id"],
@@ -36,6 +38,7 @@ class User {
         phone: json["phone"],
         address: json["address"]??'',
         avatar: json["avatar"],
+        typeLogin: json["type_login"],
     );
 
     Map<String, dynamic> toJson() => {

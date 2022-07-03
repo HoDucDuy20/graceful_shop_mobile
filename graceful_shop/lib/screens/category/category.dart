@@ -23,6 +23,14 @@ class _CategoryState extends State<Category> {
   int _selectedIndex = 0;
 
   @override
+  void initState() {
+    super.initState();
+    categoryController.getCategores();
+    productController.resetSearch();
+    productController.getProductsOfAllType2(categoryController.categoryList[0].id);
+  }
+
+  @override
   Widget build(BuildContext context) {
     // final orientation = MediaQuery.of(context).orientation;
     return Obx(() {
@@ -59,6 +67,7 @@ class _CategoryState extends State<Category> {
                             _selectedIndex = index;
                             productController.resetSearch();
                             productController.getProductsOfAllType2(categoryController.categoryList[index].id);
+                            print(categoryController.categoryList[index].id);
                           },
                           labelType: NavigationRailLabelType.selected,
                           destinations: [

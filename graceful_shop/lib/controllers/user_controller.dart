@@ -1,14 +1,16 @@
 import 'dart:io';
 
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:graceful_shop/controllers/cart_controller.dart';
 import 'package:graceful_shop/controllers/favorite_controller.dart';
+import 'package:graceful_shop/controllers/login_with_google.dart';
 import 'package:graceful_shop/models/user.dart';
 import 'package:graceful_shop/resources/widgets/show_dialog.dart';
 import 'package:graceful_shop/screens/login/login.dart';
 import 'package:graceful_shop/screens/tab_bar/tab_bar.dart';
 import 'package:graceful_shop/services/remote_service.dart';
-import 'package:http/http.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserController extends GetxController {
@@ -102,8 +104,13 @@ class UserController extends GetxController {
     isLoading.value = false;
   }
 
-  void logOut() async {
+  void logOut(BuildContext context) async {
     isLoading.value = true;
+    if(user.value.typeLogin != 0){
+      final provider = Provider.of<GoogleSignInProvider>(context, listen: false);
+      provider.logOut();
+    }
+
     var responseData = await RemoteService.logOut(token.value);
     if (responseData != null) {
       setToken('');
@@ -243,5 +250,31 @@ class UserController extends GetxController {
         snackPosition: SnackPosition.BOTTOM,
       );
     }
+  }
+
+   void loginWithGoogle(var userGoogle) async {
+    isLoading.value = true;
+    var responseData = await RemoteService.loginWithGoogle(userGoogle);
+    if (responseData != null) {
+      int status = responseData.status;
+      if (status == 0) {
+        setToken(responseData.data);
+        getUserInfo();
+        Get.offAll(() => TabBarBottom(index: 3));
+      } else {
+        Get.snackbar(
+          'LoginFailed'.tr,
+          responseData.message,
+          snackPosition: SnackPosition.BOTTOM,
+        );
+      }
+    } else {
+      Get.snackbar(
+        'FailedAction'.tr,
+        'AnErrorOccurred'.tr,
+        snackPosition: SnackPosition.BOTTOM,
+      );
+    }
+    isLoading.value = false;
   }
 }

@@ -39,32 +39,30 @@ class _GridProductFeaturedState extends State<GridProductFeatured> {
           //     ),
           //   ),
           // ),
-          Obx(() {
-            return GridViewProduct(
-              context,
-              productController.productList,
-              productController.total.value,
-              false,
-              false,
-            );
-          }),
-          (productController.checkFull.value == true || productController.productList.isEmpty)
-              ? SizedBox(
-                  height: Dimensions.h40,
-                )
-              : productController.loading.value
-                  ? Center(
-                      child: Image.asset(
-                        'assets/gif/loading_2_2.gif',
-                        height: Dimensions.h50,
-                      ),
-                    )
-                  : ButtonShowMore(
-                      onPressed: () {
-                        productController.loading.value = true;
-                        productController.getPopularProducts();
-                      },
-                    ),
+          GridViewProduct(
+            context,
+            productController.productList,
+            productController.total.value,
+            false,
+            false,
+          ),
+          // (productController.checkFull.value == true || productController.productList.isEmpty)
+          //     ? SizedBox(
+          //         height: Dimensions.h40,
+          //       )
+          //     : productController.loading.value
+          //         ? Center(
+          //             child: Image.asset(
+          //               'assets/gif/loading_2_2.gif',
+          //               height: Dimensions.h50,
+          //             ),
+          //           )
+          //         : ButtonShowMore(
+          //             onPressed: () {
+          //               productController.loading.value = true;
+          //               productController.getPopularProducts();
+          //             },
+          //           ),
         ],
       );
     });

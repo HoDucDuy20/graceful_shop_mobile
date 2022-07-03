@@ -41,8 +41,8 @@ class AddressController extends GetxController {
       getAddress();
       if (responseData.status == 0) {
         back();
-        showSuccess('AddressSuccess'.tr);
-        Future.delayed(const Duration(milliseconds: 300), back);
+        toastSuccess('AddressSuccess'.tr);
+        // Future.delayed(const Duration(milliseconds: 300), back);
       } else {
         Get.snackbar(
           'FailedAction'.tr,
@@ -99,8 +99,8 @@ class AddressController extends GetxController {
       getAddress();
       if (responseData.status == 0) {
         back();
-        showSuccess('EditAddressSuccess'.tr);
-        Future.delayed(const Duration(milliseconds: 300), back);
+        toastSuccess('EditAddressSuccess'.tr);
+        // Future.delayed(const Duration(milliseconds: 300), back);
       } else {
         Get.snackbar(
           'FailedAction'.tr,
@@ -130,8 +130,8 @@ class AddressController extends GetxController {
       getAddress();
       if (responseData.status == 0) {
         back();
-        showSuccess('DeleteAddressSuccess'.tr);
-        Future.delayed(const Duration(milliseconds: 300), back);
+        toastSuccess('DeleteAddressSuccess'.tr);
+        // Future.delayed(const Duration(milliseconds: 300), back);
       } else {
         Get.snackbar(
           'FailedAction'.tr,

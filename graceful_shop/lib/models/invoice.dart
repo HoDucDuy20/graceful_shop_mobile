@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:graceful_shop/models/voucher.dart';
+import 'package:graceful_shop/resources/utils/format.dart';
 
 List<Invoice> invoiceFromJson(String str) => List<Invoice>.from(json.decode(str)['data'].map((x) => Invoice.fromJson(x)));
 
@@ -23,6 +24,8 @@ class Invoice {
       this.cancelerId,
       this.reason,
       required this.createdAt,
+      this.updatedAt,
+      required this.typePay,
     });
 
     int id;
@@ -39,7 +42,9 @@ class Invoice {
     int status;
     int? cancelerId;
     String? reason;
-    DateTime createdAt;
+    String createdAt;
+    String? updatedAt;
+    String typePay;
 
     factory Invoice.fromJson(Map<String, dynamic> json) => Invoice(
         id: json["id"],
@@ -56,7 +61,9 @@ class Invoice {
         status: json["status"],
         cancelerId: json["canceler_id"],
         reason: json["reason"],
-        createdAt: DateTime.parse(json["created_at"]),
+        createdAt: DateTime.parse(json["created_at"]).toLocal().toString(),
+        updatedAt: DateTime.parse(json["updated_at"]).toLocal().toString(),
+        typePay: nameTypePayToKeyTypePay(json["type_pay"]),
     );
 
     Map<String, dynamic> toJson() => {
@@ -67,6 +74,6 @@ class Invoice {
         "ship_price": shipPrice,
         "until_price": untilPrice,
         "status": status,
-        "created_at": createdAt.toIso8601String(),
+        "created_at": createdAt,
     };
 }

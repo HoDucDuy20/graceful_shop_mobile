@@ -37,7 +37,7 @@ class Rate {
         userId: json["user_id"],
         numRate: json["num_rate"].toDouble(),
         description: json["description"],
-        createdAt: json["created_at"],
+        createdAt:  DateTime.parse(json["created_at"]).toLocal().toString(),
         picturesRate: List<PicturesRate>.from(json["pictures_rate"].map((x) => PicturesRate.fromJson(x))),
     );
 

@@ -42,7 +42,7 @@ class _PersonalEditState extends State<PersonalEdit> {
     super.initState();
     txtName.text = userController.user.value.fullName;
     dateOfBirth = userController.user.value.dateOfBirth;
-    txtDateOfBirth.text = Format.dateTime(dateOfBirth);
+    txtDateOfBirth.text = Format.date(dateOfBirth);
     txtEmail.text = userController.user.value.email;
     txtAddress.text = userController.user.value.address;
     sexVal = userController.user.value.sex;
@@ -298,7 +298,7 @@ class _PersonalEditState extends State<PersonalEdit> {
             onChanged: (date) {}, onConfirm: (date) {
           setState(() {
             dateOfBirth = date.toString();
-            txtDateOfBirth.text = Format.dateTime(date.toString());
+            txtDateOfBirth.text = Format.date(date.toString());
           });
         }, currentTime: DateTime.now(), locale: LocaleType.vi);
       },

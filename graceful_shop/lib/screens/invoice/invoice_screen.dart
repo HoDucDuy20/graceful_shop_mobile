@@ -88,28 +88,48 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
                             ),
                             SizedBox(
                               width: Dimensions.width,
-                              child: Text.rich(
-                                TextSpan(
-                                  text: '${'TotalPayment'.tr}:  ',
-                                  style: TextStyle(
-                                    height: 1.7,
-                                    fontSize: Dimensions.font14,
-                                    fontWeight: FontWeight.w400,
-                                    color: AppColors.black2Color,
-                                  ),
-                                  children: <TextSpan>[
-                                    TextSpan(
-                                      text: Format.numPrice(listInvoice[index].untilPrice),
-                                      style:  TextStyle(
-                                        // height: 1.7,
-                                        fontSize: Dimensions.font14,
-                                        fontWeight: FontWeight.w500,
-                                        color: AppColors.orangeColor,
+                              child: Row(
+                                mainAxisSize: MainAxisSize.max,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  if((listInvoice[index].typePay != '' && listInvoice[index].typePay != 'tm' && listInvoice[index].status != 0) || listInvoice[index].status == 4)
+                                    Text.rich(
+                                      TextSpan(
+                                        text: 'Paid'.tr,
+                                        style: TextStyle(
+                                          height: 1.7,
+                                          fontSize: Dimensions.font14,
+                                          fontWeight: FontWeight.w400,
+                                          color: AppColors.greenColor,
+                                        ),
                                       ),
+                                      textAlign: TextAlign.start,
                                     ),
-                                  ],
-                                ),
-                                textAlign: TextAlign.end,
+                                  const SizedBox(width: 1,),
+                                  Text.rich(
+                                    TextSpan(
+                                      text: '${'TotalPayment'.tr}:  ',
+                                      style: TextStyle(
+                                        height: 1.7,
+                                        fontSize: Dimensions.font14,
+                                        fontWeight: FontWeight.w400,
+                                        color: AppColors.black2Color,
+                                      ),
+                                      children: <TextSpan>[
+                                        TextSpan(
+                                          text: Format.numPrice(listInvoice[index].untilPrice),
+                                          style:  TextStyle(
+                                            // height: 1.7,
+                                            fontSize: Dimensions.font14,
+                                            fontWeight: FontWeight.w500,
+                                            color: AppColors.orangeColor,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    textAlign: TextAlign.end,
+                                  ),
+                                ],
                               ),
                             ),
                           ],

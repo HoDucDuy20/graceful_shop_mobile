@@ -4,6 +4,7 @@ import 'package:graceful_shop/models/address.dart';
 import 'package:graceful_shop/models/cart.dart';
 import 'package:graceful_shop/models/category.dart';
 import 'package:graceful_shop/models/color_size.dart';
+import 'package:graceful_shop/models/info_shop.dart';
 import 'package:graceful_shop/models/invoice.dart';
 import 'package:graceful_shop/models/invoice_detail.dart';
 import 'package:graceful_shop/models/product.dart';
@@ -115,8 +116,7 @@ class RemoteService {
     }
   }
 
-  static Future<ProductTotal?> getProductsOfAllType(
-      int categoryId, int page) async {
+  static Future<ProductTotal?> getProductsOfAllType(int categoryId, int page) async {
     var response = await client.post(
       uriProductCategoryById(categoryId, page),
       body: jsonEncode({
@@ -584,7 +584,7 @@ class RemoteService {
     }
   }
 
-  static Future<ResponseData?> addInvoice(String token, List<int> lstCartId, int? voucherId, int shipPrice, Address address) async {
+  static Future<ResponseData?> addInvoice(String token, List<int> lstCartId, int? voucherId, int shipPrice, Address address, String? invoiceCode, String? typePay) async {
     // print(token);
     var response = await client.post(
       uriAddInvoice(),
@@ -594,7 +594,9 @@ class RemoteService {
         "ship_price": shipPrice,
         "name": address.name, 
         "phone": address.phoneNumber, 
-        "address": address.address
+        "address": address.address,
+        "invoice_code": invoiceCode,
+        "type_pay": typePay,
       }),
       headers: {
         'Content-Type': 'application/json',
@@ -893,6 +895,46 @@ class RemoteService {
       return responseDataFromJson(jsonString);
     } else {
       print('forgotPass error: ' + response.statusCode.toString());
+      return null;
+    }
+  }
+
+  static Future<InfoShop?> getInfoShop() async {
+    // print(token);
+    var response = await client.get(
+      uriInfoShop(),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+    );
+    if (response.statusCode == 200) {
+      var jsonString = response.body;
+      return infoShopFromJson(jsonString);
+    } else {
+      print('getInfoShop error: ' + response.statusCode.toString());
+      return null;
+    }
+  }
+
+   static Future<ResponseData?> loginWithGoogle(var userGoogle) async {
+    var response = await client.post(
+      uriLoginWithGoogle(),
+      body: jsonEncode({
+        "email": userGoogle.email,
+        "displayName": userGoogle.displayName,
+        "photoUrl": userGoogle.photoUrl
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+    );
+    if (response.statusCode == 200) {
+      var jsonString = response.body;
+      return responseDataFromJson(jsonString);
+    } else {
+      print('loginWithGoogle error: ' + response.statusCode.toString());
       return null;
     }
   }
