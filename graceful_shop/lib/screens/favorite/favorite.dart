@@ -81,7 +81,7 @@ class _FavoriteState extends State<Favorite> {
                                       return InkWell(
                                         highlightColor: AppColors.whiteColor,
                                         onTap: () {
-                                          Get.to(() => ProductDetail(product: favoriteController.producFavoritetList[index]));
+                                          Get.to(ProductDetail(product: favoriteController.producFavoritetList[index]), duration: const Duration(milliseconds: 400), transition: Transition.zoom);
                                         },
                                         child: Container(
                                           margin: EdgeInsets.all(Dimensions.w10),

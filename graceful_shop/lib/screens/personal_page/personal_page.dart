@@ -169,7 +169,7 @@ class _PersonalPageState extends State<PersonalPage> {
         InkWell(
           onTap: () {
             userController.getUserInfo();
-            Get.to(() => const PersonalDetail());
+            Get.to(const PersonalDetail(), duration: const Duration(milliseconds: 700), transition: Transition.upToDown);
           },
           child: Container(
             padding: EdgeInsets.only(top: Dimensions.h12, bottom: Dimensions.h5),

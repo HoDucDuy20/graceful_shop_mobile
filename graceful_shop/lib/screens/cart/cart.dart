@@ -489,7 +489,7 @@ class _CartScreenState extends State<CartScreen> {
                               onPressed: (){
                                 updateListCartPay();
                                 if(listCartId.isNotEmpty) {
-                                  Get.to(() => PayScreen(listCartPay: listCartPay));
+                                  Get.to(PayScreen(listCartPay: listCartPay), duration: const Duration(milliseconds: 400), transition: Transition.rightToLeftWithFade);
                                 }
                               },
                               color: AppColors.redColor,

@@ -72,6 +72,7 @@ class _ItemGridViewState extends State<ItemGridView> {
                   product.numLike--;
                 }
               });
+              print('object');
             },
             child: Container(
               padding: EdgeInsets.all(Dimensions.h7),

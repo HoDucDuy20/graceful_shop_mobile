@@ -1,6 +1,6 @@
 //baseUrl
 // String baseUrl = 'http://10.0.2.2:8000/';
-String baseUrl = 'http://192.168.1.6:8000/';
+String baseUrl = 'http://192.168.1.5:8000/';
 // String baseUrl = 'http://172.20.2.162:8000/';
 
 //parse uri
@@ -20,7 +20,7 @@ String formaterImg(String url){
 Uri uriProductNew(int page) => formaterApi('product-new-view?page=$page');
 
 Uri uriProductPopular(int page) => formaterApi('product-popular-view?page=$page');
-
+ 
 Uri uriProductById(int id) => formaterApi('product-byid/$id');
 
 Uri uriProductTypeById(int id, int page) => formaterApi('product-type-byid/$id?page=$page');

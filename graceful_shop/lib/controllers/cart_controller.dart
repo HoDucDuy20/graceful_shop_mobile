@@ -27,7 +27,7 @@ class CartController extends GetxController {
       return;
     }
     getProductCart();
-    Get.to(() => const CartScreen());
+    Get.to(const CartScreen(), duration: const Duration(milliseconds: 700), transition: Transition.upToDown);
   }
 
   void addCart(int productId, int colorId, int sizeId, int quantity) async {

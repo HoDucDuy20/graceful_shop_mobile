@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:graceful_shop/controllers/product_controller.dart';
+import 'package:graceful_shop/controllers/slide_ads_controller.dart';
 import 'package:graceful_shop/screens/home/grid_product_featured.dart';
 import 'package:graceful_shop/screens/home/grid_product_new.dart';
 import 'package:graceful_shop/screens/home/menu_top.dart';
@@ -17,6 +18,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   ProductController productController = Get.find<ProductController>();
+  SlideAdsController slideAdsController = Get.find<SlideAdsController>();
   static const double endReachedThreshold = 1; // Khi chỉ còn cách phía dưới Grid 200dp thì sẽ load more
   late ScrollController scrollController;
   double scrollControllerOffset = 0.0;
@@ -53,75 +55,87 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Obx(() {
-        return CustomScrollView(
-          controller: scrollController,
-          slivers: [
-            SliverAppBar(
-              pinned: true,
-              floating: false,
-              title: const MenuTop(),
-              expandedHeight: Dimensions.h250,
-              backgroundColor: AppColors.whiteColor,
-              flexibleSpace: FlexibleSpaceBar(
-                background: ImgSlide(),
+        return RefreshIndicator(
+          onRefresh: () async {
+            productController.tab.value = productController.tab.value;
+            slideAdsController.getSlideAds();
+            productController.reset();
+            if (productController.tab.value == 0) {
+              productController.getPopularProducts();
+            } else {
+              productController.getNewProducts();
+            }
+          },
+          child: CustomScrollView(
+            controller: scrollController,
+            slivers: [
+              SliverAppBar(
+                pinned: true,
+                floating: false,
+                title: const MenuTop(),
+                expandedHeight: Dimensions.h250,
+                backgroundColor: AppColors.whiteColor,
+                flexibleSpace: FlexibleSpaceBar(
+                  background: ImgSlide(),
+                ),
               ),
-            ),
-            SliverList(
-              delegate: SliverChildListDelegate(
-                [
-                  Container(
-                    width: Dimensions.width,
-                    height: Dimensions.h40,
-                    // padding: EdgeInsets.symmetric(vertical: Dimensions.h5),
-                    decoration: BoxDecoration(
-                      border: Border(
-                        top: BorderSide(
-                          color: AppColors.gray2Color,
-                          width: 3.5,
-                        ),
-                        bottom: BorderSide(
-                          color: AppColors.gray2Color,
-                          width: 3.5,
+              SliverList(
+                delegate: SliverChildListDelegate(
+                  [
+                    Container(
+                      width: Dimensions.width,
+                      height: Dimensions.h40,
+                      // padding: EdgeInsets.symmetric(vertical: Dimensions.h5),
+                      decoration: BoxDecoration(
+                        border: Border(
+                          top: BorderSide(
+                            color: AppColors.gray2Color,
+                            width: 3.5,
+                          ),
+                          bottom: BorderSide(
+                            color: AppColors.gray2Color,
+                            width: 3.5,
+                          ),
                         ),
                       ),
+                      child: ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: [
+                          tab('Featured'.tr, 0),
+                          tab('New'.tr, 1),
+                        ],
+                      ),
                     ),
-                    child: ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: [
-                        tab('Featured'.tr, 0),
-                        tab('New'.tr, 1),
+                    IndexedStack(
+                      index: productController.tab.value,
+                      children: <Widget>[
+                        Visibility(
+                          maintainState: true,
+                          visible: productController.tab.value == 0,
+                          child: const GridProductFeatured(),
+                        ),
+                        Visibility(
+                          maintainState: true,
+                          visible: productController.tab.value == 1,
+                          child: GridProductNew(),
+                        ),
                       ],
                     ),
-                  ),
-                  IndexedStack(
-                    index: productController.tab.value,
-                    children: <Widget>[
-                      Visibility(
-                        maintainState: true,
-                        visible: productController.tab.value == 0,
-                        child: const GridProductFeatured(),
-                      ),
-                      Visibility(
-                        maintainState: true,
-                        visible: productController.tab.value == 1,
-                        child: GridProductNew(),
-                      ),
-                    ],
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            SliverToBoxAdapter(
-              child: productController.loading.value
-                  ? Center(
-                      child: Image.asset(
-                        'assets/gif/loading_2_2.gif',
-                        height: Dimensions.h50,
-                      ),
-                    )
-                  : const SizedBox(),
-            ),
-          ],
+              SliverToBoxAdapter(
+                child: productController.loading.value
+                    ? Center(
+                        child: Image.asset(
+                          'assets/gif/loading_2_2.gif',
+                          height: Dimensions.h50,
+                        ),
+                      )
+                    : const SizedBox(),
+              ),
+            ],
+          ),
         );
       }),
     );

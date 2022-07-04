@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "421237035814",
+    "project_id": "graceful-shop",
+    "storage_bucket": "graceful-shop.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:421237035814:android:71410bf3e5034826c027e7",
+        "android_client_info": {
+          "package_name": "com.example.graceful_shop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "421237035814-jp7iu0rmadeqguvttkdncq3usfnlkl92.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAsx9u3Mx0Ko7F-b1MU3d56cOObRI-EzqE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "421237035814-jp7iu0rmadeqguvttkdncq3usfnlkl92.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

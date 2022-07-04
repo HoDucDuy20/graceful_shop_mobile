@@ -57,7 +57,7 @@ Widget GridViewProduct(BuildContext context, List<Product> lstProduct, int total
               return InkWell(
                 highlightColor: AppColors.whiteColor,
                 onTap: () {
-                  Get.to(() => ProductDetail(product: lstProduct[index]));
+                  Get.to(ProductDetail(product: lstProduct[index]), duration: const Duration(milliseconds: 400), transition: Transition.zoom);
                 },
                 child: Container(
                   margin: EdgeInsets.all(Dimensions.w10),
@@ -380,7 +380,7 @@ Widget GridViewProduct2(BuildContext context, List<Product> lstProduct, int tota
               return InkWell(
                 highlightColor: AppColors.whiteColor,
                 onTap: () {
-                  Get.to(() => ProductDetail(product: lstProduct[index]));
+                   Get.to(ProductDetail(product: lstProduct[index]), duration: const Duration(milliseconds: 400), transition: Transition.zoom);
                 },
                 child: Container(
                   margin: EdgeInsets.all(Dimensions.w10),

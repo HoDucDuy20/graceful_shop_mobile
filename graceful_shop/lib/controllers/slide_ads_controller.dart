@@ -14,6 +14,7 @@ class SlideAdsController extends GetxController {
   }
 
   void getSlideAds() async {
+    slideAdsList.value = [];
     var slideAds = await RemoteService.getSlideAds();
     if (slideAds != null) {
       slideAdsList.value = slideAds;

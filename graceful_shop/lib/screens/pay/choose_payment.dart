@@ -73,6 +73,12 @@ class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
                         margin: EdgeInsets.only(bottom: Dimensions.h10),
                         color: AppColors.whiteColor,
                         child: ListTile(
+                          onTap: (){
+                            setState(() {});
+                            if(paymentIndex != index){
+                              paymentIndex = index;
+                            }
+                          },
                           leading: SizedBox(  
                             width: Dimensions.w65,
                             height: Dimensions.w100,
@@ -93,12 +99,7 @@ class _ChoosePaymentScreenState extends State<ChoosePaymentScreen> {
                             ),
                           ),
                           trailing: InkWell(
-                            onTap: (){
-                              setState(() {});
-                              if(paymentIndex != index){
-                                paymentIndex = index;
-                              }
-                            },
+                            onTap: (){},
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Icon(

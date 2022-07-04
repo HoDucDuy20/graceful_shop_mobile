@@ -68,365 +68,368 @@ class _ProductDetailState extends State<ProductDetail> {
       body: Obx(() {
         return Stack(
           children: [
-            CustomScrollView(
-              controller: scrollController,
-              slivers: [
-                SliverToBoxAdapter(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: Dimensions.hCard,
-                        child: ListImg(lstImg: product.pictures),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.all(Dimensions.w10),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              product.productName,
-                              style: TextStyle(
-                                fontSize: Dimensions.font20,
-                                fontWeight: FontWeight.w900,
-                                color: AppColors.black2Color,
-                                letterSpacing: 0.5,
-                              ),
+            RefreshIndicator(
+              onRefresh: () async {
+                productController.getColorSize(product.id);
+                productController.getRateOfProduct(product.id);
+              },
+              child: SingleChildScrollView(
+                controller: scrollController,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: Dimensions.hCard,
+                      child: ListImg(lstImg: product.pictures),
+                    ),
+                    Padding(
+                      padding: EdgeInsets.all(Dimensions.w10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            product.productName,
+                            style: TextStyle(
+                              fontSize: Dimensions.font20,
+                              fontWeight: FontWeight.w900,
+                              color: AppColors.black2Color,
+                              letterSpacing: 0.5,
                             ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(vertical: Dimensions.h12),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Row(
-                                    mainAxisAlignment:MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Row(
-                                        children: [
-                                          Text(
-                                            Format.numPrice(product.price),
-                                            maxLines: 1,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: TextStyle(
-                                              fontSize: Dimensions.font20,
-                                              fontWeight: FontWeight.w600,
-                                              color: AppColors.blueAccentColor,
-                                              letterSpacing: 0.5,
-                                            ),
-                                          ),
-                                          if (product.discountPrice != 0)
-                                            Container(
-                                              margin: EdgeInsets.only(left: Dimensions.w7),
-                                              padding: EdgeInsets.symmetric(horizontal: Dimensions.w5),
-                                              decoration: BoxDecoration(
-                                                border: Border.all(
-                                                  color: AppColors.yellowColor,
-                                                  width: 1.5,
-                                                ),
-                                                color: AppColors.yellow2Color,
-                                              ),
-                                              child: Text(
-                                                Format.percentReduction(product.price,product.discountPrice),
-                                                style: TextStyle(
-                                                  fontSize: Dimensions.font15,
-                                                  fontWeight: FontWeight.w500,
-                                                  color: AppColors.redColor,
-                                                  letterSpacing: 0.5,
-                                                ),
-                                              ),
-                                            ),
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          Padding(
-                                            padding: EdgeInsets.only(right: Dimensions.w5),
-                                            child: Icon(
-                                              Icons.favorite,
-                                              size: Dimensions.font17,
-                                              color: AppColors.redColor,
-                                            ),
-                                          ),
-                                          Text(
-                                            product.numLike.toString(),
-                                            style: TextStyle(
-                                              fontSize: Dimensions.font15,
-                                              color: AppColors.black2Color,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                  if (product.discountPrice != 0)
-                                    Text(
-                                      Format.numPrice(product.discountPrice + product.price),
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: TextStyle(
-                                        decoration: TextDecoration.lineThrough,
-                                        fontSize: Dimensions.font15,
-                                        fontWeight: FontWeight.w400,
-                                        fontStyle: FontStyle.italic,
-                                        color: AppColors.grayColor,
-                                        letterSpacing: 0.5,
-                                      ),
-                                    ),
-                                ],
-                              ),
-                            ),
-                            if (productController.colorList.isNotEmpty)
-                              InkWell(
-                                onTap: () {
-                                  showSizeColor(context, product.id);
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.all(Dimensions.w5),
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      color: AppColors.grayColor,
-                                      width: 0.5,
-                                    ),
-                                    color: AppColors.whiteColor,
-                                  ),
-                                  child: ListTile(
-                                    contentPadding: EdgeInsets.zero,
-                                    minVerticalPadding: 0,
-                                    leading: Image(
-                                      image: FadeInImage.assetNetwork(
-                                        placeholder: 'assets/gif/loading_2.gif',
-                                        image: formaterImg(productController.colorList[productController.indexColor.value].picture),
-                                      ).image,
-                                      fit: BoxFit.cover,
-                                    ),
-                                    title: Column(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      crossAxisAlignment: CrossAxisAlignment.start,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(vertical: Dimensions.h12),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment:MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Row(
                                       children: [
                                         Text(
-                                          '${'Color'.tr}, ${'Size'.tr}',
+                                          Format.numPrice(product.price),
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                            fontSize: Dimensions.font20,
+                                            fontWeight: FontWeight.w600,
+                                            color: AppColors.blueAccentColor,
+                                            letterSpacing: 0.5,
+                                          ),
+                                        ),
+                                        if (product.discountPrice != 0)
+                                          Container(
+                                            margin: EdgeInsets.only(left: Dimensions.w7),
+                                            padding: EdgeInsets.symmetric(horizontal: Dimensions.w5),
+                                            decoration: BoxDecoration(
+                                              border: Border.all(
+                                                color: AppColors.yellowColor,
+                                                width: 1.5,
+                                              ),
+                                              color: AppColors.yellow2Color,
+                                            ),
+                                            child: Text(
+                                              Format.percentReduction(product.price,product.discountPrice),
+                                              style: TextStyle(
+                                                fontSize: Dimensions.font15,
+                                                fontWeight: FontWeight.w500,
+                                                color: AppColors.redColor,
+                                                letterSpacing: 0.5,
+                                              ),
+                                            ),
+                                          ),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsets.only(right: Dimensions.w5),
+                                          child: Icon(
+                                            Icons.favorite,
+                                            size: Dimensions.font17,
+                                            color: AppColors.redColor,
+                                          ),
+                                        ),
+                                        Text(
+                                          product.numLike.toString(),
                                           style: TextStyle(
                                             fontSize: Dimensions.font15,
-                                            fontWeight: FontWeight.w400,
-                                            color: AppColors.grayColor,
-                                            letterSpacing: 0.5,
-                                          ),
-                                        ),
-                                        const SizedBox(height: 5),
-                                        Text(
-                                          '${productController.colorList[productController.indexColor.value].colorName} / ${productController.sizeList[productController .indexSize.value].sizeName}',
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                            fontSize: Dimensions.font16,
-                                            fontWeight: FontWeight.w500,
                                             color: AppColors.black2Color,
-                                            letterSpacing: 0.5,
                                           ),
                                         ),
                                       ],
                                     ),
-                                    trailing: Icon(
-                                      Icons.chevron_right,
-                                      size: Dimensions.font40,
-                                      color: AppColors.gray2Color,
-                                    ),
-                                  ),
+                                  ],
                                 ),
-                              ),
-                            titleProductDetail('ProductDescription'.tr),
-                            Html(
-                              data: product.description,
-                              onLinkTap: (String? url,
-                                  RenderContext context,
-                                  Map<String, String> attributes,
-                                  dom.Element? element) {
-                                _launchUrl(url!);
-                              },
-                            ),
-                            titleProductDetail('CustomerRatings'.tr),
-                            Row(
-                              children: [
-                                RatingBarIndicator(
-                                  rating: product.numRate,
-                                  itemBuilder: (context, index) => Icon(
-                                    Icons.star,
-                                    color: AppColors.yellowColor,
-                                  ),
-                                  itemCount: 5,
-                                  itemSize: Dimensions.w30,
-                                  direction: Axis.horizontal,
-                                ),
-                                const SizedBox(width: 10),
-                                Text.rich(
-                                  TextSpan(
-                                    text: '${Format.numRate(product.numRate)}/5.0  ',
+                                if (product.discountPrice != 0)
+                                  Text(
+                                    Format.numPrice(product.discountPrice + product.price),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
-                                      wordSpacing: 1.5,
-                                      fontSize: Dimensions.font14,
+                                      decoration: TextDecoration.lineThrough,
+                                      fontSize: Dimensions.font15,
                                       fontWeight: FontWeight.w400,
-                                      color: AppColors.red3Color,
+                                      fontStyle: FontStyle.italic,
+                                      color: AppColors.grayColor,
+                                      letterSpacing: 0.5,
                                     ),
-                                    children: <TextSpan>[
-                                      TextSpan(
-                                        text: '(${productController.rateList.length} ${'Rating'.tr})',
+                                  ),
+                              ],
+                            ),
+                          ),
+                          if (productController.colorList.isNotEmpty)
+                            InkWell(
+                              onTap: () {
+                                showSizeColor(context, product.id);
+                              },
+                              child: Container(
+                                padding: EdgeInsets.all(Dimensions.w5),
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: AppColors.grayColor,
+                                    width: 0.5,
+                                  ),
+                                  color: AppColors.whiteColor,
+                                ),
+                                child: ListTile(
+                                  contentPadding: EdgeInsets.zero,
+                                  minVerticalPadding: 0,
+                                  leading: Image(
+                                    image: FadeInImage.assetNetwork(
+                                      placeholder: 'assets/gif/loading_2.gif',
+                                      image: formaterImg(productController.colorList[productController.indexColor.value].picture),
+                                    ).image,
+                                    fit: BoxFit.cover,
+                                  ),
+                                  title: Column(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        '${'Color'.tr}, ${'Size'.tr}',
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
-                                          height: 1.5,
-                                          fontSize: Dimensions.font14,
+                                          fontSize: Dimensions.font15,
                                           fontWeight: FontWeight.w400,
                                           color: AppColors.grayColor,
+                                          letterSpacing: 0.5,
+                                        ),
+                                      ),
+                                      const SizedBox(height: 5),
+                                      Text(
+                                        '${productController.colorList[productController.indexColor.value].colorName} / ${productController.sizeList[productController .indexSize.value].sizeName}',
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                          fontSize: Dimensions.font16,
+                                          fontWeight: FontWeight.w500,
+                                          color: AppColors.black2Color,
+                                          letterSpacing: 0.5,
                                         ),
                                       ),
                                     ],
                                   ),
-                                  textAlign: TextAlign.start,
+                                  trailing: Icon(
+                                    Icons.chevron_right,
+                                    size: Dimensions.font40,
+                                    color: AppColors.gray2Color,
+                                  ),
                                 ),
-                              ],
+                              ),
                             ),
-                            if (productController.rateList.isNotEmpty)
-                              ListView.builder(
-                                physics: const NeverScrollableScrollPhysics(),
-                                padding: EdgeInsets.symmetric(vertical: Dimensions.h7),
-                                shrinkWrap: true,
-                                itemCount: productController.rateList.length > 3 ? 3 : productController.rateList.length,
-                                itemBuilder: (context, index) {
-                                  return Container(
-                                    padding: EdgeInsets.symmetric(vertical: Dimensions.h7),
-                                    decoration: BoxDecoration(
-                                      border: Border(
-                                        top: BorderSide(
-                                          color: AppColors.gray2Color,
-                                          width: 0.5,
-                                        ),
+                          titleProductDetail('ProductDescription'.tr),
+                          Html(
+                            data: product.description,
+                            onLinkTap: (String? url,
+                                RenderContext context,
+                                Map<String, String> attributes,
+                                dom.Element? element) {
+                              _launchUrl(url!);
+                            },
+                          ),
+                          titleProductDetail('CustomerRatings'.tr),
+                          Row(
+                            children: [
+                              RatingBarIndicator(
+                                rating: product.numRate,
+                                itemBuilder: (context, index) => Icon(
+                                  Icons.star,
+                                  color: AppColors.yellowColor,
+                                ),
+                                itemCount: 5,
+                                itemSize: Dimensions.w30,
+                                direction: Axis.horizontal,
+                              ),
+                              const SizedBox(width: 10),
+                              Text.rich(
+                                TextSpan(
+                                  text: '${Format.numRate(product.numRate)}/5.0  ',
+                                  style: TextStyle(
+                                    wordSpacing: 1.5,
+                                    fontSize: Dimensions.font14,
+                                    fontWeight: FontWeight.w400,
+                                    color: AppColors.red3Color,
+                                  ),
+                                  children: <TextSpan>[
+                                    TextSpan(
+                                      text: '(${productController.rateList.length} ${'Rating'.tr})',
+                                      style: TextStyle(
+                                        height: 1.5,
+                                        fontSize: Dimensions.font14,
+                                        fontWeight: FontWeight.w400,
+                                        color: AppColors.grayColor,
                                       ),
                                     ),
-                                    child: Column(
-                                      crossAxisAlignment:CrossAxisAlignment.start,
-                                      children: [
-                                        ListTile(
-                                          leading: CircleAvatar(
-                                            backgroundColor: AppColors.blueAccentColor,
-                                            backgroundImage: FadeInImage.assetNetwork(
-                                              placeholder:'assets/gif/loading_2.gif',
-                                              image: formaterImg(productController.rateList[index].user!.avatar),
-                                              fit: BoxFit.cover,
-                                            ).image,
-                                          ),
-                                          title: Text(
-                                            productController.rateList[index].user!.fullName,
-                                            style: TextStyle(
-                                              height: 1.5,
-                                              fontSize: Dimensions.font14,
-                                              fontWeight: FontWeight.w600,
-                                              color: AppColors.grayColor,
-                                            ),
-                                          ),
-                                          subtitle: RatingBarIndicator(
-                                            rating: productController.rateList[index].numRate.toDouble(),
-                                            itemBuilder: (context, index) => Icon(
-                                              Icons.star,
-                                              color: AppColors.yellowColor,
-                                            ),
-                                            itemCount: 5,
-                                            itemSize: Dimensions.w15,
-                                            direction: Axis.horizontal,
-                                          ),
-                                          trailing: productController.rateList[index].user!.id == userController.user.value.id 
-                                            ? Column(
-                                                children: [
-                                                  InkWell(
-                                                    onTap: (){
-                                                      rateController.ratedDetail(productController.rateList[index].id);
-                                                      Get.to(() => EditRateProduct(product: product));
-                                                    },
-                                                    child: Icon(
-                                                      Icons.edit_outlined,
-                                                      size: Dimensions.font17,
-                                                      color: AppColors.mainColor,
-                                                    ),  
-                                                  ),
-                                                  SizedBox(
-                                                    height: Dimensions.h5,
-                                                  ),
-                                                  Text(
-                                                    Format.dateTime(productController.rateList[index].createdAt),
-                                                  ),
-                                                ],
-                                              )
-                                            : Text(
-                                                Format.dateTime(productController.rateList[index].createdAt),
-                                              )
-                                        ),
-                                        Padding(
-                                          padding: EdgeInsets.only(bottom: Dimensions.h7),
-                                          child: Text(
-                                            productController.rateList[index].description,
-                                            style: TextStyle(
-                                              height: 1.5,
-                                              fontSize: Dimensions.font15,
-                                              fontWeight: FontWeight.w500,
-                                              color: AppColors.black2Color,
-                                            ),
-                                          ),
-                                        ),
-                                        if (productController.rateList[index].picturesRate.isNotEmpty)
-                                          GridViewImageRate(context, productController.rateList[index].picturesRate)
-                                      ],
-                                    ),
-                                  );
-                                },
+                                  ],
+                                ),
+                                textAlign: TextAlign.start,
                               ),
-                            if (productController.rateList.length > 3)
-                              InkWell(
-                                onTap: () {
-                                  Get.to(() => ViewRate(product: product));
-                                },
-                                child: Container(
+                            ],
+                          ),
+                          if (productController.rateList.isNotEmpty)
+                            ListView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              padding: EdgeInsets.symmetric(vertical: Dimensions.h7),
+                              shrinkWrap: true,
+                              itemCount: productController.rateList.length > 3 ? 3 : productController.rateList.length,
+                              itemBuilder: (context, index) {
+                                return Container(
+                                  padding: EdgeInsets.symmetric(vertical: Dimensions.h7),
                                   decoration: BoxDecoration(
                                     border: Border(
                                       top: BorderSide(
                                         color: AppColors.gray2Color,
-                                        width: 1,
+                                        width: 0.5,
                                       ),
                                     ),
                                   ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
+                                  child: Column(
+                                    crossAxisAlignment:CrossAxisAlignment.start,
                                     children: [
-                                      Padding(
-                                        padding: const EdgeInsets.only(top: 4, bottom: 5),
-                                        child: Text(
-                                          'SeeMore'.tr,
+                                      ListTile(
+                                        leading: CircleAvatar(
+                                          backgroundColor: AppColors.blueAccentColor,
+                                          backgroundImage: FadeInImage.assetNetwork(
+                                            placeholder:'assets/gif/loading_2.gif',
+                                            image: formaterImg(productController.rateList[index].user!.avatar),
+                                            fit: BoxFit.cover,
+                                          ).image,
+                                        ),
+                                        title: Text(
+                                          productController.rateList[index].user!.fullName,
                                           style: TextStyle(
+                                            height: 1.5,
                                             fontSize: Dimensions.font14,
+                                            fontWeight: FontWeight.w600,
+                                            color: AppColors.grayColor,
+                                          ),
+                                        ),
+                                        subtitle: RatingBarIndicator(
+                                          rating: productController.rateList[index].numRate.toDouble(),
+                                          itemBuilder: (context, index) => Icon(
+                                            Icons.star,
+                                            color: AppColors.yellowColor,
+                                          ),
+                                          itemCount: 5,
+                                          itemSize: Dimensions.w15,
+                                          direction: Axis.horizontal,
+                                        ),
+                                        trailing: productController.rateList[index].user!.id == userController.user.value.id 
+                                          ? Column(
+                                              children: [
+                                                InkWell(
+                                                  onTap: (){
+                                                    rateController.ratedDetail(productController.rateList[index].id);
+                                                    Get.to(() => EditRateProduct(product: product));
+                                                  },
+                                                  child: Icon(
+                                                    Icons.edit_outlined,
+                                                    size: Dimensions.font17,
+                                                    color: AppColors.mainColor,
+                                                  ),  
+                                                ),
+                                                SizedBox(
+                                                  height: Dimensions.h5,
+                                                ),
+                                                Text(
+                                                  Format.dateTime(productController.rateList[index].createdAt),
+                                                ),
+                                              ],
+                                            )
+                                          : Text(
+                                              Format.dateTime(productController.rateList[index].createdAt),
+                                            )
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.only(bottom: Dimensions.h7),
+                                        child: Text(
+                                          productController.rateList[index].description,
+                                          style: TextStyle(
+                                            height: 1.5,
+                                            fontSize: Dimensions.font15,
                                             fontWeight: FontWeight.w500,
-                                            color: AppColors.mainColor,
+                                            color: AppColors.black2Color,
                                           ),
                                         ),
                                       ),
-                                      SizedBox(width: Dimensions.w5),
-                                      Padding(
-                                        padding: const EdgeInsets.only(top: 5),
-                                        child: Icon(
-                                          Icons.expand_more,
-                                          size: Dimensions.font15,
+                                      if (productController.rateList[index].picturesRate.isNotEmpty)
+                                        GridViewImageRate(context, productController.rateList[index].picturesRate)
+                                    ],
+                                  ),
+                                );
+                              },
+                            ),
+                          if (productController.rateList.length > 3)
+                            InkWell(
+                              onTap: () {
+                                Get.to(ViewRate(product: product), duration: const Duration(milliseconds: 400), transition: Transition.rightToLeft);
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  border: Border(
+                                    top: BorderSide(
+                                      color: AppColors.gray2Color,
+                                      width: 1,
+                                    ),
+                                  ),
+                                ),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 4, bottom: 5),
+                                      child: Text(
+                                        'SeeMore'.tr,
+                                        style: TextStyle(
+                                          fontSize: Dimensions.font14,
+                                          fontWeight: FontWeight.w500,
                                           color: AppColors.mainColor,
                                         ),
                                       ),
-                                    ],
-                                  ),
+                                    ),
+                                    SizedBox(width: Dimensions.w5),
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 5),
+                                      child: Icon(
+                                        Icons.expand_more,
+                                        size: Dimensions.font15,
+                                        color: AppColors.mainColor,
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
-                            SizedBox(height: Dimensions.h80),
-                          ],
-                        ),
+                            ),
+                          SizedBox(height: Dimensions.h80),
+                        ],
                       ),
-                    ],
-                  ),
+                          
+                    ),
+                  ],              
                 ),
-              ],
+              ),
             ),
             PreferredSize(
               preferredSize: Size(Dimensions.width, Dimensions.h20),

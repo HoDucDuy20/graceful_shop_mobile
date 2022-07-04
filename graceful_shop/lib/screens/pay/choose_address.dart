@@ -54,7 +54,7 @@ class _ChooseAddressScreenState extends State<ChooseAddressScreen> {
         actions: [
           InkWell(
             onTap: (){
-              Get.to(() => const AddressScreen());
+              Get.to( const AddressScreen(), duration: const Duration(milliseconds: 400), transition: Transition.fade);
             },
             child: Padding(
               padding: EdgeInsets.symmetric(horizontal: Dimensions.w10),

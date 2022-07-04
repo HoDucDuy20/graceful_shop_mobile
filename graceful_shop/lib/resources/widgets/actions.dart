@@ -31,7 +31,7 @@ void _launchUrl(String url) async {
 Widget Action_Search() {
   return IconOnTap1(
     onPressed: () {
-      Get.to(() => const Search());
+      Get.to(const Search(), duration: const Duration(milliseconds: 400), transition: Transition.topLevel);
     },
     icon: Icons.search,
     size: Dimensions.font27,

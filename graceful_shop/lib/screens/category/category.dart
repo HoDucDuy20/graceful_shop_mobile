@@ -24,10 +24,7 @@ class _CategoryState extends State<Category> {
 
   @override
   void initState() {
-    super.initState();
-    categoryController.getCategores();
-    productController.resetSearch();
-    productController.getProductsOfAllType2(categoryController.categoryList[0].id);
+    super.initState();  
   }
 
   @override
@@ -67,7 +64,7 @@ class _CategoryState extends State<Category> {
                             _selectedIndex = index;
                             productController.resetSearch();
                             productController.getProductsOfAllType2(categoryController.categoryList[index].id);
-                            print(categoryController.categoryList[index].id);
+                            // print(categoryController.categoryList[index].id);
                           },
                           labelType: NavigationRailLabelType.selected,
                           destinations: [
@@ -130,34 +127,40 @@ class _CategoryState extends State<Category> {
               const VerticalDivider(thickness: 1, width: 1),
               // This is the main content.
               Expanded(
-                child: ListView(
-                  padding: EdgeInsets.symmetric(vertical: Dimensions.h5),
-                  children: [
-                    Container(
-                      color: AppColors.gray3Color,
-                      child: ListTile(
-                        onTap: () {
-                          productController.resetSearch();
-                          productController.getProductsOfAllType(categoryController.categoryList[_selectedIndex].id);
-                          Get.to(() => CategoryDetail(category: categoryController.categoryList[_selectedIndex]));
-                        },
-                        title: Text(
-                          categoryController.categoryList[_selectedIndex].categoryName,
-                          style: TextStyle(
-                            color: AppColors.mainColor,
-                            fontSize: Dimensions.font17,
-                            fontWeight: FontWeight.w400,
+                child: RefreshIndicator(
+                  onRefresh: () async {
+                    productController.resetSearch();
+                    categoryController.getCategores(); 
+                  },
+                  child: ListView(
+                    padding: EdgeInsets.symmetric(vertical: Dimensions.h5),
+                    children: [
+                      Container(
+                        color: AppColors.gray3Color,
+                        child: ListTile(
+                          onTap: () {
+                            productController.resetSearch();
+                            productController.getProductsOfAllType(categoryController.categoryList[_selectedIndex].id);
+                            Get.to(CategoryDetail(category: categoryController.categoryList[_selectedIndex]), duration: const Duration(milliseconds: 700), transition: Transition.fadeIn);
+                          },
+                          title: Text(
+                            categoryController.categoryList[_selectedIndex].categoryName,
+                            style: TextStyle(
+                              color: AppColors.mainColor,
+                              fontSize: Dimensions.font17,
+                              fontWeight: FontWeight.w400,
+                            ),
                           ),
+                          trailing: const Icon(Icons.chevron_right),
                         ),
-                        trailing: const Icon(Icons.chevron_right),
                       ),
-                    ),
-                    GridViewProduct2(
-                      context,
-                      productController.productAllType,
-                      productController.totalProductAllType.value,
-                    ),
-                  ],
+                      GridViewProduct2(
+                        context,
+                        productController.productAllType,
+                        productController.totalProductAllType.value,
+                      ),
+                    ],
+                  ),
                 ),
               )
             ],

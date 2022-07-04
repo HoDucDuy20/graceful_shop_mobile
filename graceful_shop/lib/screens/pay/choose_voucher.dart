@@ -83,6 +83,16 @@ class _ChooseVoucherScreenState extends State<ChooseVoucherScreen> {
                             margin: EdgeInsets.only(bottom: Dimensions.h10),
                             color: AppColors.whiteColor,
                             child: ListTile(
+                              onTap: (){
+                                setState(() {});
+                                if(voucherId == voucherController.voucherList[index].id){
+                                  voucherId = -1;
+                                  voucherPay = Voucher(id: -1, voucherCode: '', description: '', minTotalPrice: 0, discountPrice: 0, startDate: '', endDate: '');
+                                }else{
+                                  voucherId = voucherController.voucherList[index].id;
+                                  voucherPay = voucherController.voucherList[index];
+                                }
+                              },
                               title: Text(
                                 voucherController.voucherList[index].description,
                                 maxLines: 3,
@@ -118,16 +128,7 @@ class _ChooseVoucherScreenState extends State<ChooseVoucherScreen> {
                                 textAlign: TextAlign.start,
                               ),
                               trailing: InkWell(
-                                onTap: (){
-                                  setState(() {});
-                                  if(voucherId == voucherController.voucherList[index].id){
-                                    voucherId = -1;
-                                    voucherPay = Voucher(id: -1, voucherCode: '', description: '', minTotalPrice: 0, discountPrice: 0, startDate: '', endDate: '');
-                                  }else{
-                                    voucherId = voucherController.voucherList[index].id;
-                                    voucherPay = voucherController.voucherList[index];
-                                  }
-                                },
+                                onTap: (){},
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Icon(

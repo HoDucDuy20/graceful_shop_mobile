@@ -220,7 +220,7 @@ class _RateProductState extends State<RateProduct> {
                 children: [
                   InkWell(
                     onTap: (){
-                      Get.to(() => ProductDetail(product: product));
+                      Get.to(ProductDetail(product: product), duration: const Duration(milliseconds: 400), transition: Transition.zoom);
                     },
                     child: Container(
                       margin: EdgeInsets.symmetric(vertical: Dimensions.h10),

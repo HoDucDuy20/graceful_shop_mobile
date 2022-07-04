@@ -48,7 +48,7 @@ class ImgSlide extends StatelessWidget {
                     return InkWell(
                       onTap: () {
                         productController.getSlideAdsDetail(i.id);
-                        Get.to(() => AdvertiseDetail(slideAdsDetail: i));
+                        Get.to(AdvertiseDetail(slideAdsDetail: i), duration: const Duration(milliseconds: 700), transition: Transition.fadeIn);
                       },
                       child: SizedBox(
                         width: (orientation == Orientation.portrait) ? Dimensions.width : Dimensions.height,
@@ -65,21 +65,22 @@ class ImgSlide extends StatelessWidget {
                 );
               }).toList(),
             ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: DotsIndicator(
-                dotsCount: slideAdsController.slideAdsList.isEmpty ? 1 : slideAdsController.slideAdsList.length,
-                position: i.toDouble(),
-                decorator: DotsDecorator(
-                  activeColor: AppColors.mainColor,
-                  size: Size.square(Dimensions.w7),
-                  activeSize: Size.square(Dimensions.w10),
-                  activeShape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(25.0),
+            if(slideAdsController.slideAdsList.isNotEmpty)
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: DotsIndicator(
+                  dotsCount: slideAdsController.slideAdsList.isEmpty ? 1 : slideAdsController.slideAdsList.length,
+                  position: i.toDouble(),
+                  decorator: DotsDecorator(
+                    activeColor: AppColors.mainColor,
+                    size: Size.square(Dimensions.w7),
+                    activeSize: Size.square(Dimensions.w10),
+                    activeShape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(25.0),
+                    ),
                   ),
                 ),
               ),
-            ),
           ],
         );
       },
