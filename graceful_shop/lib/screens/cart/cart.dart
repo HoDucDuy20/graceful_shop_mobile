@@ -293,23 +293,23 @@ class _CartScreenState extends State<CartScreen> {
                                               padding: EdgeInsets.symmetric(vertical: Dimensions.h7),
                                               child: Row(
                                                 children: [
-                                                  if (cartController.productCartList[index].product.discountPrice != 0)
-                                                    Padding(
-                                                      padding: EdgeInsets.only(right: Dimensions.w7),
-                                                      child: Text(
-                                                        Format.numPrice(cartController.productCartList[index].product.discountPrice + cartController.productCartList[index].product.price),
-                                                        maxLines: 1,
-                                                        overflow: TextOverflow.ellipsis,
-                                                        style: TextStyle(
-                                                          decoration: TextDecoration.lineThrough,
-                                                          fontSize: Dimensions.font14,
-                                                          fontWeight: FontWeight.w300,
-                                                          fontStyle: FontStyle.italic,
-                                                          color: AppColors.grayColor,
-                                                          letterSpacing: 0.5,
-                                                        ),
-                                                      ),
-                                                    ),
+                                                  // if (cartController.productCartList[index].product.discountPrice != 0)
+                                                  //   Padding(
+                                                  //     padding: EdgeInsets.only(right: Dimensions.w7),
+                                                  //     child: Text(
+                                                  //       Format.numPrice(cartController.productCartList[index].product.discountPrice + cartController.productCartList[index].product.price),
+                                                  //       maxLines: 1,
+                                                  //       overflow: TextOverflow.ellipsis,
+                                                  //       style: TextStyle(
+                                                  //         decoration: TextDecoration.lineThrough,
+                                                  //         fontSize: Dimensions.font14,
+                                                  //         fontWeight: FontWeight.w300,
+                                                  //         fontStyle: FontStyle.italic,
+                                                  //         color: AppColors.grayColor,
+                                                  //         letterSpacing: 0.5,
+                                                  //       ),
+                                                  //     ),
+                                                  //   ),
                                                   Text(
                                                     Format.numPrice(cartController.productCartList[index].product.price),
                                                     maxLines: 1,

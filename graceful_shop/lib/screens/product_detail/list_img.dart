@@ -48,7 +48,7 @@ class ListImg extends StatelessWidget {
                         child: FadeInImage.assetNetwork(
                           placeholder: 'assets/gif/loading_2.gif',
                           image: formaterImg(img.pictureValue),
-                          fit: BoxFit.cover,
+                          fit: BoxFit.scaleDown,
                         ),
                       ),
                     );

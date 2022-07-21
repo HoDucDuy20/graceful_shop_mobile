@@ -8,23 +8,27 @@ class ColorSize {
     ColorSize({
         required this.colors,
         required this.sizes,
-        required this.quantityOfType,
+        // required this.quantityOfType,
+        required this.numOrder,
     });
 
     List<ProductColor> colors;
     List<ProductSize> sizes;
-    List<QuantityOfType> quantityOfType;
+    // List<QuantityOfType> quantityOfType;
+    int numOrder;
 
     factory ColorSize.fromJson(Map<String, dynamic> json) => ColorSize(
         colors: List<ProductColor>.from(json["colors"].map((x) => ProductColor.fromJson(x))),
         sizes: List<ProductSize>.from(json["sizes"].map((x) => ProductSize.fromJson(x))),
-        quantityOfType: List<QuantityOfType>.from(json["quantityOfType"].map((x) => QuantityOfType.fromJson(x))),
+        // quantityOfType: List<QuantityOfType>.from(json["quantityOfType"].map((x) => QuantityOfType.fromJson(x))),
+        numOrder: json['numOrder'],
     );
 
     Map<String, dynamic> toJson() => {
         "colors": List<dynamic>.from(colors.map((x) => x.toJson())),
         "sizes": List<dynamic>.from(sizes.map((x) => x.toJson())),
-        "quantityOfType": List<dynamic>.from(quantityOfType.map((x) => x.toJson())),
+        // "quantityOfType": List<dynamic>.from(quantityOfType.map((x) => x.toJson())),
+        "numOrder": numOrder,
     };
 }
 

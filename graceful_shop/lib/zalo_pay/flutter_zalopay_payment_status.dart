@@ -1,8 +1,8 @@
-// part of 'flutter_zalopay_sdk.dart';
+part of 'flutter_zalopay_sdk.dart';
 
-// enum FlutterZaloPayStatus {
-//   processing,
-//   failed,
-//   success,
-//   cancelled
-// }
+enum FlutterZaloPayStatus {
+  processing,
+  failed,
+  success,
+  cancelled
+}

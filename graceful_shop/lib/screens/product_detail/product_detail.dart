@@ -91,7 +91,7 @@ class _ProductDetailState extends State<ProductDetail> {
                             product.productName,
                             style: TextStyle(
                               fontSize: Dimensions.font20,
-                              fontWeight: FontWeight.w900,
+                              fontWeight: FontWeight.w700,
                               color: AppColors.black2Color,
                               letterSpacing: 0.5,
                             ),
@@ -117,31 +117,39 @@ class _ProductDetailState extends State<ProductDetail> {
                                             letterSpacing: 0.5,
                                           ),
                                         ),
-                                        if (product.discountPrice != 0)
-                                          Container(
-                                            margin: EdgeInsets.only(left: Dimensions.w7),
-                                            padding: EdgeInsets.symmetric(horizontal: Dimensions.w5),
-                                            decoration: BoxDecoration(
-                                              border: Border.all(
-                                                color: AppColors.yellowColor,
-                                                width: 1.5,
-                                              ),
-                                              color: AppColors.yellow2Color,
-                                            ),
-                                            child: Text(
-                                              Format.percentReduction(product.price,product.discountPrice),
-                                              style: TextStyle(
-                                                fontSize: Dimensions.font15,
-                                                fontWeight: FontWeight.w500,
-                                                color: AppColors.redColor,
-                                                letterSpacing: 0.5,
-                                              ),
-                                            ),
-                                          ),
+                                        // if (product.discountPrice != 0)
+                                        //   Container(
+                                        //     margin: EdgeInsets.only(left: Dimensions.w7),
+                                        //     padding: EdgeInsets.symmetric(horizontal: Dimensions.w5),
+                                        //     decoration: BoxDecoration(
+                                        //       border: Border.all(
+                                        //         color: AppColors.yellowColor,
+                                        //         width: 1.5,
+                                        //       ),
+                                        //       color: AppColors.yellow2Color,
+                                        //     ),
+                                        //     child: Text(
+                                        //       Format.percentReduction(product.price,product.discountPrice),
+                                        //       style: TextStyle(
+                                        //         fontSize: Dimensions.font15,
+                                        //         fontWeight: FontWeight.w500,
+                                        //         color: AppColors.redColor,
+                                        //         letterSpacing: 0.5,
+                                        //       ),
+                                        //     ),
+                                        //   ),
                                       ],
                                     ),
                                     Row(
                                       children: [
+                                        Text(
+                                          '${productController.numOrder} Lượt mua ',
+                                          style: TextStyle(
+                                            fontSize: Dimensions.font14,
+                                            color: AppColors.black2Color,
+                                          ),
+                                        ),
+                                        const SizedBox(width: 15),
                                         Padding(
                                           padding: EdgeInsets.only(right: Dimensions.w5),
                                           child: Icon(
@@ -161,27 +169,27 @@ class _ProductDetailState extends State<ProductDetail> {
                                     ),
                                   ],
                                 ),
-                                if (product.discountPrice != 0)
-                                  Text(
-                                    Format.numPrice(product.discountPrice + product.price),
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                      decoration: TextDecoration.lineThrough,
-                                      fontSize: Dimensions.font15,
-                                      fontWeight: FontWeight.w400,
-                                      fontStyle: FontStyle.italic,
-                                      color: AppColors.grayColor,
-                                      letterSpacing: 0.5,
-                                    ),
-                                  ),
+                                // if (product.discountPrice != 0)
+                                //   Text(
+                                //     Format.numPrice(product.discountPrice + product.price),
+                                //     maxLines: 1,
+                                //     overflow: TextOverflow.ellipsis,
+                                //     style: TextStyle(
+                                //       decoration: TextDecoration.lineThrough,
+                                //       fontSize: Dimensions.font15,
+                                //       fontWeight: FontWeight.w400,
+                                //       fontStyle: FontStyle.italic,
+                                //       color: AppColors.grayColor,
+                                //       letterSpacing: 0.5,
+                                //     ),
+                                //   ),
                               ],
                             ),
                           ),
                           if (productController.colorList.isNotEmpty)
                             InkWell(
                               onTap: () {
-                                showSizeColor(context, product.id);
+                                showSizeColor(context, product);
                               },
                               child: Container(
                                 padding: EdgeInsets.all(Dimensions.w5),
@@ -475,7 +483,7 @@ class _ProductDetailState extends State<ProductDetail> {
                 child: ButtonBuyNow(
                   title: 'BuyNow'.tr,
                   onPressed: () {
-                    showSizeColor(context, product.id);
+                    showSizeColor(context, product);
                   },
                   color: AppColors.redColor,
                 ),

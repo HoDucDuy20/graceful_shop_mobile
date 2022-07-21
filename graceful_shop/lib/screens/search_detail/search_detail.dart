@@ -27,12 +27,27 @@ class _SearchDetailState extends State<SearchDetail> {
   final GlobalKey<ScaffoldState> _scaffoldKey = new GlobalKey<ScaffoldState>();
   
   double minValue = 0;
-  double maxValue = 2000000;
-  int divisionsValue = 20;
+  double maxValue = 5000000;
+  int divisionsValue = 50;
 
   int proType = -1;
 
   RangeValues _currentRangeValues = RangeValues(0, 0);
+
+  int index = 0;
+
+  int priceSort = 0;
+  bool newSort = false;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
+  void lienQuan(){
+
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -105,6 +120,190 @@ class _SearchDetailState extends State<SearchDetail> {
                   ),
                 ),
               ],
+              bottom:  PreferredSize(
+                preferredSize: const Size.fromHeight(35),
+                child: Container(
+                  color: AppColors.whiteColor,
+                  height: 30.0,
+                  child: Row(
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          setState(() {});
+                          index = 0;
+                          priceSort = 0;
+                          newSort = false;
+                          productController.resetSearch();
+                          productController.searchProducts(value, proType == -1 ? null: proType, _currentRangeValues.start.round(), _currentRangeValues.end.round(), newSort, priceSort);
+                        },
+                        child: Container(
+                          width: Dimensions.width / 3,
+                          alignment: Alignment.center,
+                          decoration: index == 0
+                              ? BoxDecoration(
+                                  border: Border(
+                                    right: BorderSide(
+                                      color: AppColors.gray2Color,
+                                      width: 1.5,
+                                    ),
+                                    bottom: BorderSide( 
+                                      color: AppColors.blueAccentColor,
+                                      width: 1.5,
+                                    ),
+                                  ),
+                                  color: AppColors.blueAccentSearchColor,
+                                )
+                              : BoxDecoration(
+                                  border: Border(
+                                    right: BorderSide( 
+                                      color: AppColors.gray2Color,
+                                      width: 1.5,
+                                    ),
+                                  ),
+                                  color: AppColors.whiteColor,
+                                ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Concern'.tr,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontSize: Dimensions.font14,
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColors.black2Color,
+                                  letterSpacing: 0.5,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          setState(() {});
+                          index = 1;
+                          priceSort = 0;
+                          newSort = true;
+                          productController.resetSearch();
+                          productController.searchProducts(value, proType == -1 ? null: proType, _currentRangeValues.start.round(), _currentRangeValues.end.round(), newSort, priceSort);
+                        },
+                        child: Container(
+                          width: Dimensions.width / 3,
+                          alignment: Alignment.center,
+                          decoration: index == 1
+                              ? BoxDecoration(
+                                  border: Border(
+                                    right: BorderSide(
+                                      color: AppColors.gray2Color,
+                                      width: 1.5,
+                                    ),
+                                    bottom: BorderSide( 
+                                      color: AppColors.blueAccentColor,
+                                      width: 1.5,
+                                    ),
+                                  ),
+                                  color: AppColors.blueAccentSearchColor,
+                                )
+                              : BoxDecoration(
+                                  border: Border(
+                                    right: BorderSide( 
+                                      color: AppColors.gray2Color,
+                                      width: 1.5,
+                                    ),
+                                  ),
+                                  color: AppColors.whiteColor,
+                                ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'New'.tr,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontSize: Dimensions.font14,
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColors.black2Color,
+                                  letterSpacing: 0.5,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {
+                          setState(() {});
+                          index = 2;
+                          if(priceSort == 1){
+                            priceSort = 2;
+                          }else{
+                            priceSort = 1;
+                          }
+                          newSort = false;
+                          productController.resetSearch();
+                          productController.searchProducts(value, proType == -1 ? null: proType, _currentRangeValues.start.round(), _currentRangeValues.end.round(), newSort, priceSort);
+                        },
+                        child: Container(
+                          width: Dimensions.width / 3,
+                          alignment: Alignment.center,
+                          decoration: index == 2
+                              ? BoxDecoration(
+                                  border: Border(
+                                    right: BorderSide(
+                                      color: AppColors.gray2Color,
+                                      width: 1.5,
+                                    ),
+                                    bottom: BorderSide( 
+                                      color: AppColors.blueAccentColor,
+                                      width: 1.5,
+                                    ),
+                                  ),
+                                  color: AppColors.blueAccentSearchColor,
+                                )
+                              : BoxDecoration(
+                                  border: Border(
+                                    right: BorderSide( 
+                                      color: AppColors.gray2Color,
+                                      width: 1.5,
+                                    ),
+                                  ),
+                                  color: AppColors.whiteColor,
+                                ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Price'.tr,
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                style: TextStyle(
+                                  fontSize: Dimensions.font14,
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColors.black2Color,
+                                  letterSpacing: 0.5,
+                                ),
+                              ),
+                              if(priceSort == 1)
+                                Icon(
+                                  Icons.arrow_upward_outlined,
+                                  color: AppColors.black2Color,
+                                ),
+                              if(priceSort == 2)
+                                Icon(
+                                  Icons.arrow_downward_outlined ,
+                                  color: AppColors.black2Color,
+                                ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),   
             ),
             endDrawer: Drawer(
               child: Stack(
@@ -420,7 +619,7 @@ class _SearchDetailState extends State<SearchDetail> {
                         onPressed: (){
                           Get.back();
                           productController.resetSearch();
-                          productController.searchProducts(value, proType == -1 ? null: proType, _currentRangeValues.start.round(), _currentRangeValues.end.round());
+                          productController.searchProducts(value, proType == -1 ? null: proType, _currentRangeValues.start.round(), _currentRangeValues.end.round(), newSort, priceSort);
                         }, 
                         color: AppColors.orangeColor,
                       ),
@@ -455,7 +654,7 @@ class _SearchDetailState extends State<SearchDetail> {
                               : ButtonShowMore(
                                   onPressed: () {
                                     productController.loading.value = true;
-                                    productController.searchProducts(value, proType == -1 ? null: proType, _currentRangeValues.start.round(), _currentRangeValues.end.round());
+                                    productController.searchProducts(value, proType == -1 ? null: proType, _currentRangeValues.start.round(), _currentRangeValues.end.round(), newSort, priceSort);
                                   },
                                 ),
                     ],
@@ -469,3 +668,4 @@ class _SearchDetailState extends State<SearchDetail> {
     );
   }
 }
+

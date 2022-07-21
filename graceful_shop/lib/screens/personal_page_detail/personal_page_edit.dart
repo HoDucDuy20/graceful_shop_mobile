@@ -138,7 +138,7 @@ class _PersonalEditState extends State<PersonalEdit> {
                   ),
                   title('PersonalPageInfo'.tr),
                   info('InputName'.tr),
-                  textField(txtName, errorName),
+                  textField(txtName, errorName, false),
                   info('DateOfBirth'.tr),
                   textFieldDate(),
                   info('Sex'.tr),
@@ -172,18 +172,20 @@ class _PersonalEditState extends State<PersonalEdit> {
                     ],
                   ),
                   title('AccountInformation'.tr),
-                  info('Phone'.tr),
-                  TextField(
-                    readOnly: true,
-                    decoration: InputDecoration(
-                      filled: true,
-                      focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.grayColor)),
-                      border: OutlineInputBorder(borderSide: BorderSide(color: AppColors.mainColor)),
-                      hintText: userController.user.value.phone,
+                  if(userController.user.value.typeLogin == 0)
+                    info('Phone'.tr),
+                  if(userController.user.value.typeLogin == 0)
+                    TextField(
+                      readOnly: true,
+                      decoration: InputDecoration(
+                        filled: true,
+                        focusedBorder: OutlineInputBorder(borderSide: BorderSide(color: AppColors.grayColor)),
+                        border: OutlineInputBorder(borderSide: BorderSide(color: AppColors.mainColor)),
+                        hintText: userController.user.value.phone,
+                      ),
                     ),
-                  ),
                   info('Email'.tr),
-                  textField(txtEmail, errorEmail),
+                  textField(txtEmail, errorEmail, true),
                   // info('Address'.tr),
                   // textField(txtAddress, ''),
                   Container(
@@ -264,8 +266,9 @@ class _PersonalEditState extends State<PersonalEdit> {
     );
   }
 
-  Widget textField(TextEditingController textEditingController, error) {
+  Widget textField(TextEditingController textEditingController, String error, bool disable) {
     return TextField(
+      readOnly: disable,
       controller: textEditingController,
       decoration: InputDecoration(
         border: OutlineInputBorder(

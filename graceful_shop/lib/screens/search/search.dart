@@ -90,7 +90,7 @@ class _SearchState extends State<Search> {
                     _addItem(value);
                     productController.resetSearch();
                      productController.searchProductType(value);
-                    productController.searchProducts(value, null, null, null);
+                    productController.searchProducts(value, null, null, null, false, 0);
                     Get.to(SearchDetail(value: value), duration: const Duration(milliseconds: 400), transition: Transition.topLevel);
                   }
                 },
@@ -197,7 +197,7 @@ class _SearchState extends State<Search> {
                               txtSearch.text = searchHistory![i];
                               productController.resetSearch();
                               productController.searchProductType(txtSearch.text);
-                              productController.searchProducts(txtSearch.text, null, 0, 0);
+                              productController.searchProducts(txtSearch.text, null, 0, 0, false, 0);
                               Get.to(SearchDetail(value: txtSearch.text), duration: const Duration(milliseconds: 400), transition: Transition.topLevel);
                             },
                             child: Padding(

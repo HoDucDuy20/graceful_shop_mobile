@@ -15,11 +15,7 @@ class Product {
   Product({
     required this.id,
     required this.productName,
-    required this.stock,
-    required this.importPrice,
     required this.price,
-    required this.vat,
-    required this.discountPrice,
     required this.productTypeId,
     required this.productBarcode,
     required this.brandId,
@@ -30,15 +26,12 @@ class Product {
     required this.pictures,
     required this.likes,
     this.isLike = false,
+    required this.quantityStatus,
   });
 
   int id;
   String productName;
-  int stock;
-  int importPrice;
   int price;
-  double vat;
-  int discountPrice;
   int productTypeId;
   String productBarcode;
   int brandId;
@@ -49,15 +42,12 @@ class Product {
   List<Picture> pictures;
   List<Like> likes;
   bool isLike;
+  int quantityStatus;
 
   factory Product.fromJson(Map<String, dynamic> json) => Product(
         id: json["id"],
         productName: json["product_name"],
-        stock: json["stock"],
-        importPrice: json["import_price"],
         price: json["price"],
-        vat: json["vat"].toDouble(),
-        discountPrice: json["discount_price"],
         productTypeId: json["product_type_id"],
         productBarcode: json["product_barcode"],
         brandId: json["brand_id"],
@@ -67,16 +57,13 @@ class Product {
         description: json["description"],
         pictures: List<Picture>.from(json["pictures"].map((x) => Picture.fromJson(x))),
         likes: List<Like>.from(json["likes"].map((x) => Like.fromJson(x))),
+        quantityStatus: json["quantity_status"],
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "product_name": productName,
-        "stock": stock,
-        "import_price": importPrice,
         "price": price,
-        "vat": vat,
-        "discount_price": discountPrice,
         "product_type_id": productTypeId,
         "product_barcode": productBarcode,
         "brand_id": brandId,
@@ -86,6 +73,7 @@ class Product {
         "description": description,
         "pictures": List<dynamic>.from(pictures.map((x) => x.toJson())),
         "likes": List<dynamic>.from(likes.map((x) => x.toJson())),
+        'quantity_status': quantityStatus,
       };
 }
 

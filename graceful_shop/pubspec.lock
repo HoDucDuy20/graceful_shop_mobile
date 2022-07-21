@@ -79,7 +79,7 @@ packages:
     source: hosted
     version: "0.3.3+1"
   crypto:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: crypto
       url: "https://pub.dartlang.org"
@@ -233,6 +233,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_zalopay_sdk:
+    dependency: "direct main"
+    description:
+      name: flutter_zalopay_sdk
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.1.12"
   fluttertoast:
     dependency: "direct main"
     description:
@@ -567,6 +574,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.2"
+  sprintf:
+    dependency: "direct main"
+    description:
+      name: sprintf
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "6.0.0"
   stack_trace:
     dependency: transitive
     description:
@@ -672,6 +686,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.2"
+  watcher:
+    dependency: "direct main"
+    description:
+      name: watcher
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.0.1"
   win32:
     dependency: transitive
     description:

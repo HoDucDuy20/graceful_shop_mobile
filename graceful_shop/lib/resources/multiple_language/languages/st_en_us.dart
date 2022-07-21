@@ -38,6 +38,7 @@ const Map<String, String> en = {
   'Featured': 'Featured',
   'New': 'New',
   'NoProducts': 'No products',
+  'Selling': 'Selling',
   //Search
   'Cancel': 'Cancel',
   'SearchHistory': 'Search history',
@@ -115,6 +116,9 @@ const Map<String, String> en = {
   'CustomerRatings': 'Customer ratings',
   'Rating': 'rating',
   'AddedToCart': 'Added to cart',
+  'ProductOutOfStock': 'Product is out of stock',
+  'OutOfStock': 'Out of stock',
+  'Concern': 'Concern',
   //Cart
   'Cart': 'Cart',
   'Classify': 'Classify',

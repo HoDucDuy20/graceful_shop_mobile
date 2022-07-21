@@ -80,7 +80,8 @@ class _PersonalDetailState extends State<PersonalDetail> {
                 info('DateOfBirth'.tr, Format.date(userController.user.value.dateOfBirth)),
                 info('Sex'.tr, userController.user.value.sexName),
                 title('AccountInformation'.tr),
-                info('Phone'.tr, userController.user.value.phone),
+                if(userController.user.value.typeLogin == 0)
+                  info('Phone'.tr, userController.user.value.phone),
                 info('Email'.tr, userController.user.value.email),
                 // info('Address'.tr, userController.user.value.address),
                 if(userController.user.value.typeLogin == 0)

@@ -4,6 +4,7 @@ import 'package:graceful_shop/controllers/product_controller.dart';
 import 'package:graceful_shop/controllers/slide_ads_controller.dart';
 import 'package:graceful_shop/screens/home/grid_product_featured.dart';
 import 'package:graceful_shop/screens/home/grid_product_new.dart';
+import 'package:graceful_shop/screens/home/grid_product_selling.dart';
 import 'package:graceful_shop/screens/home/menu_top.dart';
 import 'package:graceful_shop/screens/home/slide_advertise.dart';
 import 'package:graceful_shop/resources/utils/colors.dart';
@@ -32,15 +33,20 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
         
     if (thresholdReached) {
       // Load more!
-      productController.loading.value = true;
-      switch (productController.tab.value) {
-        case 0:
-          productController.getPopularProducts();
-          break;
-        case 1:
-          productController.getNewProducts();
-          break;
-      }
+      if(!productController.loading.value){
+        productController.loading.value = true;
+        switch (productController.tab.value) {
+          case 0:
+            productController.getPopularProducts();
+            break;
+          case 1:
+            productController.getNewProducts();
+            break;
+          case 2:
+            productController.getSellingProducts();
+            break;
+        }
+      }     
     }
   }
 
@@ -62,8 +68,10 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
             productController.reset();
             if (productController.tab.value == 0) {
               productController.getPopularProducts();
-            } else {
+            } else if (productController.tab.value == 1) {
               productController.getNewProducts();
+            } else {
+              productController.getSellingProducts();
             }
           },
           child: CustomScrollView(
@@ -103,6 +111,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                         children: [
                           tab('Featured'.tr, 0),
                           tab('New'.tr, 1),
+                          tab('Selling'.tr, 2),
                         ],
                       ),
                     ),
@@ -118,6 +127,11 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
                           maintainState: true,
                           visible: productController.tab.value == 1,
                           child: GridProductNew(),
+                        ),
+                        Visibility(
+                          maintainState: true,
+                          visible: productController.tab.value == 2,
+                          child: GridProductSelling(),
                         ),
                       ],
                     ),
@@ -147,7 +161,7 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
       maxLines: 1,
       overflow: TextOverflow.ellipsis,
       style: TextStyle(
-        fontSize: Dimensions.font17,
+        fontSize: Dimensions.font16,
         fontWeight: FontWeight.w500,
         color: AppColors.black2Color,
         letterSpacing: 0.5,
@@ -163,23 +177,43 @@ class _HomeState extends State<Home> with SingleTickerProviderStateMixin {
           productController.reset();
           if (index == 0) {
             productController.getPopularProducts();
-          } else {
+          } else if (index == 1) {
             productController.getNewProducts();
+          } else {
+            productController.getSellingProducts();
           }
         }
       },
       child: Container(
-        width: Dimensions.width / 2,
+        width: Dimensions.width / 3,
         alignment: Alignment.center,
         decoration: productController.tab.value == index
             ? BoxDecoration(
-                border: Border.all(
-                  color: AppColors.blueAccentColor,
-                  width: 1.5,
+                border: Border(
+                  right: BorderSide(
+                    color: AppColors.gray2Color,
+                    width: 1.5,
+                  ),
+                  bottom: BorderSide( 
+                    color: AppColors.blueAccentColor,
+                    width: 1.5,
+                  ),
+                  top: BorderSide( 
+                    color: AppColors.blueAccentColor,
+                    width: 1.5,
+                  ),
                 ),
                 color: AppColors.blueAccentSearchColor,
               )
-            : null,
+            : BoxDecoration(
+                border: Border(
+                  right: BorderSide( 
+                    color: AppColors.gray2Color,
+                    width: 1.5,
+                  ),
+                ),
+                color: AppColors.whiteColor,
+              ),
         child: tabBarText(title),
       ),
     );

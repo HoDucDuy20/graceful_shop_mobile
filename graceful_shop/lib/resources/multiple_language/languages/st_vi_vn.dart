@@ -38,6 +38,7 @@ const Map<String, String> vi = {
   'Featured': 'Nổi bật',
   'New': 'Mới nhất',
   'NoProducts': 'Không có sản phẩm',
+  'Selling': 'Bán chạy',
   //Search
   'Cancel': 'Huỷ',
   'SearchHistory': 'Lịch sử tìm kiếm',
@@ -115,6 +116,9 @@ const Map<String, String> vi = {
   'CustomerRatings': 'Khách hàng đánh giá',
   'Rating': 'đánh giá',
   'AddedToCart': 'Đã thêm vào giỏ hàng',
+  'ProductOutOfStock': 'Sản phẩm đã hết hàng',
+  'OutOfStock': 'Hết hàng',
+  'Concern': 'Liên quan',
   //Cart
   'Cart': 'Giỏ hàng',
   'Classify': 'Phân loại',
@@ -158,7 +162,7 @@ const Map<String, String> vi = {
   'Invoice': 'Đơn hàng',
   'MyRate': 'Đánh giá của tui',
   'WaitForConfirmation': 'Chờ xác nhận',
-  'Confirmed': 'Đã xác nhân',
+  'Confirmed': 'Đã xác nhận',
   'Delivering': 'Đang giao',
   'Delivered': 'Đã giao',
   'Canceled': 'Đã huỷ',

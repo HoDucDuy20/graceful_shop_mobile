@@ -591,48 +591,48 @@ class _PayScreenState extends State<PayScreen> {
                               invoiceController.addInvoice(listCartId, null, transportFee, addressController.addressPay.value, null, null);
                             }
                           }else if(invoiceController.payments[invoiceController.paymentIndex.value].key == 'zp'){
-                            // print('zalopay...');
-                            // int amount;
-                            // voucherController.voucherPay.value.minTotalPrice <= untilPrice 
-                            // ? amount = (untilPrice - voucherController.voucherPay.value.discountPrice)
-                            // : amount = untilPrice;                           
+                            print('zalopay...');
+                            int amount;
+                            voucherController.voucherPay.value.minTotalPrice <= untilPrice 
+                            ? amount = (untilPrice - voucherController.voucherPay.value.discountPrice)
+                            : amount = untilPrice;                           
                             
-                            //   showDialog(
-                            //     context: context,
-                            //     builder: (BuildContext context) {
-                            //       return Center(
-                            //         child: CircularProgressIndicator(),
-                            //       );
-                            //     });
-                            //   String invoiceCode = getAppTransId();
-                            //   var result = await createOrder(amount, invoiceCode);
-                            // if (result != null) {
-                            //     Navigator.pop(context);
-                            //     String zpTransToken = result.zptranstoken;
-                            //     print("zpTransToken $zpTransToken'.");
-                            //   FlutterZaloPaySdk.payOrder(zpToken: zpTransToken).listen((event) {
-                            //     setState(() {
-                            //       switch (event) {
-                            //         case FlutterZaloPayStatus.cancelled:
-                            //           showSuccess2('User Huỷ Thanh Toán'.tr, ''.tr);
-                            //           break;
-                            //         case FlutterZaloPayStatus.success:
-                            //           if(voucherController.voucherPay.value.minTotalPrice <= untilPrice && voucherController.voucherPay.value.id != -1) {
-                            //             invoiceController.addInvoice(listCartId, voucherController.voucherPay.value.id, transportFee, addressController.addressPay.value, invoiceCode, 'ZaloPay');
-                            //           }else{
-                            //             invoiceController.addInvoice(listCartId, null, transportFee, addressController.addressPay.value, invoiceCode, 'ZaloPay');
-                            //           }
-                            //           break;
-                            //         case FlutterZaloPayStatus.failed:
-                            //           showSuccess2('Thanh toán thất bại'.tr, ''.tr);
-                            //           break;
-                            //         default:
-                            //           showSuccess2('Thanh toán thất bại'.tr, ''.tr);
-                            //           break;
-                            //       }
-                            //     });
-                            //   });
-                            // }
+                              showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return Center(
+                                    child: CircularProgressIndicator(),
+                                  );
+                                });
+                              String invoiceCode = getAppTransId();
+                              var result = await createOrder(amount, invoiceCode);
+                            if (result != null) {
+                                Navigator.pop(context);
+                                String zpTransToken = result.zptranstoken;
+                                print("zpTransToken $zpTransToken'.");
+                              FlutterZaloPaySdk.payOrder(zpToken: zpTransToken).listen((event) {
+                                setState(() {
+                                  switch (event) {
+                                    case FlutterZaloPayStatus.cancelled:
+                                      showSuccess2('User Huỷ Thanh Toán'.tr, ''.tr);
+                                      break;
+                                    case FlutterZaloPayStatus.success:
+                                      if(voucherController.voucherPay.value.minTotalPrice <= untilPrice && voucherController.voucherPay.value.id != -1) {
+                                        invoiceController.addInvoice(listCartId, voucherController.voucherPay.value.id, transportFee, addressController.addressPay.value, invoiceCode, 'ZaloPay');
+                                      }else{
+                                        invoiceController.addInvoice(listCartId, null, transportFee, addressController.addressPay.value, invoiceCode, 'ZaloPay');
+                                      }
+                                      break;
+                                    case FlutterZaloPayStatus.failed:
+                                      showSuccess2('Thanh toán thất bại'.tr, ''.tr);
+                                      break;
+                                    default:
+                                      showSuccess2('Thanh toán thất bại'.tr, ''.tr);
+                                      break;
+                                  }
+                                });
+                              });
+                            }
                           }
                         },
                         

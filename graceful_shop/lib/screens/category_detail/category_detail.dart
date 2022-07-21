@@ -33,19 +33,22 @@ class _CategoryDetailState extends State<CategoryDetail> {
         
     if (thresholdReached) {
       // Load more!
-      productController.loading.value = true;
-      // switch (productController.tab.value) {
-      //   case 0:
-      //     productController.getPopularProducts();
-      //     break;
-      //   case 1:
-      //     productController.getNewProducts();
-      //     break;
-      // }
-      if(categoryIndex == -1){
-        productController.getProductsOfAllType(category.id);
-      }else{
-        productController.getProductsOfType(category.productTypes[categoryIndex].id);
+      if(!productController.loading.value)
+      {
+        productController.loading.value = true;
+        // switch (productController.tab.value) {
+        //   case 0:
+        //     productController.getPopularProducts();
+        //     break;
+        //   case 1:
+        //     productController.getNewProducts();
+        //     break;
+        // }
+        if(categoryIndex == -1){
+          productController.getProductsOfAllType(category.id);
+        }else{
+          productController.getProductsOfType(category.productTypes[categoryIndex].id);
+        }
       }
     }
   }

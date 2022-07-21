@@ -44,7 +44,7 @@ class Dimensions {
   static double h7 = height / 111.57 > 9 ? 9 : height / 111.57;
   static double h5 = height / 156.22 > 6 ? 6 : height / 156.22;
   static double hCard = height / 1.95 > 406 ? 406 : height / 1.95 < 350 ? 350 : height / 1.95;
-  static double hCard2 = height / 2.40 > 332 ? 332 : height / 2.40 < 295 ? 295 : height / 2.40;
+  static double hCard2 = height / 2.85 > 292 ? 292 : height / 2.85 < 270 ? 270 : height / 2.85;
   static double hLstCategory = height / 7.81 > 104 ? 104 : height / 7.81 < 75 ? 75 : height / 7.81;
   static double hSearch1 = height / 26.04 > 32 ? 32 : height / 26.04 < 27 ? 27 : height / 26.04;
   static double hSearch2 = height / 19.53 > 42 ? 42 : height / 19.53 < 38 ? 38 : height / 19.53;

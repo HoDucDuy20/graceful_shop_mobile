@@ -62,6 +62,26 @@ class RemoteService {
     }
   }
 
+  static Future<ProductTotal?> getSellingProducts(int page) async {
+    var response = await client.post(
+      uriProductSelling(page),
+      body: jsonEncode({
+        "num": total,
+      }),
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+    );
+    if (response.statusCode == 200) {
+      var jsonString = response.body;
+      return productTotalFromJson(jsonString);
+    } else {
+      print('getPopularProducts error: ' + response.statusCode.toString());
+      return null;
+    }
+  }
+
   static Future<ColorSize?> getColorSize(int id) async {
     var response = await client.get(
       uriProductById(id),
@@ -250,14 +270,16 @@ class RemoteService {
     }
   }
 
-  static Future<ProductTotal?> searchProducts(String value, int page, int? productTypeId, int? fromPrice, int? toPrice) async {
+  static Future<ProductTotal?> searchProducts(String value, int page, int? productTypeId, int? fromPrice, int? toPrice, bool newSort, int priceSort) async {
     var response = await client.post(
       uriProductSearch(value, page),
       body: jsonEncode({
         "num": total,
         "product_type_id": productTypeId,
         "from_price": fromPrice,
-        "to_price": toPrice
+        "to_price": toPrice,
+        "new_sort": newSort,
+        "price_sort": priceSort
       }),
       headers: {
         'Content-Type': 'application/json',

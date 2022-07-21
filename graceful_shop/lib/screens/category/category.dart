@@ -20,7 +20,7 @@ class Category extends StatefulWidget {
 class _CategoryState extends State<Category> {
   CategoryController categoryController = Get.find<CategoryController>();
   ProductController productController = Get.find<ProductController>();
-  int _selectedIndex = 0;
+  // int _selectedIndex = 0;
 
   @override
   void initState() {
@@ -58,10 +58,10 @@ class _CategoryState extends State<Category> {
                       child: IntrinsicHeight(
                         child: NavigationRail(
                           backgroundColor: AppColors.blueAccentSearchColor,
-                          selectedIndex: _selectedIndex,
+                          selectedIndex: categoryController.selectedIndex.value,
                           onDestinationSelected: (int index) {
                             setState(() {});
-                            _selectedIndex = index;
+                            categoryController.selectedIndex.value = index;
                             productController.resetSearch();
                             productController.getProductsOfAllType2(categoryController.categoryList[index].id);
                             // print(categoryController.categoryList[index].id);
@@ -129,6 +129,7 @@ class _CategoryState extends State<Category> {
               Expanded(
                 child: RefreshIndicator(
                   onRefresh: () async {
+                    categoryController.selectedIndex.value = 0;
                     productController.resetSearch();
                     categoryController.getCategores(); 
                   },
@@ -140,11 +141,11 @@ class _CategoryState extends State<Category> {
                         child: ListTile(
                           onTap: () {
                             productController.resetSearch();
-                            productController.getProductsOfAllType(categoryController.categoryList[_selectedIndex].id);
-                            Get.to(CategoryDetail(category: categoryController.categoryList[_selectedIndex]), duration: const Duration(milliseconds: 700), transition: Transition.fadeIn);
+                            productController.getProductsOfAllType(categoryController.categoryList[categoryController.selectedIndex.value].id);
+                            Get.to(CategoryDetail(category: categoryController.categoryList[categoryController.selectedIndex.value]), duration: const Duration(milliseconds: 700), transition: Transition.fadeIn);
                           },
                           title: Text(
-                            categoryController.categoryList[_selectedIndex].categoryName,
+                            categoryController.categoryList[categoryController.selectedIndex.value].categoryName,
                             style: TextStyle(
                               color: AppColors.mainColor,
                               fontSize: Dimensions.font17,

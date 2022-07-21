@@ -110,11 +110,9 @@ class _RateProductState extends State<RateProduct> {
                     //   });
                     // }
                     if (selectedImages!.isNotEmpty) {
-                      int i = 0;
                       for (var img in selectedImages) {
                         setState(() {});
-                        i++;
-                        if(i > 6){
+                        if(lstImage.length >= 6){
                           Get.snackbar(
                             'MaxPhotos'.tr,
                             ''.tr,
@@ -124,7 +122,6 @@ class _RateProductState extends State<RateProduct> {
                         }
                         lstImage.add(img.path);
                       }
-                      i = 0;  
                     }
                   }
                 } catch (e) {

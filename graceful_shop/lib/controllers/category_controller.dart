@@ -6,6 +6,7 @@ import 'package:graceful_shop/services/remote_service.dart';
 class CategoryController extends GetxController {
   ProductController productController = Get.find<ProductController>();
   var categoryList = <Category>[].obs;
+  var selectedIndex = 0.obs;
   @override
   void onInit() {
     super.onInit();

@@ -7,8 +7,8 @@ import 'package:graceful_shop/resources/utils/dimensions.dart';
 import 'package:graceful_shop/resources/widgets/button.dart';
 import 'package:graceful_shop/resources/widgets/grid_view.dart';
 
-class GridProductNew extends StatelessWidget {
-  GridProductNew({Key? key}) : super(key: key);
+class GridProductSelling extends StatelessWidget {
+  GridProductSelling({Key? key}) : super(key: key);
   ProductController productController = Get.find<ProductController>();
 
   @override
@@ -51,7 +51,7 @@ class GridProductNew extends StatelessWidget {
           //         : ButtonShowMore(
           //             onPressed: () {
           //               productController.loading.value = true;
-          //               productController.getNewProducts();
+          //               productController.getSellingProducts();
           //             },
           //           ),
         ],

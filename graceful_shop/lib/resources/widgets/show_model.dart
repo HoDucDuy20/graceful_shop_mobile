@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:graceful_shop/controllers/cart_controller.dart';
 import 'package:graceful_shop/controllers/product_controller.dart';
+import 'package:graceful_shop/models/product.dart';
 import 'package:graceful_shop/models/product_type.dart';
 import 'package:graceful_shop/resources/utils/colors.dart';
 import 'package:graceful_shop/resources/utils/dimensions.dart';
@@ -12,7 +13,7 @@ import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 ProductController productController = Get.find<ProductController>();
 CartController cartController = Get.find<CartController>();
 
-void showSizeColor(BuildContext context, int productId) async {
+void showSizeColor(BuildContext context, Product product) async {
   showMaterialModalBottomSheet(
     context: context,
     shape: const RoundedRectangleBorder(
@@ -178,38 +179,57 @@ void showSizeColor(BuildContext context, int productId) async {
                     ),
                   ],
                 ),
-                child: Row(
-                  mainAxisSize: MainAxisSize.max,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    ButtonAddCart(
-                      title: 'AddCart'.tr,
-                      onPressed: () {
-                        cartController.addCart(
-                          productId,
-                          productController.colorList[productController.indexColor.value].id,
-                          productController.sizeList[productController.indexSize.value].id,
-                          productController.quantity.value,
-                        );
-                      },
-                      color: AppColors.blueAccentColor,
-                    ),
-                    SizedBox(width: Dimensions.w25),
-                    ButtonAddCart(
-                      title: 'BuyNow'.tr,
-                      onPressed: () {
-                        cartController.addCart(
-                          productId,
-                          productController.colorList[productController.indexColor.value].id,
-                          productController.sizeList[productController.indexSize.value].id,
-                          productController.quantity.value,
-                        );
-                        cartController.showCart();
-                      },
-                      color: AppColors.redColor,
-                    ),
-                  ],
-                ),
+                child: product.quantityStatus == 1
+                    ? Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ButtonAddCart(
+                            title: 'AddCart'.tr,
+                            onPressed: () {
+                              cartController.addCart(
+                                product.id,
+                                productController.colorList[productController.indexColor.value].id,
+                                productController.sizeList[productController.indexSize.value].id,
+                                productController.quantity.value,
+                              );
+                            },
+                            color: AppColors.blueAccentColor,
+                          ),
+                          SizedBox(width: Dimensions.w25),
+                          ButtonAddCart(
+                            title: 'BuyNow'.tr,
+                            onPressed: () {
+                              cartController.addCart(
+                                product.id,
+                                productController.colorList[productController.indexColor.value].id,
+                                productController.sizeList[productController.indexSize.value].id,
+                                productController.quantity.value,
+                              );
+                              cartController.showCart();
+                            },
+                            color: AppColors.redColor,
+                          ),
+                        ],
+                      )
+                    : Row(
+                        mainAxisSize: MainAxisSize.max,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'ProductOutOfStock'.tr,
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                              fontSize: Dimensions.font17,
+                              fontWeight: FontWeight.w600,
+                              color: AppColors.redColor,
+                              letterSpacing: 0.5,
+                            ),
+                          ),
+                        ],
+                      )
               ),
             ),
           ],

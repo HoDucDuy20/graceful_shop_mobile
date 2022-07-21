@@ -12,22 +12,20 @@ class FavoriteController extends GetxController {
   var producFavoritetList = <Product>[].obs;
   var isLoading = false.obs;
   Product p = Product(
-      id: -1,
-      productName: '',
-      stock: 0,
-      importPrice: 0,
-      price: 0,
-      vat: 0,
-      discountPrice: 0,
-      productTypeId: 0,
-      productBarcode: '',
-      brandId: -1,
-      popular: 0,
-      numLike: 0,
-      numRate: 0,
-      description: '',
-      pictures: [],
-      likes: []);
+    id: -1,
+    productName: '',
+    price: 0,
+    productTypeId: 0,
+    productBarcode: '',
+    brandId: -1,
+    popular: 0,
+    numLike: 0,
+    numRate: 0,
+    description: '',
+    pictures: [],
+    likes: [],
+    quantityStatus: 1,
+  );
 
   @override
   void onInit() {
